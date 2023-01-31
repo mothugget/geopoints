@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Switch } from '@headlessui/react';
+import Link from 'next/link';
+import { UserDataContext } from '../contexts/UserDataContext';
 
-const ListToggle = ({ listTitle }: { listTitle: string }) => {
+interface ListToggleProps {
+  listTitle: string;
+  listId: number;
+}
+
+const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
+  const { userData } = useContext(UserDataContext);
 
   return (
     <div className="mt-5 flex justify-between">
@@ -19,7 +27,12 @@ const ListToggle = ({ listTitle }: { listTitle: string }) => {
           } inline-block h-4 w-4 transform rounded-full bg-white transition`}
         />
       </Switch>
-      <p className="w-32 text-sm text-gray-700">{listTitle}</p>
+
+      {userData && (
+        <Link href={`/${userData.userName}/lists/${listId}`}>
+          <p className="w-32 text-sm text-gray-700 underline hover:text-blue-900">{listTitle}</p>
+        </Link>
+      )}
     </div>
   );
 };
