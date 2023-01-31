@@ -4,6 +4,7 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import Image from 'next/image.js';
 
 import { Coordinates } from '../types/types'
+import { PointCreationContext } from '../contexts/PointCreationContext';
 
 import { Marker } from '@react-google-maps/api';
 import LoadingSpinner from './LoadingSpinner';
@@ -13,18 +14,20 @@ const containerStyle = {
   height: '100vh',
 };
 
-let lat: number | undefined = 0;
-let lng: number | undefined = 0
+
 
 function Map() {
   const [center, setCenter] = useState<Coordinates | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
+  const { setCenterCoordinates } = React.useContext(PointCreationContext)
+
+
   getUserPosition();
 
-  function logCoordinates() {
-    console.log(lat,' ',lng)
-  }
+
+
+  let coordinates: Coordinates|null = { lat: 0, lng: 0 }
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -36,8 +39,8 @@ function Map() {
       const bounds = new window.google.maps.LatLngBounds(center);
       map.fitBounds(bounds);
       map.addListener("center_changed", () => {
-        lat = map.getCenter()?.lat()
-        lng = map.getCenter()?.lng()
+          coordinates = { lat: map.getCenter()?.lat() as number, lng: map.getCenter()?.lng() as number};
+        // setCenterCoordinates(coordinates)
       })
       setMap(map);
     },
@@ -48,7 +51,7 @@ function Map() {
 
   // if (map) { console.log(map.getCenter()?.lat())}
 
-  const onUnmount = useCallback(function callback(map: any) {
+  const onUnmount = useCallback(function callback(map: google.maps.Map) {
     setMap(null);
   }, []);
 
@@ -109,7 +112,6 @@ function Map() {
           height={40}
         />
       </div>
-      <button className="absolute z-20" onClick={logCoordinates}>Log coordinates</button>
     </div>
   ) : (
     <></>
