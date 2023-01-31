@@ -37,7 +37,7 @@ model List {
   spotifyPath String?  @map(name: "spotify_path")
   tags        Tag[]
   points      Point[]
-  liked_by    User[]   @relation("LikedLists")
+  likedBy    User[]   @relation("LikedLists")
 }
 
 model Point {
@@ -58,7 +58,7 @@ model Point {
 model Tag {
   id            Int     @id @default(autoincrement())
   name          String
-  timesSearched BigInt  @default(0) @map(name: "times_searched")
+  timesSearched Int  @default(0) @map(name: "times_searched")
   points        Point[]
   lists         List[]
 }
