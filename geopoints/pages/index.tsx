@@ -59,8 +59,6 @@ export default withPageAuthRequired(function Home() {
       <Header />
       <section className="mb-auto">
         <Map />
-        {/* <h1 className="text-neutral-500">{data.email}</h1>
-        <h1 className="text-neutral-500">{data.bio}</h1> */}
       </section>
       <Footer />
     </main>
