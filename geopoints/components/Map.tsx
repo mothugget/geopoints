@@ -1,7 +1,10 @@
 import React from 'react';
 import { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { TbCrosshair } from 'react-icons/tb';
+import Image from 'next/image.js';
+
+import { Coordinates } from '../types/types'
+
 import { Marker } from '@react-google-maps/api';
 import LoadingSpinner from './LoadingSpinner';
 
@@ -10,16 +13,12 @@ const containerStyle = {
   height: '100vh',
 };
 
-export interface Coordinates {
-  lat: number;
-  lng: number;
-}
-
 function Map() {
   const [center, setCenter] = useState<Coordinates | null>(null);
   const [map, setMap] = useState(null);
 
   getUserPosition();
+
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -90,7 +89,12 @@ function Map() {
         <></>
       </GoogleMap>
       <div className="absolute z-20">
-        <TbCrosshair className="text-gray-600 w-8 h-8" />
+        <Image
+          src="/crosshair.png"
+          alt="crosshair"
+          width={40}
+          height={40}
+        />
       </div>
     </div>
   ) : (
