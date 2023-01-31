@@ -33,6 +33,7 @@ const NUMBER_OF_FAKE_USERS = 7;
               title: faker.company.catchPhrase(),
               description: faker.lorem.sentence(),
               imagePath: faker.image.nature(),
+              public: true,
               tags: {
                 create: {
                   name: faker.random.word(),
@@ -61,6 +62,7 @@ const NUMBER_OF_FAKE_USERS = 7;
         imagePath: faker.image.avatar(),
         ownLists: {
           create: {
+            public: true,
             title: faker.company.catchPhrase(),
             description: faker.lorem.sentence(),
             imagePath: faker.image.nature(),
