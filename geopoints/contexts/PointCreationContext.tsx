@@ -3,7 +3,7 @@ import { Coordinates } from '../types/types';
 
 interface PointCreate {
   centerCoordinates: Coordinates | null;
-  setCenterCoordinates: Dispatch<SetStateAction<null>> | null;
+  setCenterCoordinates: Dispatch<SetStateAction<any>> | null;
 }
 const PointCreationContext = createContext<PointCreate>({
   centerCoordinates: null,

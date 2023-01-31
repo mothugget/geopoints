@@ -38,18 +38,15 @@ function Map() {
     function callback(map: google.maps.Map) {
       const bounds = new window.google.maps.LatLngBounds(center);
       map.fitBounds(bounds);
-      map.addListener("center_changed", () => {
-          coordinates = { lat: map.getCenter()?.lat() as number, lng: map.getCenter()?.lng() as number};
-        // setCenterCoordinates(coordinates)
-      })
+
       setMap(map);
     },
     [center]
   );
-
-
-
-  // if (map) { console.log(map.getCenter()?.lat())}
+  if(map)map.addListener("center_changed", () => {
+    coordinates = { lat: map.getCenter()?.lat() as number, lng: map.getCenter()?.lng() as number };
+    setCenterCoordinates?.(coordinates)
+  })
 
   const onUnmount = useCallback(function callback(map: google.maps.Map) {
     setMap(null);
@@ -84,7 +81,7 @@ function Map() {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={5}
         onLoad={onLoad}
         // onLoad={(map)=>{}}
         onUnmount={onUnmount}
