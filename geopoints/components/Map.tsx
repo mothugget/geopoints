@@ -13,12 +13,18 @@ const containerStyle = {
   height: '100vh',
 };
 
+let lat: number | undefined = 0;
+let lng: number | undefined = 0
+
 function Map() {
   const [center, setCenter] = useState<Coordinates | null>(null);
-  const [map, setMap] = useState< google.maps.Map | null>(null);
+  const [map, setMap] = useState<google.maps.Map | null>(null);
 
   getUserPosition();
 
+  function logCoordinates() {
+    console.log(lat,' ',lng)
+  }
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -26,10 +32,13 @@ function Map() {
   });
 
   const onLoad = useCallback(
-    function callback(map:google.maps.Map) {
+    function callback(map: google.maps.Map) {
       const bounds = new window.google.maps.LatLngBounds(center);
       map.fitBounds(bounds);
-console.log(map.getCenter()?.lat())
+      map.addListener("center_changed", () => {
+        lat = map.getCenter()?.lat()
+        lng = map.getCenter()?.lng()
+      })
       setMap(map);
     },
     [center]
@@ -37,7 +46,7 @@ console.log(map.getCenter()?.lat())
 
 
 
-  if (map) { console.log(map.getCenter()?.lat())}
+  // if (map) { console.log(map.getCenter()?.lat())}
 
   const onUnmount = useCallback(function callback(map: any) {
     setMap(null);
@@ -100,6 +109,7 @@ console.log(map.getCenter()?.lat())
           height={40}
         />
       </div>
+      <button className="absolute z-20" onClick={logCoordinates}>Log coordinates</button>
     </div>
   ) : (
     <></>
