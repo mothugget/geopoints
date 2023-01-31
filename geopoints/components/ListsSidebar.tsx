@@ -1,13 +1,16 @@
-import ListToggle from './ListToggle';
+import { useContext } from 'react';
+import { UserDataContext } from '../contexts/UserDataContext';
+import GroupOfLists from './GroupOfLists';
 
 interface ListsSidebarProps {
   showSidebar: boolean;
 }
 
-const ListsSidebar: React.FC<ListsSidebarProps> = ({ showSidebar }) => {
+const ListsSidebar = ({ showSidebar }: ListsSidebarProps) => {
   // thsi componenet needs the showSidebar prop to create a smooth animation
   // todo work on animation
-  // get lists from context
+
+  const { userData } = useContext(UserDataContext);
   return (
     <div
       className={`${
@@ -16,8 +19,12 @@ const ListsSidebar: React.FC<ListsSidebarProps> = ({ showSidebar }) => {
       `}
     >
       <h2 className="w-full text-2xl font-bold text-gray-800">Map</h2>
-      <h2 className="mt-10 w-full text-xl font-bold text-gray-800">Display:</h2>
-      <ListToggle />
+      <div className="overflow-auto max-h-64">
+        {userData && (
+          <GroupOfLists title="Your lists: " lists={userData.ownLists} />
+        )}
+      </div>
+      {userData && <GroupOfLists title="Liked: " lists={userData.likedLists} />}
     </div>
   );
 };
