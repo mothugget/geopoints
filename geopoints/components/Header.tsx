@@ -6,10 +6,6 @@ import { UserDataContext } from '../contexts/UserDataContext';
 
 const Header = () => {
   const { userData } = useContext(UserDataContext);
-  console.log(
-    'User data from global context in the header component',
-    userData
-  );
   function redirectProfile() {}
 
   return (
@@ -21,7 +17,7 @@ const Header = () => {
             right-0
             top-0
             flex
-            z-20
+            z-40
             justify-center
             items-center
             overflow-hidden

@@ -1,4 +1,9 @@
-import { createContext, useState, Dispatch, SetStateAction } from 'react';
+import React, {
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { User } from '../types/types';
 
 interface UserData {
@@ -10,16 +15,19 @@ const UserDataContext = createContext<UserData>({
   setUserData: null,
 });
 
-function UserDataContextProvider({ children }: any) {
+function UserDataContextProvider({ children }: { children: React.ReactNode }) {
   const [userData, setUserData] = useState(null);
 
   return (
-    <UserDataContext.Provider value={{
-      userData, setUserData
-    }}>
+    <UserDataContext.Provider
+      value={{
+        userData,
+        setUserData,
+      }}
+    >
       {children}
     </UserDataContext.Provider>
-  )
+  );
 }
 
-export { UserDataContext, UserDataContextProvider }
+export { UserDataContext, UserDataContextProvider };

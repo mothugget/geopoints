@@ -29,47 +29,47 @@ const User = () => {
   const Auth = useUser();
 
   // fetch the user data with ReactQuery using the user email from auth0
-  const { isError, isLoading, data, error, refetch } = useQuery(
-    ['fectchUserData', Auth.user?.email],
-    async () => {
-      try {
-        const data = await fetchUserData(Auth.user?.email!);
-        if (data && setUserData) {
-          setUserData({ ...data }); // set user data to global context
-          return data;
-        }
-      } catch (error) {
-        console.log(error)
-        throw new Error('Error fetching data');
-      }
-    },
-    {
-      enabled: false,
-    }
-  );
+  // const { isError, isLoading, data, error, refetch } = useQuery(
+  //   ['fectchUserData', Auth.user?.email],
+  //   async () => {
+  //     try {
+  //       const data = await fetchUserData(Auth.user?.email!);
+  //       if (data && setUserData) {
+  //         setUserData({ ...data }); // set user data to global context
+  //         return data;
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //       throw new Error('Error fetching data');
+  //     }
+  //   },
+  //   {
+  //     enabled: false,
+  //   }
+  // );
 
-  if (Auth.isLoading) {
-    return <LoadingSpinner />;
-  }
+  // if (Auth.isLoading) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (Auth.error) {
-    return <span className="text-black">Error on Auth</span>;
-  }
+  // if (Auth.error) {
+  //   return <span className="text-black">Error on Auth</span>;
+  // }
 
-  if (!data) {
-    refetch();
-    return null;
-  }
+  // if (!data) {
+  //   refetch();
+  //   return null;
+  // }
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  // if (isLoading) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (isError && error instanceof Error) {
-    return <span className="text-black">Error: {error.message}</span>;
-  }
+  // if (isError && error instanceof Error) {
+  //   return <span className="text-black">Error: {error.message}</span>;
+  // }
 
-  console.log(userData)
+  // console.log(userData)
 
 
   let [categories] = useState({
@@ -201,7 +201,7 @@ const User = () => {
           ))}
         </Tab.Panels>
       </Tab.Group>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   )
 
