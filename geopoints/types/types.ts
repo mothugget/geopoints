@@ -24,7 +24,7 @@ interface List {
   id: number;
   title: string;
   author: User;
-  imgPath: string;
+  imagePath: string;
   description: string;
   createdAt: number;
   tags: Tag[];

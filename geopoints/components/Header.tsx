@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image.js';
-import { SearchBar } from './SearchBar';
+import { SearchBar } from './SearchBar/SearchBar';
+import Search from './SearchBar/Search';
 import { useContext } from 'react';
 import { UserDataContext } from '../contexts/UserDataContext';
 
@@ -9,7 +10,7 @@ const Header = () => {
   function redirectProfile() {}
 
   return (
-    <div>
+    <div className="z-40">
       <SearchBar />
       <Link
         href=""
