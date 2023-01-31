@@ -60,7 +60,6 @@ export default withPageAuthRequired(function Home() {
       <section className="mb-auto">
         <Map />
       </section>
-      <Footer />
     </main>
   );
 });

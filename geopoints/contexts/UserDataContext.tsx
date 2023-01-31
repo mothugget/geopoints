@@ -10,7 +10,6 @@ interface UserData {
   userData: User | null;
   setUserData: Dispatch<SetStateAction<null>> | null;
 }
-
 const UserDataContext = createContext<UserData>({
   userData: null,
   setUserData: null,

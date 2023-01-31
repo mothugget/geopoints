@@ -17,7 +17,7 @@ const Header = () => {
             right-0
             top-0
             flex
-            z-20
+            z-40
             justify-center
             items-center
             overflow-hidden

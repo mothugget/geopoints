@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import Footer from '../components/Footer';
 
 import { UserDataContextProvider } from '../contexts/UserDataContext';
 import { PointCreationContextProvider } from '../contexts/PointCreationContext';
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <UserDataContextProvider>
           <PointCreationContextProvider>
+            <Footer/>
             <Component {...pageProps} />
           </PointCreationContextProvider>
         </UserDataContextProvider>
