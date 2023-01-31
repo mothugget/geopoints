@@ -1,13 +1,21 @@
 import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
 import { List } from '../../../types/types.js';
+import Image from 'next/image';
+import PictureTitleAndDesc from '../../../components/PictureTitleAndDesc';
 
 const prisma = new PrismaClient();
 
 function List({ listData }: { listData: List }) {
-  console.log({ listData });
-  // return <p>Hello</p>;
+  return (
+    listData && (
+      <PictureTitleAndDesc
+        imagePath={listData.imagePath}
+        description={listData.description}
+        title={listData.title}
+      />
+    )
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
