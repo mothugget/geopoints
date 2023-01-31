@@ -21,6 +21,7 @@ interface Point {
 }
 
 interface List {
+  id: number;
   title: string;
   author: User;
   imgPath: string;
