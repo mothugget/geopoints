@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 import type { NextPage } from 'next';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import { useQuery } from 'react-query';
-import {UserDataContext} from '../contexts/UserDataContext';
+import { UserDataContext } from '../contexts/UserDataContext';
 import Map from '../components/Map';
 import fetchUserData from '../util/fetchUserData';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const Home: NextPage = () => {
+export default withPageAuthRequired(function Home() {
   const { userData, setUserData } = useContext(UserDataContext);
   const Auth = useUser();
 
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
           return data;
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
         throw new Error('Error fetching data');
       }
     },
@@ -65,6 +65,4 @@ const Home: NextPage = () => {
       <Footer />
     </main>
   );
-};
-
-export default Home;
+});
