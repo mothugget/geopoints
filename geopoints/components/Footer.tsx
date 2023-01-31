@@ -1,25 +1,25 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { BsFillGeoFill } from 'react-icons/bs';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import ListsSidebar from './ListsSidebar';
-import { PointCreationContext } from '../contexts/PointCreationContext';
+import AddContentModal from './AddContentModal';
+
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-console.log('hello')
-  const { centerCoordinates } = useContext(PointCreationContext)
+  const [showAddContentModal, setShowAddContentModal] = useState<Boolean>(false);
+  console.log(showAddContentModal)
 
-function logCenter(params:type) {
-  console.log(centerCoordinates)
-}
+console.log('hello')
+
   return (
     <>
       {showSidebar && <ListsSidebar showSidebar={showSidebar} />}
       <footer className="h-16 z-10 bg-white">
         <div className="p-4 flex justify-between text-gray-600 ">
           <BsFillGeoFill className="w-8 h-8" />
-          <button onClick={logCenter}>
+          <button onClick={()=>{ setShowAddContentModal(!showAddContentModal)}}>
             <IoAddCircleOutline className="w-8 h-8" />
           </button>
           <AiOutlineUnorderedList
@@ -27,6 +27,7 @@ function logCenter(params:type) {
             className="w-8 h-8"
           />
         </div>
+        {showAddContentModal&&<AddContentModal/>}
       </footer>
     </>
   );
