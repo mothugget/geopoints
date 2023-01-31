@@ -1,14 +1,14 @@
 import { PrismaClient } from '@prisma/client';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Image from 'next/image';
 import { List } from '../../../types/types.js';
 
 const prisma = new PrismaClient();
 
-const List = ({ listData }: { listData: List }) => {
+function List({ listData }: { listData: List }) {
   console.log({ listData });
-};
-
-export default List;
+  // return <p>Hello</p>;
+}
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const listId = Number(context.query.listId);
@@ -22,7 +22,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 
   listData = JSON.parse(JSON.stringify(listData));
+  // getServerSideProps errors when passing Date objects. In this case,
+  // the createdAt property of listData.
+  // this is a way of overcoming it.
+  // check: https://github.com/vercel/next.js/issues/11993 for more info.
   return {
-    props: { listData }, // will be passed to the page component as props
+    props: { listData },
   };
 };
+
+export default List;
