@@ -45,7 +45,7 @@ const Home: NextPage = () => {
     <main className="flex flex-col h-screen justify-between bg-white">
       <Header />
       <section className="mb-auto">
-        <Map />
+        {/* <Map /> */}
         {/* <h1 className="text-neutral-500">{data.email}</h1>
         <h1 className="text-neutral-500">{data.bio}</h1> */}
       </section>
