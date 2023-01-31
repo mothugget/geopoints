@@ -1,9 +1,9 @@
-import React from 'react';
+import Image from 'next/image.js';
+import React, { useContext } from 'react';
 import { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import Image from 'next/image.js';
 import { Coordinates } from '../types/types';
-import { PointCreationContext } from '../contexts/PointCreationContext';
+import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 
 const containerStyle = {
@@ -14,9 +14,7 @@ const containerStyle = {
 function Map() {
   const [currentUserLocation, setCurrentUserLocation] =
     useState<Coordinates | null>(null);
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-  const { setCenterCoordinates } = React.useContext(PointCreationContext);
-  let coordinates: Coordinates = { lat: 0, lng: 0 };
+  const { map, setMap } = useContext(MapContext);
 
   getUserPosition();
 
@@ -29,24 +27,21 @@ function Map() {
     function callback(map: google.maps.Map) {
       const bounds = new window.google.maps.LatLngBounds(currentUserLocation);
       map.fitBounds(bounds);
-      setMap(map);
+      if (setMap) {
+        setMap(map);
+      }
     },
-    [currentUserLocation]
+    [currentUserLocation, setMap]
   );
 
-  if (map) {
-    map.addListener('center_changed', () => {
-      coordinates = {
-        lat: Number(map.getCenter()?.lat()),
-        lng: Number(map.getCenter()?.lng()),
-      };
-      setCenterCoordinates?.(coordinates);
-    });
-  }
-
-  const onUnmount = useCallback(function callback(map: google.maps.Map) {
-    setMap(null);
-  }, []);
+  const onUnmount = useCallback(
+    function callback(map: google.maps.Map) {
+      if (setMap) {
+        setMap(null);
+      }
+    },
+    [setMap]
+  );
 
   function getUserPosition() {
     navigator.geolocation.getCurrentPosition((geolocation) => {
