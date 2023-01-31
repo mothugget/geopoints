@@ -2,11 +2,8 @@ import React from 'react';
 import { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import Image from 'next/image.js';
-
-import { Coordinates } from '../types/types'
+import { Coordinates } from '../types/types';
 import { PointCreationContext } from '../contexts/PointCreationContext';
-
-import { Marker } from '@react-google-maps/api';
 import LoadingSpinner from './LoadingSpinner';
 
 const containerStyle = {
@@ -14,20 +11,14 @@ const containerStyle = {
   height: '100vh',
 };
 
-
-
 function Map() {
-  const [center, setCenter] = useState<Coordinates | null>(null);
+  const [currentUserLocation, setCurrentUserLocation] =
+    useState<Coordinates | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-
-  const { setCenterCoordinates } = React.useContext(PointCreationContext)
-
+  const { setCenterCoordinates } = React.useContext(PointCreationContext);
+  let coordinates: Coordinates = { lat: 0, lng: 0 };
 
   getUserPosition();
-
-
-
-  let coordinates: Coordinates|null = { lat: 0, lng: 0 }
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -36,17 +27,22 @@ function Map() {
 
   const onLoad = useCallback(
     function callback(map: google.maps.Map) {
-      const bounds = new window.google.maps.LatLngBounds(center);
+      const bounds = new window.google.maps.LatLngBounds(currentUserLocation);
       map.fitBounds(bounds);
-
       setMap(map);
     },
-    [center]
+    [currentUserLocation]
   );
-  if(map)map.addListener("center_changed", () => {
-    coordinates = { lat: map.getCenter()?.lat() as number, lng: map.getCenter()?.lng() as number };
-    setCenterCoordinates?.(coordinates)
-  })
+
+  if (map) {
+    map.addListener('center_changed', () => {
+      coordinates = {
+        lat: Number(map.getCenter()?.lat()),
+        lng: Number(map.getCenter()?.lng()),
+      };
+      setCenterCoordinates?.(coordinates);
+    });
+  }
 
   const onUnmount = useCallback(function callback(map: google.maps.Map) {
     setMap(null);
@@ -55,13 +51,13 @@ function Map() {
   function getUserPosition() {
     navigator.geolocation.getCurrentPosition((geolocation) => {
       const { latitude, longitude } = geolocation.coords;
-      if (!center) {
-        setCenter({ lat: latitude, lng: longitude });
+      if (!currentUserLocation) {
+        setCurrentUserLocation({ lat: latitude, lng: longitude });
       }
     });
   }
 
-  if (!center) {
+  if (!currentUserLocation) {
     return <LoadingSpinner />;
   }
 
@@ -80,7 +76,7 @@ function Map() {
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
+        center={currentUserLocation}
         zoom={5}
         onLoad={onLoad}
         // onLoad={(map)=>{}}
@@ -102,16 +98,11 @@ function Map() {
         <></>
       </GoogleMap>
       <div className="absolute z-20">
-        <Image
-          src="/crosshair.png"
-          alt="crosshair"
-          width={40}
-          height={40}
-        />
+        <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
       </div>
     </div>
   ) : (
-    <></>
+    <LoadingSpinner />
   );
 }
 
