@@ -1,4 +1,4 @@
-import { List } from '../types/types';
+import { List } from '../../types/types';
 import ListToggle from './ListToggleRender';
 
 interface GroupOfListsProps {
@@ -20,7 +20,7 @@ const GroupOfLists = ({ title, lists }: GroupOfListsProps) => {
         <ul>
           {lists.map((list) => (
             <li key={list.id}>
-              <ListToggle listTitle={list.title} listId={list.id}/>
+              <ListToggle listTitle={list.title} listId={list.id} />
             </li>
           ))}
         </ul>

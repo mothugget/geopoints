@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { Switch } from '@headlessui/react';
 import Link from 'next/link';
-import { UserDataContext } from '../contexts/UserDataContext';
+import { UserDataContext } from '../../contexts/UserDataContext';
 
 interface ListToggleProps {
   listTitle: string;
@@ -30,7 +30,9 @@ const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
 
       {userData && (
         <Link href={`/${userData.userName}/lists/${listId}`}>
-          <p className="w-32 text-sm text-gray-700 underline hover:text-blue-900">{listTitle}</p>
+          <p className="w-32 text-sm text-gray-700 underline hover:text-blue-900">
+            {listTitle}
+          </p>
         </Link>
       )}
     </div>

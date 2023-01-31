@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { BsFillGeoFill } from 'react-icons/bs';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
-import ListsSidebar from './ListsSidebar';
+import ListsSidebar from './Sidebar/ListsSidebar';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);

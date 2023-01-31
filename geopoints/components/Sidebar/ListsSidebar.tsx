@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UserDataContext } from '../contexts/UserDataContext';
+import { UserDataContext } from '../../contexts/UserDataContext';
 import GroupOfLists from './GroupOfLists';
 
 interface ListsSidebarProps {
