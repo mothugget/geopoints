@@ -5,7 +5,7 @@ import { UserDataContext } from '../contexts/UserDataContext';
 import Map from '../components/Map';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
-import fetchDataAndSetContext from '../util/fetchDataAndSetContext';
+import fetchUserData from '../util/fetchUserData';
 
 export default withPageAuthRequired(function Home() {
   const { userData, setUserData } = useContext(UserDataContext);
@@ -13,7 +13,13 @@ export default withPageAuthRequired(function Home() {
 
   const { isError, isLoading, error } = useQuery(
     ['fectchUserData', user!],
-    async () => fetchDataAndSetContext(user!, setUserData)
+    async () => {
+      const data = await fetchUserData(user!);
+      if (data && setUserData) {
+        setUserData({ ...data }); // set user data to global context
+        return data;
+      }
+    }
   );
 
   if (isLoading) {
