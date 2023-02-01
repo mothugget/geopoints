@@ -15,7 +15,7 @@ const getUserData = async (req: NextApiRequest, res: NextApiResponse) => {
           likedPoints: true,
         },
       });
-      res.status(200).json(userData);
+      userData ? res.status(200).json(userData) : res.status(200).json(null);
     } else {
       throw new Error('Incorrect email');
     }

@@ -18,13 +18,13 @@ export default withPageAuthRequired(function Home() {
     ['fectchUserData', Auth.user?.email],
     async () => {
       try {
-        const data = await fetchUserData(Auth.user?.email!);
+        const data = await fetchUserData(Auth.user!);
         if (data && setUserData) {
           setUserData({ ...data }); // set user data to global context
           return data;
         }
       } catch (error) {
-        console.log(error);
+        console.log({ error });
         throw new Error('Error fetching data');
       }
     },
@@ -45,7 +45,7 @@ export default withPageAuthRequired(function Home() {
     refetch();
     return null;
   }
-
+  console.log({ Auth });
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -53,7 +53,6 @@ export default withPageAuthRequired(function Home() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  console.log({ userData });
 
   return (
     <main className="flex flex-col h-screen justify-between bg-white">
