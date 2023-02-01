@@ -8,13 +8,13 @@ const fetchUserData = async (user: UserProfile) => {
       `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/users/${user.email}`
     );
     if (!res.ok) throw new Error('Error fetching user data');
-    let userData = await res.json();
+    let data = await res.json();
 
-    if (userData === null) {
-      userData = await createNewUser(user);
+    if (data.error) {
+      // if user not found create a new one
+      data.userData = await createNewUser(user);
     }
-
-    return userData;
+    return data.userData;
   }
 };
 

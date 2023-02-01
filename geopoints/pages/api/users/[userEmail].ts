@@ -15,7 +15,9 @@ const getUserData = async (req: NextApiRequest, res: NextApiResponse) => {
           likedPoints: true,
         },
       });
-      userData ? res.status(200).json(userData) : res.status(200).json(null);
+      userData
+        ? res.status(200).json({ userData, error: false })
+        : res.status(204).json({ userData: null, error: 'User not found' });
     } else {
       throw new Error('Incorrect email');
     }

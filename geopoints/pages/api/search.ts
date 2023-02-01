@@ -7,7 +7,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { q } = req.query;
     if (q && typeof q === 'string') {
-      console.log('im here');
       const results = await prisma.list.findMany({
         where: {
           title: {
