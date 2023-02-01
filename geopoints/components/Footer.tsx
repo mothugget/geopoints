@@ -11,7 +11,6 @@ const Footer = () => {
   const { map, setMap } = useContext(MapContext);
   const [showAddContentModal, setShowAddContentModal] =
     useState<Boolean>(false);
-  console.log(showAddContentModal);
 
   return (
     <>
