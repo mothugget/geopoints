@@ -29,9 +29,9 @@ export const SearchBar = () => {
         <Image
           src={'/search-icon.png'}
           alt="Search icon"
-          width={32}
           height={32}
-          
+          width={32}
+          priority={true}
         />
       </button>
       {showSearchInput && (

@@ -32,6 +32,7 @@ const Header = () => {
           alt="Profile picture"
           width={40}
           height={40}
+          priority={true}
           className="rounded-full"
         />
       </Link>

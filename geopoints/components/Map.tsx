@@ -26,7 +26,7 @@ function Map() {
   const onLoad = useCallback(
     function callback(map: google.maps.Map) {
       const bounds = new window.google.maps.LatLngBounds(currentUserLocation);
-      map.setZoom(15);
+      map.setZoom(16);
       if (setMap) {
         setMap(map);
       }
