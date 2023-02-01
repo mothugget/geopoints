@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image.js';
 import { AiOutlineSearch } from 'react-icons/ai';
 import Search from './Search';
 
@@ -25,7 +26,13 @@ export const SearchBar = () => {
             w-16
             h-16"
       >
-        <AiOutlineSearch className="text-white w-8 h-8" />
+        <Image
+          src={'/search-icon.png'}
+          alt="Search icon"
+          width={32}
+          height={32}
+          
+        />
       </button>
       {showSearchInput && (
         <div
