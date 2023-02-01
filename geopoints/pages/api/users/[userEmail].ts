@@ -17,11 +17,12 @@ const getUserData = async (req: NextApiRequest, res: NextApiResponse) => {
       });
       userData
         ? res.status(200).json({ userData, error: false })
-        : res.status(204).json({ userData: null, error: 'User not found' });
+        : res.status(200).json({ userData: null, error: 'User not found' });
     } else {
       throw new Error('Incorrect email');
     }
   } catch (error) {
+    console.log('error in the controller');
     console.error({ error });
     res.status(500).json({ error });
   }
