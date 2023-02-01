@@ -7,8 +7,8 @@ import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 
 const containerStyle = {
-  width: '100vw',
-  height: '100vh',
+  width: '100%',
+  height: '100%',
 };
 
 function Map() {
@@ -63,8 +63,8 @@ function Map() {
         flex
         justify-center
         items-center
-        h-screen
-        w-screen
+        h-full
+        w-full
         top-0
         left-0
         "
@@ -76,6 +76,7 @@ function Map() {
         onUnmount={onUnmount}
         options={{
           streetViewControl: false,
+          fullscreenControl: false,
           zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER,
           },
