@@ -17,8 +17,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <UserDataContextProvider>
           <PointCreationContextProvider>
-            <Footer/>
             <Component {...pageProps} />
+            <Footer/>
           </PointCreationContextProvider>
         </UserDataContextProvider>
       </QueryClientProvider>
