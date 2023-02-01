@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <div className="z-40">
       <SearchBar />
-      <Link href={`/${userData?.userName}/profile`}>
+      <Link href={`/profile/${userData?.userName}`}>
         <Image
           src={userData?.imagePath || '/fake-user-profile-pic.png'}
           alt="Profile picture"
