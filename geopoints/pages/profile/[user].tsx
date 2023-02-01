@@ -9,7 +9,30 @@ import { useQuery } from 'react-query';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import fetchUserData from '../../util/fetchUserData';
 
-const categories = {
+
+
+function classNames(...classes: any) {
+  return classes.filter(Boolean).join(' ');
+}
+
+const User = () => {
+  const [openTab, setOpenTab] = useState(1);
+  const { userData, setUserData } = useContext(UserDataContext);
+  const { user } = useUser();
+
+  const { isError, isLoading, error } = useQuery(
+    ['fetchUserData', user!],
+    async () => {
+      const data = await fetchUserData(user!);
+      if (data && setUserData) {
+        setUserData({ ...data }); // set user data to global context
+        return data;
+      }
+    }
+  );
+
+  const categories = {
+  // Lists: [...userData.ownLists],
   Lists: [
     {
       id: 1,
@@ -76,31 +99,6 @@ const categories = {
   ],
 };
 
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ');
-}
-
-const User = () => {
-  const [openTab, setOpenTab] = useState(1);
-  const Auth = useUser();
-  const { userData, setUserData } = useContext(UserDataContext);
-
-  const { isError, isLoading, data, error, refetch } = useQuery(
-    ['fectchUserData', Auth.user?.email],
-    async () => {
-      try {
-        const data = await fetchUserData(Auth.user!);
-        if (data && setUserData) {
-          setUserData({ ...data }); // set user data to global context
-          return data;
-        }
-      } catch (error) {
-        console.log({ error });
-        throw new Error('Error fetching data');
-      }
-    }
-  );
-
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -108,7 +106,8 @@ const User = () => {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  console.log({ userData });
+
+  console.log('userData: ',userData);
 
   return (
     <div className="w-full max-w-md px-2 py-16 sm:px-0">
