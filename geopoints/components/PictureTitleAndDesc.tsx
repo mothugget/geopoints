@@ -1,8 +1,7 @@
 import Image from 'next/image.js';
 
-
 interface PictureTitleAndDescProps {
-  imagePath: string | string[];
+  imagePath: string;
   title: string;
   description: string;
   points?: string[];
@@ -14,7 +13,6 @@ const PictureTitleAndDesc = ({
 }: PictureTitleAndDescProps) => {
   return (
     <section className="h-96 text-gray-800 mb-10">
-      {Array.isArray(imagePath) ? (null) : (null)}
       <Image
         src={imagePath}
         width={320}
