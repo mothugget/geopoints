@@ -26,7 +26,7 @@ function Map() {
   const onLoad = useCallback(
     function callback(map: google.maps.Map) {
       const bounds = new window.google.maps.LatLngBounds(currentUserLocation);
-      map.fitBounds(bounds);
+      map.setZoom(15);
       if (setMap) {
         setMap(map);
       }
@@ -72,9 +72,7 @@ function Map() {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={currentUserLocation}
-        zoom={5}
         onLoad={onLoad}
-        // onLoad={(map)=>{}}
         onUnmount={onUnmount}
         options={{
           streetViewControl: false,
@@ -85,6 +83,7 @@ function Map() {
             position: google.maps.ControlPosition.LEFT_CENTER,
             style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
           },
+          mapTypeId: 'satellite'
         }}
       >
         {/* <Marker position={center}>
