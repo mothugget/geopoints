@@ -1,11 +1,9 @@
-import React from 'react';
+import Image from 'next/image.js';
+import React, { useContext } from 'react';
 import { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import Image from 'next/image.js';
-
-import { Coordinates } from '../types/types'
-
-import { Marker } from '@react-google-maps/api';
+import { Coordinates } from '../types/types';
+import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 
 const containerStyle = {
@@ -14,11 +12,11 @@ const containerStyle = {
 };
 
 function Map() {
-  const [center, setCenter] = useState<Coordinates | null>(null);
-  const [map, setMap] = useState(null);
+  const [currentUserLocation, setCurrentUserLocation] =
+    useState<Coordinates | null>(null);
+  const { map, setMap } = useContext(MapContext);
 
   getUserPosition();
-
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -26,30 +24,35 @@ function Map() {
   });
 
   const onLoad = useCallback(
-    function callback(map: any) {
-      // This is just an example of getting and using the map instance!!! don't just blindly copy!
-      const bounds = new window.google.maps.LatLngBounds(center);
-      map.fitBounds(bounds);
-
-      setMap(map);
+    function callback(map: google.maps.Map) {
+      const bounds = new window.google.maps.LatLngBounds(currentUserLocation);
+      map.setZoom(16);
+      if (setMap) {
+        setMap(map);
+      }
     },
-    [center]
+    [currentUserLocation, setMap]
   );
 
-  const onUnmount = useCallback(function callback(map: any) {
-    setMap(null);
-  }, []);
+  const onUnmount = useCallback(
+    function callback(map: google.maps.Map) {
+      if (setMap) {
+        setMap(null);
+      }
+    },
+    [setMap]
+  );
 
   function getUserPosition() {
     navigator.geolocation.getCurrentPosition((geolocation) => {
       const { latitude, longitude } = geolocation.coords;
-      if (!center) {
-        setCenter({ lat: latitude, lng: longitude });
+      if (!currentUserLocation) {
+        setCurrentUserLocation({ lat: latitude, lng: longitude });
       }
     });
   }
 
-  if (!center) {
+  if (!currentUserLocation) {
     return <LoadingSpinner />;
   }
 
@@ -68,8 +71,7 @@ function Map() {
     >
       <GoogleMap
         mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
+        center={currentUserLocation}
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={{
@@ -81,6 +83,7 @@ function Map() {
             position: google.maps.ControlPosition.LEFT_CENTER,
             style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
           },
+          mapTypeId: 'satellite'
         }}
       >
         {/* <Marker position={center}>
@@ -89,16 +92,11 @@ function Map() {
         <></>
       </GoogleMap>
       <div className="absolute z-20">
-        <Image
-          src="/crosshair.png"
-          alt="crosshair"
-          width={40}
-          height={40}
-        />
+        <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
       </div>
     </div>
   ) : (
-    <></>
+    <LoadingSpinner />
   );
 }
 

@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import Image from 'next/image.js';
 import { AiOutlineSearch } from 'react-icons/ai';
+import Search from './Search';
 
 export const SearchBar = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
@@ -24,7 +26,13 @@ export const SearchBar = () => {
             w-16
             h-16"
       >
-        <AiOutlineSearch className="text-white w-8 h-8" />
+        <Image
+          src={'/search-icon.png'}
+          alt="Search icon"
+          height={32}
+          width={32}
+          priority={true}
+        />
       </button>
       {showSearchInput && (
         <div
@@ -40,23 +48,7 @@ export const SearchBar = () => {
                 h-16
                 w-screen"
         >
-          <input
-            type="text"
-            name="search"
-            className="block
-                            w-full
-                            shadow
-                            italic
-                            backdrop-blur-sm
-                            text
-                            rounded-md
-                            pl-2
-                            border-gray-300
-                            focus:border-indigo-500
-                            focus:ring-indigo-500
-                            text-sm"
-            placeholder="Search..."
-          ></input>
+          <Search />
         </div>
       )}
     </div>
