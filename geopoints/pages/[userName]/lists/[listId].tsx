@@ -3,18 +3,34 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { List } from '../../../types/types.js';
 import Image from 'next/image';
 import PictureTitleAndDesc from '../../../components/PictureTitleAndDesc';
+import PointUnderList from '../../../components/PointUnderList';
 
 const prisma = new PrismaClient();
 
 function List({ listData }: { listData: List }) {
   return (
-    listData && (
-      <PictureTitleAndDesc
-        imagePath={listData.imagePath}
-        description={listData.description}
-        title={listData.title}
-      />
-    )
+      <div className="flex flex-col mt-10">
+        <PictureTitleAndDesc
+          imagePath={listData.imagePath}
+          description={listData.description}
+          title={listData.title}
+        />
+        <PointUnderList
+          imagePath={listData.points[0].imagePaths[0]}
+          title={listData.points[0].title}
+          description={listData.points[0].description}
+        />
+        <PointUnderList
+          imagePath={listData.points[0].imagePaths[0]}
+          title={listData.points[0].title}
+          description={listData.points[0].description}
+        />
+        <PointUnderList
+          imagePath={listData.points[0].imagePaths[0]}
+          title={listData.points[0].title}
+          description={listData.points[0].description}
+        />
+      </div>
   );
 }
 
@@ -25,11 +41,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       points: true,
       tags: true,
-      likedBy: true,
+      liked_by: true,
     },
   });
 
-  listData = JSON.parse(JSON.stringify(listData));
+  function toObject(x: any) {
+    return JSON.parse(JSON.stringify(x, (key, value) =>
+        typeof value === 'bigint'
+            ? value.toString()
+            : value // return everything else unchanged
+    ));
+  }
+
+  listData = toObject(listData)
+
+  // listData = JSON.parse(JSON.stringify(listData));
   // getServerSideProps errors when passing Date objects. In this case,
   // the createdAt property of listData.
   // this is a way of overcoming it.
