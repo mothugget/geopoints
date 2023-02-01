@@ -1,4 +1,5 @@
 interface Tag {
+  id: number;
   name: string;
   timesSearched?: number;
 }
@@ -9,12 +10,13 @@ interface Coordinates {
 }
 
 interface Point {
+  id: number;
   coordinates: Coordinates;
   title: string;
   description: string;
   date: number;
   tags: Tag[];
-  imgPaths: string[];
+  imagePaths: string[];
   author: User;
   public: boolean;
   share_id?: string;

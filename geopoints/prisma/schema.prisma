@@ -38,7 +38,7 @@ model List {
   spotifyPath String?  @map(name: "spotify_path")
   tags        Tag[]
   points      Point[]
-  liked_by    User[]   @relation("LikedLists")
+  likedBy    User[]   @relation("LikedLists")
 }
 
 model Point {

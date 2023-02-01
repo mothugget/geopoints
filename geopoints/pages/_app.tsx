@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Footer from '../components/Footer';
 import { UserDataContextProvider } from '../contexts/UserDataContext';
 import { MapContextProvider } from '../contexts/MapContext';
+import Header from '../components/Header';
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <UserDataContextProvider>
           <MapContextProvider>
+            <Header />
             <Component {...pageProps} />
             <Footer />
           </MapContextProvider>
