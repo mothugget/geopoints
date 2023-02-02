@@ -2,15 +2,21 @@ import { useContext, useState } from 'react';
 import { Switch } from '@headlessui/react';
 import Link from 'next/link';
 import { UserDataContext } from '../../contexts/UserDataContext';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
+import { List } from '../../types/types';
+
 
 interface ListToggleProps {
-  listTitle: string;
-  listId: number | undefined;
+  list: List
 }
 
-const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
+const ListToggle = ({list}:ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
   const { userData } = useContext(UserDataContext);
+  const { displayedPoints, setDisplayedPoints } = useContext(DisplayedPointsContext)
+
+console.log(enabled)
+console.log(list)
 
   return (
     <div className="mt-5 flex justify-between">
@@ -29,9 +35,9 @@ const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
       </Switch>
 
       {userData && (
-        <Link href={`/${userData.userName}/lists/${listId}`}>
+        <Link href={`/${userData.userName}/lists/${list.id}`}>
           <p className="w-32 text-sm text-gray-700 underline hover:text-blue-900">
-            {listTitle}
+            {list.title}
           </p>
         </Link>
       )}
