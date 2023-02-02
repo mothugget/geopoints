@@ -60,19 +60,23 @@ export default function CreatePointForm() {
     }
   };
 
-  const titleInputHandler = (e: any) => {
+  const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, title: e.target.value });
   };
-  const descriptionInputHandler = (e: any) => {
+  const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, description: e.target.value });
   };
-  const tagsInputHandler = (e: any) => {
-    setPointInput({ ...pointInput, tags: e.target.value });
+  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const userEnteredTags = e.target.value;
+    const tagsRegex = /^#\w+/g;
+    const parsedTags = userEnteredTags.split(tagsRegex);
+    console.log(parsedTags);
+    setPointInput({ ...pointInput, tags: parsedTags });
   };
-  const publicInputHandler = (e: any) => {
+  const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, public: e.target.value });
   };
-  const listInputHandler = (e: any) => {
+  const listInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(JSON.parse(e.target.value));
     setPointInput({ ...pointInput, list: e.target.value });
   };
