@@ -11,11 +11,11 @@ const PictureTitleAndDesc = ({
   title,
   description,
 }: PictureTitleAndDescProps) => {
-  console.log({imagePath})
+  console.log({ imagePath });
   return (
     <section className="h-96 text-gray-800 mb-10">
       <Image
-        src={imagePath ?? '/favicon.ico'}
+        src={imagePath || '/favicon.ico'}
         width={320}
         height={320}
         alt={`Picture list: ${title}`}

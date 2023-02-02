@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import UploadWidget from '../UploadWidget';
-import { User } from '../../types/types';
 import { UserDataContext } from '../../contexts/UserDataContext';
 import { MapContext } from '../../contexts/MapContext';
-import { Point } from '../../types/types';
+import createPoint from '../../util/createPoint';
+import { faker } from '@faker-js/faker';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
@@ -18,28 +18,17 @@ export default function CreatePointForm() {
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
     const pointData = {
-      title: pointInput?.title,
-      description: pointInput?.description,
-      isPublic: pointInput?.public === 'on' ? true : false,
+      title: pointInput.title,
+      description: pointInput.description,
+      isPublic: pointInput.public === 'on' ? true : false,
       lng: map?.getCenter()?.lat(),
       lat: map?.getCenter()?.lng(),
-      // imagePath: imgPath ? [imgPath] : [],
-      // listId: pointInput?.list?.id,
-      // likedBy: User[];
+      imagePath: faker.image.animals(),
+      listId: pointInput.list || userData?.ownLists?.at(0)?.id,
     };
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/points/create`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pointData, listId: pointInput?.list }),
-        }
-      );
-      console.log({ pointData, listId: pointInput?.list });
-      if (!res.ok) throw new Error('Error creating a new point');
-      const newUser = await res.json();
-      return newUser;
+      const newPoint = await createPoint(pointData, pointInput.list);
+      return newPoint;
     } catch (err) {
       console.log(err);
     }

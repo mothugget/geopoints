@@ -24,7 +24,7 @@ const PointUnderList = ({
               <Image
                 width={120}
                 height={10}
-                src={imagePath}
+                src={imagePath || '/favicon.ico'}
                 alt={title}
                 className="flex-none overflow-hidden h-24 rounded-md"
               />
