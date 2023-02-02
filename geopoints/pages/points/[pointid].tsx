@@ -5,7 +5,6 @@ import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
 
 const prisma = new PrismaClient();
 
-// function Point({ pointData }: { pointData: Point }) {
 function PointPage({ pointData }: { pointData: Point }) {
   return (
     <div className="flex flex-col mt-10">
