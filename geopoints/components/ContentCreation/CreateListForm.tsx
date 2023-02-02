@@ -14,6 +14,7 @@ import { User } from "../../types/types";
 import UploadWidget from "../UploadWidget";
 import { List } from "../../types/types";
 import { UserDataContext } from "../../contexts/UserDataContext";
+import createListHandler from "../../pages/api/lists/create";
 
 const labelClass = "w-full text-base font-bold text-gray-800";
 const inputClass = "border-black border-2 rounded-md min-w-50 w-fit text-black";
@@ -43,19 +44,25 @@ function CreateListForm() {
   const [listInput, setListInput] = useState<any>(null);
   const { userData } = useContext(UserDataContext);
   const [imgPath, setImgPath] = useState<string>("");
-  console.log({ userData });
+  // console.log({ userData });
 
-  const listFormSubmitHandler = (e: any) => {
+  const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    const inputData = {
+    const listData = {
       title: listInput.title,
-      isPublic: listInput?.public === "on" ? true : false,
       description: listInput.description,
+      isPublic: listInput?.public === "on" ? true : false,
       tags: listInput.tags,
       // author: userData?.name,
       // imagePath: imgPath ? [imgPath] : [],
       // points: userData?.likedPoints,
     };
+    try {
+      const newList = await createListHandler(listData, userData?.id);
+      return newList;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +73,15 @@ function CreateListForm() {
   };
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userEnteredTags = e.target.value;
-    const tagsRegex = /^#\w+/g;
+    const tagsRegex = /#\w+/g;
     const parsedTags = userEnteredTags.split(tagsRegex);
-    setListInput({ ...listInput, tags: parsedTags });
+    const filteringRegex = /[^#a-zA-Z_-]/;
+    const filteredTags = parsedTags.filter(
+      (hashtag) => !filteringRegex.test(hashtag)
+    );
+    const tagsArray = filteredTags.map((tag, index) => {id: index});
+    console.log(filteredTags);
+    setListInput({ ...listInput, tags: e.target.value });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, public: e.target.value });
@@ -76,7 +89,7 @@ function CreateListForm() {
 
   return (
     <form
-      action=""
+      onSubmit={listFormSubmitHandler}
       className="mt-10
     flex
     flex-col
@@ -121,7 +134,7 @@ function CreateListForm() {
         <input id="Public" type="checkbox" onChange={publicInputHandler} />
       </span>
 
-      <UploadWidget setImgUploaded={setImgUploaded} />
+      <UploadWidget setImgUploaded={setImgUploaded} setImgPath={setImgPath} />
 
       <button
         type="submit"

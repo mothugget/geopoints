@@ -9,11 +9,13 @@ const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
 export default function CreatePointForm() {
+  const { userData } = useContext(UserDataContext);
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>('');
-  const [pointInput, setPointInput] = useState<any>({});
-  const { userData } = useContext(UserDataContext);
+  const [pointInput, setPointInput] = useState<any>();
   const { map } = useContext(MapContext);
+
+  console.log(userData?.ownLists[0].id)
 
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ export default function CreatePointForm() {
       listId: pointInput.list || userData?.ownLists?.at(0)?.id,
     };
     try {
-      const newPoint = await createPoint(pointData, pointInput.list);
+      const newPoint = await createPoint(pointData, pointData.listId);
       return newPoint;
     } catch (err) {
       console.log(err);
@@ -39,13 +41,6 @@ export default function CreatePointForm() {
   };
   const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, description: e.target.value });
-  };
-  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const userEnteredTags = e.target.value;
-    // const tagsRegex = /^#\w+/g;
-    // const parsedTags = userEnteredTags.split(tagsRegex);
-    // console.log(parsedTags);
-    setPointInput({ ...pointInput, tags: e.target.value });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, public: e.target.value });
@@ -97,7 +92,8 @@ export default function CreatePointForm() {
         id="List"
         name="List"
         className={inputClass}
-        selected={userData?.ownLists[0].id}
+        selected={`${userData?.ownLists[0].id}`}
+        
         onChange={listInputHandler}
       >
         {/* ACCESSING LIST INFO ??*/}
