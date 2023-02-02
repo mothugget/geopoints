@@ -1,31 +1,16 @@
-import React, { useState, useContext } from "react";
-import UploadWidget from "../UploadWidget";
-import { User } from "../../types/types";
-import { UserDataContext } from "../../contexts/UserDataContext";
-import { MapContext } from "../../contexts/MapContext";
-import { Point } from "../../types/types";
+import React, { useState, useContext } from 'react';
+import UploadWidget from '../UploadWidget';
+import { User } from '../../types/types';
+import { UserDataContext } from '../../contexts/UserDataContext';
+import { MapContext } from '../../contexts/MapContext';
+import { Point } from '../../types/types';
 
-// interface Point {
-//   id?: number;
-//   title: string;
-//   description?: string;
-//   public: boolean;
-//   lng: number;
-//   lat: number;
-//   imagePaths?: string[];
-//   spotifyPath?: string;
-//   tags?: Tag[];
-//   list: List;
-//   listId: number;
-//   likedBy: User[];
-// }
-
-const labelClass = "w-full text-base font-bold text-gray-800";
-const inputClass = "border-black border-2 rounded-md min-w-50 w-fit text-black";
+const labelClass = 'w-full text-base font-bold text-gray-800';
+const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
 export default function CreatePointForm() {
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
-  const [imgPath, setImgPath] = useState<string>("");
+  const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
   const { userData } = useContext(UserDataContext);
   const { map } = useContext(MapContext);
@@ -38,7 +23,7 @@ export default function CreatePointForm() {
       isPublic: pointInput?.public === 'on' ? true : false,
       lng: map?.getCenter()?.lat(),
       lat: map?.getCenter()?.lng(),
-      // imagePaths: imgPath ? [imgPath] : [],
+      // imagePath: imgPath ? [imgPath] : [],
       // listId: pointInput?.list?.id,
       // likedBy: User[];
     };
@@ -46,17 +31,17 @@ export default function CreatePointForm() {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/points/create`,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pointData, listId: pointInput?.list }),
         }
       );
-      console.log({ pointData, listId: pointInput?.list});
-      if (!res.ok) throw new Error("Error creating a new point");
+      console.log({ pointData, listId: pointInput?.list });
+      if (!res.ok) throw new Error('Error creating a new point');
       const newUser = await res.json();
       return newUser;
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
   };
 
@@ -123,7 +108,9 @@ export default function CreatePointForm() {
       >
         {/* ACCESSING LIST INFO ??*/}
         {userData?.ownLists.map((list) => (
-          <option key={list.id} value={list.id}>{list.title}</option>
+          <option key={list.id} value={list.id}>
+            {list.title}
+          </option>
         ))}
       </select>
       <label htmlFor="Tags" className={labelClass}>

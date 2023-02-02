@@ -45,7 +45,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                     title: faker.company.bsNoun(),
                     lng: Number(faker.address.longitude()),
                     lat: Number(faker.address.latitude()),
-                    imagePaths: faker.image.nature(),
+                    imagePath: faker.image.nature(),
                   },
                 },
               },
@@ -64,7 +64,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                     title: faker.company.bsNoun(),
                     lng: Number(faker.address.longitude()),
                     lat: Number(faker.address.latitude()),
-                    imagePaths: faker.image.nature(),
+                    imagePath: faker.image.nature(),
                   },
                 },
               },
@@ -85,12 +85,13 @@ const NUMBER_OF_FAKE_USERS = 7;
           create: [
             {
               title: 'My Points',
+              imagePath: faker.image.nature(),
               points: {
                 create: {
                   title: faker.company.bsNoun(),
                   lng: Number(faker.address.longitude()),
                   lat: Number(faker.address.latitude()),
-                  imagePaths: faker.image.nature(),
+                  imagePath: faker.image.nature(),
                 },
               },
             },
@@ -98,7 +99,7 @@ const NUMBER_OF_FAKE_USERS = 7;
               isPublic: true,
               title: faker.company.catchPhrase(),
               description: faker.lorem.sentence(),
-              imagePath: faker.image.nature(),
+              imagePath: faker.image.fashion(),
               tags: {
                 create: {
                   name: faker.random.word(),
@@ -109,7 +110,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                   title: faker.company.bsNoun(),
                   lng: Number(faker.address.longitude()),
                   lat: Number(faker.address.latitude()),
-                  imagePaths: faker.image.nature(),
+                  imagePath: faker.image.business(),
                 },
               },
             },

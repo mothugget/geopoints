@@ -48,7 +48,7 @@ model Point {
   isPublic      Boolean  @default(false) @map(name: "is_public")
   lng         Float
   lat         Float
-  imagePaths  String[] @map(name: "image_paths")
+  imagePath  String @map(name: "image_path")
   spotifyPath String?  @map(name: "spotify_path")
   tags        Tag[]
   list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)

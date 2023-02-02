@@ -14,7 +14,7 @@ const Header = () => {
       <Link href={`/${userData?.userName}/profile`}>
         {userData?.imagePath ? (
           <Image
-            src={userData?.imagePath || '/fake-user-profile-pic.png'}
+            src={userData?.imagePath || '/favicon.ico'}
             alt="Profile picture"
             width={40}
             height={40}

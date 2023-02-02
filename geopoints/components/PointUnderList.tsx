@@ -3,7 +3,7 @@ import Image from 'next/image.js';
 import { Tag } from '../types/types';
 
 interface PointUnderListProps {
-  imagePath?: string[] | string;
+  imagePath?: string;
   title: string;
   description?: string;
   tags: Tag[];
@@ -15,24 +15,20 @@ const PointUnderList = ({
   description,
   tags,
 }: PointUnderListProps) => {
-  console.log({ imagePath });
-  // if (Array.isArray(imagePath)) {
-  //   imagePath = imagePath[0];
-  //   console.log('im here');
-  // }
-  // needs work
   return (
     <section>
       <div className="p-3">
         <div className=" w-full lg:max-w-full lg:flex">
           <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-row justify-between items-center leading-normal">
-            <Image
-              width={120}
-              height={10}
-              src={imagePath ?? '/favicon.ico'}
-              alt={title}
-              className="flex-none overflow-hidden h-24 rounded-md"
-            />
+            {imagePath && (
+              <Image
+                width={120}
+                height={10}
+                src={imagePath}
+                alt={title}
+                className="flex-none overflow-hidden h-24 rounded-md"
+              />
+            )}
             <div className="ml-9">
               <h2 className="text-gray-900 font-bold text-xl mb-2">{title}</h2>
               {description ? (

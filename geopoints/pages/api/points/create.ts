@@ -18,6 +18,8 @@ const createPointHandler = async (
     if (error instanceof Error) {
       console.error({ error });
       res.status(400).send({ error: error.message });
+    } else {
+      res.status(400).send({ errorMessage: 'Something went wrong' });
     }
   }
 };
@@ -41,9 +43,9 @@ const checkIfPointDataIsValid = (pointData: Point) => {
 
 const createPoint = async (pointData: Point, listId: number) => {
   try {
-    const { title, isPublic, lng, lat, description, imagePaths } = pointData;
+    const { title, isPublic, lng, lat, description, imagePath } = pointData;
     return await prisma.point.create({
-      data: { title, isPublic, lng, lat, listId, description, imagePaths },
+      data: { title, isPublic, lng, lat, listId, description, imagePath },
     });
   } catch (error) {
     console.error({ error });

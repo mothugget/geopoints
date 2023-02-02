@@ -17,6 +17,8 @@ const createListHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (error instanceof Error) {
       console.error({ error });
       res.status(400).send({ errorMessage: error.message });
+    } else {
+      res.status(400).send({ errorMessage: 'Something went wrong' });
     }
   }
 };

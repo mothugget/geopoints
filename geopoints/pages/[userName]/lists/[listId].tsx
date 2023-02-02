@@ -39,15 +39,15 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   return (
     <div className="flex flex-col mt-20">
       <PictureTitleAndDesc
-        imagePaths={listData.imagePath}
-        description={listData.description}
-        title={listData.title}
+        imagePath={listData?.imagePath}
+        description={listData?.description}
+        title={listData?.title}
       />
-      {listData.points.map((point) => {
+      {listData?.points.map((point) => {
         return (
           <PointUnderList
             key={point.id}
-            imagePath={point.imagePaths}
+            imagePath={point.imagePath}
             title={point.title}
             description={point.description}
             tags={listData.tags}

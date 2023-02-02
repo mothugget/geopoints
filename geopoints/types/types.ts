@@ -17,7 +17,7 @@ interface Point {
   isPublic: boolean;
   lng: number;
   lat: number;
-  imagePaths?: string[];
+  imagePath: string;
   spotifyPath?: string;
   tags?: Tag[];
   list: List;
