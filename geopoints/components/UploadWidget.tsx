@@ -2,19 +2,22 @@
 import { CldUploadWidget } from "next-cloudinary";
 
 interface UploadWidgetProps {
-  setImgUploaded: React.Dispatch<React.SetStateAction<boolean>>
+  setImgPath: React.Dispatch<React.SetStateAction<string>>;
+  setImgUploaded: React.Dispatch<React.SetStateAction<boolean>>;
+  multiple: boolean;
 }
 
-export default function UploadWidget({setImgUploaded}: UploadWidgetProps) {
+export default function UploadWidget({setImgPath, setImgUploaded, multiple}: UploadWidgetProps) {
   function onUpload(error: any, result: any, widget: any) {
     console.log(result);
     if (result.event === 'success') {
       setImgUploaded(true);
+      setImgPath(result.info.url)
     }
   }
   return (
     <div>
-      <CldUploadWidget uploadPreset="geopoints" onUpload={onUpload}>
+      <CldUploadWidget uploadPreset="geopoints" onUpload={onUpload} option={ {multiple}}>
         {({ open }) => {
           function handleOnClick(e) {
             e.preventDefault();

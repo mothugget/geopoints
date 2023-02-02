@@ -2,8 +2,8 @@ import { useState, useContext } from 'react';
 import Link from 'next/link'
 
 
-import CreatePostModal from './CreatePostModal';
-import { MapContext } from '../../contexts/MapContext';
+import CreatePostModal from './CreatePointModal';
+
 import CreateListModal from './CreateListModal';
 
 
@@ -15,10 +15,10 @@ export default function AddContentModal({ showAddContentModal }: AddContentModal
   const [showCreatePost, setShowCreatePost] = useState<boolean>(false)
   const [showCreateList, setShowCreateList] = useState<boolean>(false)
 
-  const { map } = useContext(MapContext);
-  const lat = map?.getCenter()?.lat();
-  const lng = map?.getCenter()?.lng();
-  console.log(`lat: ${lat} lng: ${lng}`);
+  
+  
+  
+  
 
 
 

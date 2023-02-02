@@ -1,5 +1,14 @@
 //since imageUrl is required by the List schema, it's better to put the widget here and make it a required input
 
+//   <!-- Basic HTML Form -->
+// <form action="/send-data-here" method="post">
+//   <label for="first">First name:</label>
+//   <input type="text" id="first" name="first" />
+//   <label for="last">Last name:</label>
+//   <input type="text" id="last" name="last" />
+//   <button type="submit">Submit</button>
+// </form>
+
 import React, { useState, useContext } from "react";
 import { User } from "../../types/types";
 import UploadWidget from "../UploadWidget";
@@ -36,17 +45,20 @@ function CreateListForm() {
   const [listInput, setListInput] = useState<any>(null)
   const { userData } = useContext(UserDataContext);
   console.log({userData})
-
   
+  // const listFormSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   const inputData = {
+  //       title: listInput.title,
+  //       author: userData?.name,
+  //       imagePath: ,
+  //       description: listInput.description,
+  //       tags: listInput.tags,
+  //       public: listInput.public,
+  //       points: ,
+  //   };
+  // }
 
-//   <!-- Basic HTML Form -->
-// <form action="/send-data-here" method="post">
-//   <label for="first">First name:</label>
-//   <input type="text" id="first" name="first" />
-//   <label for="last">Last name:</label>
-//   <input type="text" id="last" name="last" />
-//   <button type="submit">Submit</button>
-// </form>
 
   const titleInputHandler= (e: any) => {
     setListInput({...listInput, title: e.target.value})
