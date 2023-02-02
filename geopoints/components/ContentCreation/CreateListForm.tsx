@@ -15,13 +15,12 @@ import UploadWidget from "../UploadWidget";
 import { List } from "../../types/types";
 import { UserDataContext } from "../../contexts/UserDataContext";
 
-
 const labelClass = "w-full text-base font-bold text-gray-800";
 const inputClass = "border-black border-2 rounded-md min-w-50 w-fit text-black";
 
 interface CreateListFormProps {
-  listInput: User | {},
-  setListInput: React.Dispatch<React.SetStateAction<{}>>
+  listInput: User | {};
+  setListInput: React.Dispatch<React.SetStateAction<{}>>;
 }
 
 //id, author, imagePath: from User Auth
@@ -40,38 +39,40 @@ interface CreateListFormProps {
 // }
 
 function CreateListForm() {
-  
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
-  const [listInput, setListInput] = useState<any>(null)
+  const [listInput, setListInput] = useState<any>(null);
   const { userData } = useContext(UserDataContext);
-  console.log({userData})
-  
-  // const listFormSubmitHandler = (e) => {
-  //   e.preventDefault();
-  //   const inputData = {
-  //       title: listInput.title,
-  //       author: userData?.name,
-  //       imagePath: ,
-  //       description: listInput.description,
-  //       tags: listInput.tags,
-  //       public: listInput.public,
-  //       points: ,
-  //   };
-  // }
+  const [imgPath, setImgPath] = useState<string>("");
+  console.log({ userData });
 
+  const listFormSubmitHandler = (e: any) => {
+    e.preventDefault();
+    const inputData = {
+      title: listInput.title,
+      isPublic: listInput?.public === "on" ? true : false,
+      description: listInput.description,
+      tags: listInput.tags,
+      // author: userData?.name,
+      // imagePath: imgPath ? [imgPath] : [],
+      // points: userData?.likedPoints,
+    };
+  };
 
-  const titleInputHandler= (e: any) => {
-    setListInput({...listInput, title: e.target.value})
-  }  
-  const descriptionInputHandler= (e: any) => {
-    setListInput({...listInput, description: e.target.value})
-  }  
-  const tagsInputHandler= (e: any) => {
-    setListInput({...listInput, tags: e.target.value})
-  }  
-  const publicInputHandler= (e: any) => {
-    setListInput({...listInput, public: e.target.value})
-  }
+  const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setListInput({ ...listInput, title: e.target.value });
+  };
+  const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setListInput({ ...listInput, description: e.target.value });
+  };
+  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const userEnteredTags = e.target.value;
+    const tagsRegex = /^#\w+/g;
+    const parsedTags = userEnteredTags.split(tagsRegex);
+    setListInput({ ...listInput, tags: parsedTags });
+  };
+  const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setListInput({ ...listInput, public: e.target.value });
+  };
 
   return (
     <form
