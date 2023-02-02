@@ -10,7 +10,7 @@ interface Coordinates {
 }
 
 interface Point {
-  id: number;
+  id?: number;
   title: string;
   description?: string;
   public: boolean;
@@ -25,7 +25,7 @@ interface Point {
 }
 
 interface List {
-  id: number;
+  id?: number;
   title: string;
   author: User;
   imagePath: string;

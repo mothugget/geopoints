@@ -11,7 +11,7 @@ const createPoint = async (req: NextApiRequest, res: NextApiResponse) => {
     const { pointData, listName } = req.body;
     checkIfPointDataIsValid(pointData);
     if (!listName) throw new Error('You have to send pointData and listName');
-
+    // const tagNames = take tags form pintData anb cehck if they exist if not create one
     // unfinshed
     // check https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries
     res.status(200);
