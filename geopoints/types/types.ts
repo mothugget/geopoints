@@ -17,7 +17,7 @@ interface Point {
   isPublic: boolean;
   lng: number;
   lat: number;
-  imagePaths?: string[];
+  imagePath: string;
   spotifyPath?: string;
   tags?: Tag[];
   list: List;
@@ -53,12 +53,4 @@ interface User {
   likedLists: List[];
 }
 
-interface UpdateUserBackEndParams {
-  pointData: Point;
-  listName: string;
-  tagNames: string[];
-  userName: string;
-  listId: number;
-}
-
-export type { Tag, User, Coordinates, Point, List, UpdateUserBackEndParams };
+export type { Tag, User, Coordinates, Point, List };

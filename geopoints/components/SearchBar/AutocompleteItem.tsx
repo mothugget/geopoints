@@ -12,8 +12,8 @@ const AutocompleteItem = ({ list, author }: AutocompleteItemProps) => {
       <Link href={`${author.userName}/lists/${list.id}`}>
         {list.imagePath && (
           <Image
-            src={list.imagePath}
-            alt={list.title}
+            src={list?.imagePath || '/favicon-ico'}
+            alt={list?.title}
             width={48}
             height={48}
             className="w-12 h-12 object-contain"

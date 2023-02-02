@@ -9,7 +9,7 @@ function PointPage({ pointData }: { pointData: Point }) {
   return (
     <div className="flex flex-col mt-10">
       <PictureTitleAndDesc
-        imagePaths={pointData.imagePaths!}
+        imagePath={pointData.imagePath!}
         title={pointData.title}
         description={pointData.description!}
       />
