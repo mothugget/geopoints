@@ -15,6 +15,12 @@ const PointUnderList = ({
   description,
   tags,
 }: PointUnderListProps) => {
+  console.log({ imagePath });
+  // if (Array.isArray(imagePath)) {
+  //   imagePath = imagePath[0];
+  //   console.log('im here');
+  // }
+  // needs work
   return (
     <section>
       <div className="p-3">
@@ -23,7 +29,7 @@ const PointUnderList = ({
             <Image
               width={120}
               height={10}
-              src={imagePath?.at(0) ?? ''}
+              src={imagePath ?? '/favicon.ico'}
               alt={title}
               className="flex-none overflow-hidden h-24 rounded-md"
             />
