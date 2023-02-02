@@ -3,12 +3,12 @@ import { Point } from '../types/types';
 import React from 'react';
 
 interface DisplayedPointsContext {
-  displayedPoints: Point[] | null;
-  setDisplayedPoints: Dispatch <Point[] | null> | null;
+  displayedPoints: Point[];
+  setDisplayedPoints: Dispatch <Point[] | null> | null ;
 }
 
 const DisplayedPointsContext = createContext<DisplayedPointsContext>({
-  displayedPoints: null,
+  displayedPoints: [],
   setDisplayedPoints: null,
 });
 

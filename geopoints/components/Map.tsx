@@ -24,6 +24,8 @@ function Map() {
   const { map, setMap } = useContext(MapContext);
   const { displayedPoints } = useContext(DisplayedPointsContext)
 
+  console.log(displayedPoints)
+
   getUserPosition();
 
   const { isLoaded } = useJsApiLoader({
