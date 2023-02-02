@@ -41,11 +41,11 @@ export default function CreatePointForm() {
     setPointInput({ ...pointInput, description: e.target.value });
   };
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value;
-    const tagsRegex = /^#\w+/g;
-    const parsedTags = userEnteredTags.split(tagsRegex);
-    console.log(parsedTags);
-    setPointInput({ ...pointInput, tags: parsedTags });
+    // const userEnteredTags = e.target.value;
+    // const tagsRegex = /^#\w+/g;
+    // const parsedTags = userEnteredTags.split(tagsRegex);
+    // console.log(parsedTags);
+    setPointInput({ ...pointInput, tags: e.target.value });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, public: e.target.value });
@@ -97,6 +97,7 @@ export default function CreatePointForm() {
         id="List"
         name="List"
         className={inputClass}
+        selected={userData?.ownLists[0].id}
         onChange={listInputHandler}
       >
         {/* ACCESSING LIST INFO ??*/}
