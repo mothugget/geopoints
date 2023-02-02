@@ -1,6 +1,5 @@
 import React from 'react'
 import CreatePostForm from './CreatePostForm';
-import UploadWidget from '../UploadWidget' 
 
 interface CreatePostModalProps {
   showCreatePost: boolean;
@@ -27,7 +26,6 @@ export default function CreatePostModal({ showCreatePost }: CreatePostModalProps
       `}>
       <h2 className="w-full text-2xl font-bold text-gray-800">Create Post</h2>
       <CreatePostForm />
-      <UploadWidget />
     </div>
   )
 }

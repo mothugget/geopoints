@@ -102,13 +102,13 @@ function CreateListForm() {
       />
 
       <label htmlFor="Public" className={labelClass}>
-        Visible to the public?
+        Make post public?
       </label>
       <span>
         <input id="Public" type="checkbox" onChange={publicInputHandler} />
       </span>
 
-      <UploadWidget imgUploaded={imgUploaded} setImgUploaded={setImgUploaded} />
+      <UploadWidget setImgUploaded={setImgUploaded} />
 
       <button
         type="submit"

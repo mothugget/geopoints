@@ -11,6 +11,7 @@ const PictureTitleAndDesc = ({
   title,
   description,
 }: PictureTitleAndDescProps) => {
+  console.log({imagePaths})
   return (
     <section className="h-96 text-gray-800 mb-10">
       <Image
