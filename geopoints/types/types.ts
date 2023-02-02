@@ -1,5 +1,5 @@
 interface Tag {
-  id: number;
+  id?: number;
   name: string;
   timesSearched?: number;
 }
@@ -38,7 +38,7 @@ interface List {
 }
 
 interface User {
-  id: number;
+  id?: number;
   email: string;
   userName: string;
   name?: string;
