@@ -1,10 +1,14 @@
 import Image from 'next/image.js';
 import React, { useContext } from 'react';
 import { useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { Coordinates } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
+import PointMarker from './mapMarkers/PointMarker';
+
+
+const testCoords: Coordinates[] = [{lat: 51.59298641280394, lng: 0.19911695761843295}, {lat: 51.59093347811105, lng: 0.2012627247702207}]
 
 const containerStyle = {
   width: '100%',
@@ -77,6 +81,7 @@ function Map() {
         options={{
           streetViewControl: false,
           fullscreenControl: false,
+          rotateControl: false,
           zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER,
           },
@@ -87,10 +92,19 @@ function Map() {
           mapTypeId: 'satellite'
         }}
       >
-        {/* <Marker position={center}>
+        <>
+        {testCoords.map((coords, i) => {
+          return <Marker key={i} position={coords}/>
+        })}
+        {/* <Marker icon={{
 
-                </Marker> */}
-        <></>
+url: 'https://www.svgrepo.com/show/72296/stop.svg',
+scaledSize: new google.maps.Size(24, 24)
+
+
+
+}} position={{lat: 51.59298641280394, lng: 0.19911695761843295}}/> */}
+        </>
       </GoogleMap>
       <div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
