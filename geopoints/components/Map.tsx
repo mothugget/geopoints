@@ -81,6 +81,7 @@ function Map() {
         options={{
           streetViewControl: false,
           fullscreenControl: false,
+          rotateControl: false,
           zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER,
           },
@@ -95,6 +96,14 @@ function Map() {
         {testCoords.map((coords, i) => {
           return <Marker key={i} position={coords}/>
         })}
+        {/* <Marker icon={{
+
+url: 'https://www.svgrepo.com/show/72296/stop.svg',
+scaledSize: new google.maps.Size(24, 24)
+
+
+
+}} position={{lat: 51.59298641280394, lng: 0.19911695761843295}}/> */}
         </>
       </GoogleMap>
       <div className="absolute z-20">
