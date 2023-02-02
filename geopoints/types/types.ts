@@ -11,17 +11,18 @@ interface Coordinates {
 
 interface Point {
   id?: number;
+  authorId?: number;
   title: string;
   description?: string;
-  public: boolean;
+  isPublic: boolean;
   lng: number;
   lat: number;
   imagePaths?: string[];
   spotifyPath?: string;
   tags?: Tag[];
   list: List;
-  listId: number;
-  likedBy: User[];
+  listId?: number;
+  likedBy?: User[];
 }
 
 interface List {
@@ -32,7 +33,7 @@ interface List {
   description: string;
   createdAt: number;
   tags: Tag[];
-  public: boolean;
+  isPublic: boolean;
   spotifyPath?: string;
   points: Point[];
 }
@@ -52,4 +53,12 @@ interface User {
   likedLists: List[];
 }
 
-export type { Tag, User, Coordinates, Point, List };
+interface UpdateUserBackEndParams {
+  pointData: Point;
+  listName: string;
+  tagNames: string[];
+  userName: string;
+  listId: number;
+}
+
+export type { Tag, User, Coordinates, Point, List, UpdateUserBackEndParams };

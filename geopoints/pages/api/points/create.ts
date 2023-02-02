@@ -1,20 +1,20 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { Point } from '../../../types/types';
+import { Point, UpdateUserBackEndParams } from '../../../types/types';
 
 const prisma = new PrismaClient();
 
-const createPoint = async (req: NextApiRequest, res: NextApiResponse) => {
+const createPointHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   try {
-    // listName is the the list in wich the point is going to be saved. A point can't be created
-    // without being a memeber of a list.
-    const { pointData, listName } = req.body;
+    const { pointData, listId } = req.body;
+    console.log(pointData, listId);
     checkIfPointDataIsValid(pointData);
-    if (!listName) throw new Error('You have to send pointData and listName');
-    // const tagNames = take tags form pintData anb cehck if they exist if not create one
-    // unfinshed
-    // check https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries
-    res.status(200);
+    if (!listId) throw new Error('You have to send pointData and listId');
+    const newPoint = await createPoint(pointData, Number(listId));
+    res.status(200).json({ newPoint });
   } catch (error) {
     if (error instanceof Error) {
       console.error({ error });
@@ -31,14 +31,25 @@ const checkIfPointDataIsValid = (pointData: Point) => {
   }
   if (
     Object.hasOwn(pointData, 'title') &&
-    Object.hasOwn(pointData, 'public') &&
+    Object.hasOwn(pointData, 'isPublic') &&
     Object.hasOwn(pointData, 'lng') &&
-    Object.hasOwn(pointData, 'lat') &&
-    Object.hasOwn(pointData, 'listId')
+    Object.hasOwn(pointData, 'lat')
   ) {
     return true;
   }
   throw new Error('Error: you must send a valid point object');
 };
 
-export default createPoint;
+const createPoint = async (pointData: Point, listId: number) => {
+  try {
+    const { title, isPublic, lng, lat, description } = pointData;
+    return await prisma.point.create({
+      data: { title, isPublic, lng, lat, listId, description },
+    });
+  } catch (error) {
+    console.error({ error });
+    throw new Error('Error creating point', { cause: error });
+  }
+};
+
+export default createPointHandler;

@@ -1,11 +1,11 @@
 import React from 'react'
-import CreatePostForm from './CreatePostForm';
+import CreatePostForm from './CreatePointForm';
 
 interface CreatePostModalProps {
   showCreatePost: boolean;
 }
 
-export default function CreatePostModal({ showCreatePost }: CreatePostModalProps) {
+export default function CreatePointModal({ showCreatePost }: CreatePostModalProps) {
   return (
     <div className={`
     ${showCreatePost ? 'translate-x-0 ' : 'translate-x-full'

@@ -34,7 +34,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                 title: 'My Points',
                 description: faker.lorem.sentence(),
                 imagePath: faker.image.nature(),
-                public: true,
+                isPublic: true,
                 tags: {
                   create: {
                     name: faker.random.word(),
@@ -53,7 +53,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                 title: faker.company.catchPhrase(),
                 description: faker.lorem.sentence(),
                 imagePath: faker.image.nature(),
-                public: true,
+                isPublic: true,
                 tags: {
                   create: {
                     name: faker.random.word(),
@@ -95,7 +95,7 @@ const NUMBER_OF_FAKE_USERS = 7;
               },
             },
             {
-              public: true,
+              isPublic: true,
               title: faker.company.catchPhrase(),
               description: faker.lorem.sentence(),
               imagePath: faker.image.nature(),
