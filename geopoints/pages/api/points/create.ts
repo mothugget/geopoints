@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { Point, UpdateUserBackEndParams } from '../../../types/types';
+import { Point } from '../../../types/types';
 
 const prisma = new PrismaClient();
 
@@ -10,7 +10,6 @@ const createPointHandler = async (
 ) => {
   try {
     const { pointData, listId } = req.body;
-    console.log(pointData, listId);
     checkIfPointDataIsValid(pointData);
     if (!listId) throw new Error('You have to send pointData and listId');
     const newPoint = await createPoint(pointData, Number(listId));
@@ -42,9 +41,9 @@ const checkIfPointDataIsValid = (pointData: Point) => {
 
 const createPoint = async (pointData: Point, listId: number) => {
   try {
-    const { title, isPublic, lng, lat, description } = pointData;
+    const { title, isPublic, lng, lat, description, imagePaths } = pointData;
     return await prisma.point.create({
-      data: { title, isPublic, lng, lat, listId, description },
+      data: { title, isPublic, lng, lat, listId, description, imagePaths },
     });
   } catch (error) {
     console.error({ error });
