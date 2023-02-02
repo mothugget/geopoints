@@ -18,11 +18,11 @@ const ListToggle = ({ list }: ListToggleProps) => {
 
   // console.log(enabled)
 
-  // useEffect(() => {
+  useEffect(() => {
     const allPoints = [displayedPoints,list.points]
    if (enabled) setDisplayedPoints!(allPoints.flat());
 
-  // }, [])
+  }, [enabled])
 
 
 
