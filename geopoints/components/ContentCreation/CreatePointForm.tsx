@@ -35,7 +35,7 @@ export default function CreatePointForm() {
     const pointData = {
       title: pointInput?.title,
       description: pointInput?.description,
-      isPublic: pointInput?.public,
+      isPublic: pointInput?.public === 'on' ? true : false,
       lng: map?.getCenter()?.lat(),
       lat: map?.getCenter()?.lng(),
       // imagePaths: imgPath ? [imgPath] : [],
@@ -44,18 +44,19 @@ export default function CreatePointForm() {
     };
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/users/create`,
+        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/points/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ pointData, listId: pointInput?.list?.id }),
+          body: JSON.stringify({ pointData, listId: pointInput?.list }),
         }
       );
+      console.log({ pointData, listId: pointInput?.list});
       if (!res.ok) throw new Error("Error creating a new point");
       const newUser = await res.json();
       return newUser;
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
@@ -72,6 +73,7 @@ export default function CreatePointForm() {
     setPointInput({ ...pointInput, public: e.target.value });
   };
   const listInputHandler = (e: any) => {
+    console.log(JSON.parse(e.target.value));
     setPointInput({ ...pointInput, list: e.target.value });
   };
 
@@ -121,7 +123,7 @@ export default function CreatePointForm() {
       >
         {/* ACCESSING LIST INFO ??*/}
         {userData?.ownLists.map((list) => (
-          <option value={list.title}>{list.title}</option>
+          <option key={list.id} value={list.id}>{list.title}</option>
         ))}
       </select>
       <label htmlFor="Tags" className={labelClass}>
