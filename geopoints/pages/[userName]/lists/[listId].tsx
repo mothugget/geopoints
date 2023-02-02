@@ -67,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     include: {
       points: true,
       tags: true,
-      liked_by: true,
+      likedBy: true,
     },
   });
 

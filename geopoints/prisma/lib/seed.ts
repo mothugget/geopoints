@@ -29,11 +29,76 @@ const NUMBER_OF_FAKE_USERS = 7;
           bio: faker.lorem.sentence(),
           imagePath: faker.image.avatar(),
           ownLists: {
-            create: {
+            create: [
+              {
+                title: 'My Points',
+                description: faker.lorem.sentence(),
+                imagePath: faker.image.nature(),
+                public: true,
+                tags: {
+                  create: {
+                    name: faker.random.word(),
+                  },
+                },
+                points: {
+                  create: {
+                    title: faker.company.bsNoun(),
+                    lng: Number(faker.address.longitude()),
+                    lat: Number(faker.address.latitude()),
+                    imagePaths: faker.image.nature(),
+                  },
+                },
+              },
+              {
+                title: faker.company.catchPhrase(),
+                description: faker.lorem.sentence(),
+                imagePath: faker.image.nature(),
+                public: true,
+                tags: {
+                  create: {
+                    name: faker.random.word(),
+                  },
+                },
+                points: {
+                  create: {
+                    title: faker.company.bsNoun(),
+                    lng: Number(faker.address.longitude()),
+                    lat: Number(faker.address.latitude()),
+                    imagePaths: faker.image.nature(),
+                  },
+                },
+              },
+            ],
+          },
+        },
+      });
+    }
+    //create user with your email. Set .env to your email.
+    await prisma.user.create({
+      data: {
+        email: process.env.MY_EMAIL!,
+        userName: faker.internet.userName(),
+        name: faker.name.fullName(),
+        bio: faker.lorem.sentence(),
+        imagePath: faker.image.avatar(),
+        ownLists: {
+          create: [
+            {
+              title: 'My Points',
+              points: {
+                create: {
+                  title: faker.company.bsNoun(),
+                  lng: Number(faker.address.longitude()),
+                  lat: Number(faker.address.latitude()),
+                  imagePaths: faker.image.nature(),
+                },
+              },
+            },
+            {
+              public: true,
               title: faker.company.catchPhrase(),
               description: faker.lorem.sentence(),
               imagePath: faker.image.nature(),
-              public: true,
               tags: {
                 create: {
                   name: faker.random.word(),
@@ -48,38 +113,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                 },
               },
             },
-          },
-        },
-      });
-    }
-    //create user with your email. Set .env to your email.
-    await prisma.user.create({
-      data: {
-        email: process.env.MY_EMAIL!,
-        userName: faker.internet.userName(),
-        name: faker.name.fullName(),
-        bio: faker.lorem.sentence(),
-        imagePath: faker.image.avatar(),
-        ownLists: {
-          create: {
-            public: true,
-            title: faker.company.catchPhrase(),
-            description: faker.lorem.sentence(),
-            imagePath: faker.image.nature(),
-            tags: {
-              create: {
-                name: faker.random.word(),
-              },
-            },
-            points: {
-              create: {
-                title: faker.company.bsNoun(),
-                lng: Number(faker.address.longitude()),
-                lat: Number(faker.address.latitude()),
-                imagePaths: faker.image.nature(),
-              },
-            },
-          },
+          ],
         },
       },
     });

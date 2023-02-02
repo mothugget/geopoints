@@ -5,7 +5,7 @@ import { UserDataContext } from '../../contexts/UserDataContext';
 
 interface ListToggleProps {
   listTitle: string;
-  listId: number;
+  listId: number | undefined;
 }
 
 const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
