@@ -35,7 +35,6 @@ const createNewUser = async (user: UserProfile) => {
 };
 
 const parseUser = (user: UserProfile) => {
-  // raname variables to match backend schema
   const { picture, nickname } = user;
   delete user.picture;
   delete user.nickname;
