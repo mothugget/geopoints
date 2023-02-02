@@ -4,6 +4,8 @@ import Link from 'next/link'
 
 import CreatePostModal from './CreatePostModal';
 import { MapContext } from '../../contexts/MapContext';
+import CreateListModal from './CreateListModal';
+
 
 interface AddContentModalProps {
   showAddContentModal: boolean;
@@ -57,10 +59,13 @@ export default function AddContentModal({ showAddContentModal }: AddContentModal
       p-1
       mb-[4.24rem]
       w-20
-      " >
+      "
+      onClick={() => {setShowCreateList(!showCreateList)}}
+      >
         New list
       </button>
       {showCreatePost && <CreatePostModal showCreatePost={showCreatePost} />}
+      {showCreateList && <CreateListModal showCreateList={showCreateList} />}
     </div>
 
   )

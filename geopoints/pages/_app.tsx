@@ -16,8 +16,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         <UserDataContextProvider>
           <MapContextProvider>
             <Header />
-            <Component {...pageProps} />
             <Footer />
+            <Component {...pageProps} />
           </MapContextProvider>
         </UserDataContextProvider>
       </QueryClientProvider>
