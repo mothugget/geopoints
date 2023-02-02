@@ -21,8 +21,8 @@ export default function CreatePointForm() {
       title: pointInput.title,
       description: pointInput.description,
       isPublic: pointInput.public === 'on' ? true : false,
-      lng: map?.getCenter()?.lat(),
-      lat: map?.getCenter()?.lng(),
+      lng: map?.getCenter()?.lng(),
+      lat: map?.getCenter()?.lat(),
       imagePath: faker.image.animals(),
       listId: pointInput.list || userData?.ownLists?.at(0)?.id,
     };

@@ -18,13 +18,19 @@ const containerStyle = {
   height: '100%',
 };
 
+
+
 function Map() {
   const [currentUserLocation, setCurrentUserLocation] =
     useState<Coordinates | null>(null);
   const { map, setMap } = useContext(MapContext);
   const { displayedPoints } = useContext(DisplayedPointsContext)
 
-  console.log(displayedPoints)
+  const displayedPointCoordinates: Coordinates[] = displayedPoints.map((point)=>{
+    return {lat:point.lat, lng:point.lng}
+  })
+
+console.log(displayedPointCoordinates)
 
   getUserPosition();
 
@@ -99,14 +105,14 @@ function Map() {
         }}
       >
         <>
-        {/* {testCoords.map((coords, i) => {
+        {displayedPointCoordinates.map((coords, i) => {
           return <Marker key={i} position={coords}/>
-        })} */}
-        <Marker icon={{
+        })}
+        {/* <Marker icon={{
           url: svgSource.src,
           scaledSize: new google.maps.Size(32, 32)
           }} position={{lat: 51.59298641280394, lng: 0.19911695761843295}}
-        />
+        /> */}
         </>
       </GoogleMap>
       <div className="absolute z-20">
