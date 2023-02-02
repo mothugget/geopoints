@@ -1,10 +1,10 @@
-import { createContext, useState, Dispatch } from 'react';
+import { createContext, useState, Dispatch, SetStateAction } from 'react';
 import { Point } from '../types/types';
 import React from 'react';
 
 interface DisplayedPointsContext {
   displayedPoints: Point[];
-  setDisplayedPoints: Dispatch <Point[] | null> | null ;
+  setDisplayedPoints: Dispatch<SetStateAction<Point[]>> | null ;
 }
 
 const DisplayedPointsContext = createContext<DisplayedPointsContext>({
