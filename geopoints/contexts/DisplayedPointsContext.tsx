@@ -13,7 +13,7 @@ const DisplayedPointsContext = createContext<DisplayedPointsContext>({
 });
 
 function DisplayedPointsContextProvider({ children }: any) {
-  const [displayedPoints, setDisplayedPoints] = useState<Point[] | null>(null);
+  const [displayedPoints, setDisplayedPoints] = useState<Point[]>([]);
 
   return (
     <DisplayedPointsContext.Provider

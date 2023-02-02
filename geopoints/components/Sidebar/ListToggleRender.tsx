@@ -16,7 +16,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
-  // console.log(enabled)
+  console.log(displayedPoints)
 
   useEffect(() => {
     const allPoints = [displayedPoints,list.points]
