@@ -30,7 +30,7 @@ model List {
   id          Int      @id @default(autoincrement())
   author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId    Int      @map(name: "author_id")
-  title       String
+  title       String   
   description String?
   imagePath   String?  @map(name: "image_path")
   createdAt   DateTime @default(now()) @map(name: "created_at")
@@ -58,7 +58,7 @@ model Point {
 
 model Tag {
   id            Int     @id @default(autoincrement())
-  name          String
+  name          String  @unique
   timesSearched Int     @default(0) @map(name: "times_searched")
   points        Point[]
   lists         List[]

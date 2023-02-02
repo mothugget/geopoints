@@ -14,7 +14,7 @@ const PictureTitleAndDesc = ({
   return (
     <section className="h-96 text-gray-800 mb-10">
       <Image
-        src={imagePath}
+        src={imagePath ?? '/favicon.ico'}
         width={320}
         height={320}
         alt={`Picture list: ${title}`}
