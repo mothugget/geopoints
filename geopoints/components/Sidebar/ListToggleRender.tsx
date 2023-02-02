@@ -4,6 +4,7 @@ import Link from "next/link";
 import { UserDataContext } from "../../contexts/UserDataContext";
 import { DisplayedPointsContext } from "../../contexts/DisplayedPointsContext";
 import { List } from "../../types/types";
+import { Point } from '../../types/types';
 
 interface ListToggleProps {
   list: List;
@@ -16,11 +17,18 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
-  console.log(displayedPoints)
 
   useEffect(() => {
-    const allPoints = [displayedPoints,list.points]
-   if (enabled) setDisplayedPoints!(allPoints.flat());
+    const allPoints = [displayedPoints, list.points]
+    if (enabled) {
+      setDisplayedPoints!(allPoints.flat())
+    } else {
+      const allPoints: Point[] = []
+      displayedPoints.forEach(point => {
+        (point.listId !== list.id)&&allPoints.push(point)
+      })
+      setDisplayedPoints!(allPoints)
+    }
 
   }, [enabled])
 
@@ -55,14 +63,12 @@ const ListToggle = ({ list }: ListToggleProps) => {
       <Switch
         checked={enabled}
         onChange={setEnabled}
-        className={`${
-          enabled ? "bg-blue-600" : "bg-gray-200"
-        } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
+        className={`${enabled ? "bg-blue-600" : "bg-gray-200"
+          } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
       >
         <span
-          className={`${
-            enabled ? "translate-x-6" : "translate-x-1"
-          } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+          className={`${enabled ? "translate-x-6" : "translate-x-1"
+            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
         />
       </Switch>
 
