@@ -1,20 +1,20 @@
 import Image from 'next/image.js';
 
 interface PictureTitleAndDescProps {
-  imagePath: string;
+  imagePaths: string[];
   title: string;
   description: string;
   points?: string[];
 }
 const PictureTitleAndDesc = ({
-  imagePath,
+  imagePaths,
   title,
   description,
 }: PictureTitleAndDescProps) => {
   return (
     <section className="h-96 text-gray-800 mb-10">
       <Image
-        src={imagePath ?? '/favicon.ico'}
+        src={imagePaths[0] ?? '/favicon.ico'}
         width={320}
         height={320}
         alt={`Picture list: ${title}`}

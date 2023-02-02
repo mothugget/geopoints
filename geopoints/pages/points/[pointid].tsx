@@ -3,18 +3,16 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Point } from '../../types/types.js';
 import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
 
-
 const prisma = new PrismaClient();
 
 // function Point({ pointData }: { pointData: Point }) {
 function PointPage({ pointData }: { pointData: Point }) {
-  console.log(pointData)
   return (
     <div className="flex flex-col mt-10">
       <PictureTitleAndDesc
-        imagePath={pointData.imagePath}
+        imagePaths={pointData.imagePaths!}
         title={pointData.title}
-        description={pointData.description}
+        description={pointData.description!}
       />
     </div>
   );
@@ -23,29 +21,27 @@ function PointPage({ pointData }: { pointData: Point }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const pointId = Number(context.query.pointid);
   let pointData = await prisma.list.findUnique({
-    where: {id: pointId},
+    where: { id: pointId },
     include: {
       tags: true,
-      liked_by: true,
-    }
-  })
+      likedBy: true,
+    },
+  });
 
   function toObject(x: any) {
-    return JSON.parse(JSON.stringify(x, (key, value) =>
-        typeof value === 'bigint'
-            ? value.toString()
-            : value // return everything else unchanged
-    ));
+    return JSON.parse(
+      JSON.stringify(
+        x,
+        (key, value) => (typeof value === 'bigint' ? value.toString() : value) // return everything else unchanged
+      )
+    );
   }
 
-  pointData = toObject(pointData)
-
+  pointData = toObject(pointData);
 
   return {
-    props: { pointData }
+    props: { pointData },
   };
-}
-
-
+};
 
 export default PointPage;
