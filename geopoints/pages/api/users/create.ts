@@ -12,6 +12,11 @@ const createNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
         userName,
         email,
         imagePath,
+        ownLists:{
+          create: [
+            {title: 'MyPoints'}
+          ]
+        }
       },
     });
     res.status(200).json(newUser);
@@ -20,5 +25,6 @@ const createNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(500).json({ error });
   }
 };
+
 
 export default createNewUser;
