@@ -3,7 +3,7 @@ import { User } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
-import { createList } from "../../util/createPoint";
+import { createList } from "../../util/createList";
 
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
@@ -26,12 +26,15 @@ function CreateListForm() {
     e.preventDefault();
     const listData = {
       title: listInput.title,
-      isPublic: listInput?.public === 'on' ? true : false,
+      author: data,
       description: listInput.description,
       tags: listInput.tags,
-      // imagePath: imgPath ? [imgPath] : [],
-      // points: userData?.likedPoints,
+      isPublic: listInput?.public === "on" ? true : false,
+      imagePath: imgPath ? imgPath : "",
+      // points: [],
+      // points: data?.ownLists.title,
     };
+    console.log(listData, data?.id);
     try {
       const newList = await createList(listData, data?.id);
       return newList;
@@ -49,12 +52,11 @@ function CreateListForm() {
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userEnteredTags = e.target.value;
     const tagsRegex = /#\w+/g;
-    const parsedTags = userEnteredTags.split(tagsRegex);
+    const parsedTags = userEnteredTags.match(tagsRegex);
     const filteringRegex = /[^#a-zA-Z_-]/;
-    const filteredTags = parsedTags.filter(
+    const filteredTags = parsedTags?.filter(
       (hashtag) => !filteringRegex.test(hashtag)
     );
-    console.log(filteredTags);
     setListInput({ ...listInput, tags: filteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
