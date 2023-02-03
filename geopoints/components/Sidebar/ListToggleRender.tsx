@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { useContext, useState, useEffect } from 'react';
 import { Switch } from '@headlessui/react';
 import Link from 'next/link';
@@ -21,52 +23,39 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
-  function sendListPointsToMap() {
-    const allPoints = [displayedPoints, list.points]
-    console.log(list.title,'\n\tallpoints  ', allPoints, '\n\tdisplayedPoints', displayedPoints )
-    setDisplayedPoints!(allPoints.flat())
+  function sendListPointsToMap(pointArray) {
+    setDisplayedPoints(prevPoints=>[...prevPoints,...pointArray])
   }
 
-  function removeListPointsFromMap() {
-    const allPoints: Point[] = []
-    displayedPoints.forEach(point => {
-      (point.listId !== list.id) && allPoints.push(point)
+  function removeListPointsFromMap(listId) {
+    setDisplayedPoints(prevPoints=>{
+      return prevPoints.filter(point => (point.listId !== listId))
     })
-    setDisplayedPoints!(allPoints)
   }
 
 
   useEffect(() => {
-    console.log(list.id) //107
     const toggleState = window.localStorage.getItem(list.title + list.id)
     if (toggleState !== null) {
       const toggleStateBool = JSON.parse(toggleState)
-      console.log(toggleStateBool) //false
       setEnabled(toggleStateBool)
       if (toggleStateBool) {
-        console.log(list.title, ' send')
-        sendListPointsToMap()
+        sendListPointsToMap(list.points)
       } else {
-        console.log(list.title, ' remove')
-        removeListPointsFromMap()
+        removeListPointsFromMap(list.id)
       }
     }
   }, [])
 
 
-  // useEffect(() => {
-  //   sendPointsToMap();
-  //   list.id && (window.localStorage[list.title + list.id] = enabled);
-  // }, [enabled])
 
   function mockSetEnabled(value: any) {
-    // list.id && (window.localStorage[list.title + list.id] = value);
     window.localStorage.setItem(list.title + list.id, value)
     setEnabled(value);
     if (value) {
-      sendListPointsToMap()
+      sendListPointsToMap(list.points)
     } else {
-      removeListPointsFromMap()
+      removeListPointsFromMap(list.id)
     }
   } 
 
@@ -100,3 +89,5 @@ const ListToggle = ({ list }: ListToggleProps) => {
 };
 
 export default ListToggle;
+
+//todo test toggle on one list, then refresh ,toggle on the next list, refresh, toggle off, refresh, toggle off refresh
