@@ -1,20 +1,21 @@
 import Link from 'next/link';
 import Image from 'next/image.js';
-import { SearchBar } from './SearchBar/SearchBar';
-import { useContext } from 'react';
-import { UserDataContext } from '../contexts/UserDataContext';
 import SmallLoadingSpinner from './SmallLoadingSpinner';
+import { SearchBar } from './SearchBar/SearchBar';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUserData } from '../hooks/useUserData';
 
 const Header = () => {
-  const { userData } = useContext(UserDataContext);
+  const { user } = useUser();
+  const { isError, isLoading, error, data } = useUserData(user!);
 
   return (
     <div className="z-40">
       <SearchBar />
-      <Link href={`/${userData?.userName}/profile`}>
-        {userData?.imagePath ? (
+      <Link href={`/${data?.userName}/profile`}>
+        {data?.imagePath ? (
           <Image
-            src={userData?.imagePath || '/favicon.ico'}
+            src={data?.imagePath || '/favicon.ico'}
             alt="Profile picture"
             width={40}
             height={40}

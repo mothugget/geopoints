@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { UserDataContext } from '../../contexts/UserDataContext';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUserData } from '../../hooks/useUserData';
 import GroupOfLists from './GroupOfLists';
 
 interface ListsSidebarProps {
@@ -7,10 +7,9 @@ interface ListsSidebarProps {
 }
 
 const ListsSidebar = ({ showSidebar }: ListsSidebarProps) => {
-  // thsi componenet needs the showSidebar prop to create a smooth animation
-  // todo work on animation
+  const { user } = useUser();
+  const { isError, isLoading, error, data } = useUserData(user!);
 
-  const { userData } = useContext(UserDataContext);
   return (
     <div
       className={`${
@@ -20,11 +19,11 @@ const ListsSidebar = ({ showSidebar }: ListsSidebarProps) => {
     >
       <h2 className="w-full text-2xl font-bold text-gray-800">Map</h2>
       <div className="overflow-auto max-h-64">
-        {userData && (
-          <GroupOfLists title="Your lists: " lists={userData.ownLists} />
+        {data && (
+          <GroupOfLists title="Your lists: " lists={data.ownLists} />
         )}
       </div>
-      {userData && <GroupOfLists title="Liked: " lists={userData.likedLists} />}
+      {data && <GroupOfLists title="Liked: " lists={data.likedLists} />}
     </div>
   );
 };
