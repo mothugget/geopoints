@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import UploadWidget from '../UploadWidget';
 import { MapContext } from '../../contexts/MapContext';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
 import { faker } from '@faker-js/faker';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
@@ -22,10 +23,15 @@ export default function CreatePointForm() {
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
+
   const { user } = useUser();
   const { data } = useUserData(user!);
   const { map } = useContext(MapContext);
-
+  const { setDisplayedPoints } = useContext(
+    DisplayedPointsContext
+  );
+  const {refetch} = useUserData(user!)
+  
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
     console.log({ imgPath });
@@ -40,7 +46,10 @@ export default function CreatePointForm() {
     };
     try {
       const newPoint = await createPoint(pointData, pointInput.listId);
-      // window.location.reload();
+      console.log(newPoint.newPoint)
+      refetch()
+      window.localStorage.setItem('list' + pointInput.listId, 'true')
+      setDisplayedPoints&&setDisplayedPoints(samePoints => [...samePoints, newPoint.newPoint])
       return newPoint;
     } catch (err) {
       console.log(err);
