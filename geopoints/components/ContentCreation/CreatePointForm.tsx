@@ -6,12 +6,19 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { List } from '../../types/types';
 import { createPoint } from '../../util/createPoint';
-import { Select, Option } from '@material-tailwind/react';
+import {
+  Select,
+  Option,
+  Input,
+  Checkbox,
+  Button,
+} from '@material-tailwind/react';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 text-black';
 
 export default function CreatePointForm() {
+  const [checkboxState, setCheckboxState] = useState<boolean>(false);
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
@@ -21,18 +28,19 @@ export default function CreatePointForm() {
 
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
+    console.log({ imgPath });
     const pointData = {
       title: pointInput.title,
       description: pointInput.description,
-      isPublic: pointInput.public === 'on' ? true : false,
+      isPublic: checkboxState,
       lng: map?.getCenter()?.lng(),
       lat: map?.getCenter()?.lat(),
-      imagePath: faker.image.animals(),
+      imagePath: imgPath ?? '/favicon.ico',
       listId: pointInput.listId,
     };
     try {
       const newPoint = await createPoint(pointData, pointInput.listId);
-      window.location.reload();
+      // window.location.reload();
       return newPoint;
     } catch (err) {
       console.log(err);
@@ -46,7 +54,8 @@ export default function CreatePointForm() {
     setPointInput({ ...pointInput, description: e.target.value });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPointInput({ ...pointInput, public: e.target.value });
+    setCheckboxState(!checkboxState);
+    setPointInput({ ...pointInput, public: checkboxState });
   };
   const listInputHandler = (listId: string | undefined) => {
     console.log({ listId });
@@ -57,44 +66,33 @@ export default function CreatePointForm() {
     data && (
       <form
         onSubmit={pointFormSubmitHandler}
-        className="
-    mt-10
-    flex
-    flex-col
-    "
+        className="mt-10 m-w-96 flex flex-col"
       >
-        <label htmlFor="Title" className={labelClass}>
-          Title
-        </label>
-        <input
-          id="Title"
-          type="text"
-          className={inputClass}
-          onChange={titleInputHandler}
-          required
-        />
-
-        <label htmlFor="Description" className={labelClass}>
-          Description
-        </label>
-        <input
-          id="Description"
-          type="textarea"
-          className={inputClass}
-          onChange={descriptionInputHandler}
-          required
-        />
-
-        <label htmlFor="Public" className={labelClass}>
-          Make post public?
-        </label>
-        <span>
-          <input id="Public" type="checkbox" onChange={publicInputHandler} />
-        </span>
-
-        <label htmlFor="List" className={labelClass}>
-          List
-        </label>
+        <div className="my-2">
+          <Input
+            variant="standard"
+            label="Title"
+            onChange={titleInputHandler}
+            required={true}
+            maxLength={25}
+          />
+        </div>
+        <div className="my-2">
+          <Input
+            variant="standard"
+            label="Description"
+            onChange={descriptionInputHandler}
+            required={true}
+            maxLength={50}
+          />
+        </div>
+        <div className="my-2">
+          <Checkbox
+            label="Make public"
+            ripple={true}
+            onChange={publicInputHandler}
+          />
+        </div>
         <Select
           id="List"
           name="List"
@@ -108,19 +106,22 @@ export default function CreatePointForm() {
           ))}
         </Select>
 
-        <div className="mt-4">
+        <div className="my-5">
           <UploadWidget
             setImgUploaded={setImgUploaded}
             setImgPath={setImgPath}
             multiple={false}
           />
         </div>
-        <button
-          type="submit"
-          className="border-black border-2 rounded-md min-w-50 w-fit text-black mt-4 p-1"
-        >
-          Submit
-        </button>
+        <div className="my-1">
+          <Button
+            ripple={true}
+            type="submit"
+            disabled={pointInput.listId ? false : true}
+          >
+            Create
+          </Button>
+        </div>
       </form>
     )
   );

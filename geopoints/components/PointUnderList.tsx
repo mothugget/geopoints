@@ -24,7 +24,7 @@ PointUnderListProps) => {
               <Image
                 width={120}
                 height={10}
-                src={'/favicon.ico'}
+                src={imagePath ?? '/favicon.ico'}
                 alt={title}
                 className="flex-none overflow-hidden h-24 rounded-md"
               />

@@ -1,5 +1,6 @@
 //@ts-ignore
-import { CldUploadWidget } from "next-cloudinary";
+import { CldUploadWidget } from 'next-cloudinary';
+import { Button } from '@material-tailwind/react';
 
 interface UploadWidgetProps {
   setImgPath: React.Dispatch<React.SetStateAction<string>>;
@@ -7,27 +8,31 @@ interface UploadWidgetProps {
   multiple: boolean;
 }
 
-export default function UploadWidget({setImgPath, setImgUploaded, multiple}: UploadWidgetProps) {
+export default function UploadWidget({
+  setImgPath,
+  setImgUploaded,
+  multiple,
+}: UploadWidgetProps) {
   function onUpload(error: any, result: any, widget: any) {
     console.log(result);
     if (result.event === 'success') {
       setImgUploaded(true);
-      setImgPath(result.info.url)
+      setImgPath(result.info.url);
     }
   }
   return (
     <div>
-      <CldUploadWidget uploadPreset="geopoints" onUpload={onUpload} option={ {multiple}}>
+      <CldUploadWidget
+        uploadPreset="geopoints"
+        onUpload={onUpload}
+        option={{ multiple }}
+      >
         {({ open }) => {
           function handleOnClick(e) {
             e.preventDefault();
             open();
           }
-          return (
-            <button className=" text-gray-800 border-black border-2 rounded-md p-1" onClick={handleOnClick}>
-              Upload an Image
-            </button>
-          );
+          return <Button onClick={handleOnClick}>Upload an Image</Button>;
         }}
       </CldUploadWidget>
     </div>
