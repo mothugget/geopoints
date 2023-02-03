@@ -9,12 +9,11 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Button,
 } from '@material-tailwind/react';
 
 const Header = () => {
   const { user } = useUser();
-  const { isError, isLoading, error, data } = useUserData(user!);
+  const { data } = useUserData(user!);
 
   return (
     <div className="z-40">
