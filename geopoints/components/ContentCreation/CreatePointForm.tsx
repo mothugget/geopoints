@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
 import UploadWidget from '../UploadWidget';
+import { faker } from '@faker-js/faker';
+
 import { UserDataContext } from '../../contexts/UserDataContext';
 import { MapContext } from '../../contexts/MapContext';
 import createPoint from '../../util/createPoint';
-import { faker } from '@faker-js/faker';
+
+
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
-const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
+const inputClass = 'border-black border-2 rounded-md min-w-50 text-black';
 
 export default function CreatePointForm() {
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
@@ -17,6 +20,9 @@ export default function CreatePointForm() {
 
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
+    if (pointInput.list === undefined) {
+      pointInput.list=userData?.ownLists?.at(0)?.id
+    } 
     const pointData = {
       title: pointInput.title,
       description: pointInput.description,
@@ -24,15 +30,19 @@ export default function CreatePointForm() {
       lng: map?.getCenter()?.lng(),
       lat: map?.getCenter()?.lat(),
       imagePath: faker.image.animals(),
-      listId: pointInput.list || userData?.ownLists?.at(0)?.id,
+      listId: pointInput.list,
     };
     try {
       const newPoint = await createPoint(pointData, pointInput.list);
-      return newPoint;
+      window.location.reload()
+      return newPoint
     } catch (err) {
       console.log(err);
     }
   };
+
+  console.log(userData?.ownLists?.at(0)?.id)
+  console.log(pointInput.list)
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, title: e.target.value });
@@ -74,6 +84,7 @@ export default function CreatePointForm() {
         onChange={titleInputHandler}
         required
       />
+
       <label htmlFor="Description" className={labelClass}>
         Description
       </label>
@@ -84,12 +95,14 @@ export default function CreatePointForm() {
         onChange={descriptionInputHandler}
         required
       />
+
       <label htmlFor="Public" className={labelClass}>
         Make post public?
       </label>
       <span>
         <input id="Public" type="checkbox" onChange={publicInputHandler} />
       </span>
+
       <label htmlFor="List" className={labelClass}>
         List
       </label>
@@ -107,16 +120,19 @@ export default function CreatePointForm() {
           </option>
         ))}
       </select>
+
       <label htmlFor="Tags" className={labelClass}>
         Tags
-      </label>
-      <input
+      
+      {/* <input
         id="Tags"
         type="text"
         placeholder="#tree #park #skate-park..."
         className={inputClass}
         onChange={tagsInputHandler}
-      />
+      /> */}
+      </label>
+
       <div className="mt-4">
         <UploadWidget
           setImgUploaded={setImgUploaded}

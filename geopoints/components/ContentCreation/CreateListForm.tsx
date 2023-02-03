@@ -43,7 +43,7 @@ function CreateListForm() {
   const [listInput, setListInput] = useState<any>(null);
   const { userData } = useContext(UserDataContext);
   const [imgPath, setImgPath] = useState<string>("");
-  console.log({ userData });
+  // console.log({ userData });
 
   const listFormSubmitHandler = (e: any) => {
     e.preventDefault();
