@@ -15,7 +15,7 @@ interface ListToggleProps {
 const ListToggle = ({ list }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
   
-
+  const toggleState = window.localStorage.getItem('list' + list.id)
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
   const { displayedPoints, setDisplayedPoints } = useContext(
@@ -34,7 +34,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
 
 
   useEffect(() => {
-    const toggleState = window.localStorage.getItem('list' + list.id)
+    
     if (toggleState !== null) {
       const toggleStateBool = JSON.parse(toggleState)
       setEnabled(toggleStateBool)
@@ -44,7 +44,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
         removeListPointsFromMap(list.id)
       }
     }
-  }, [])
+  }, [toggleState])
 
 
 
