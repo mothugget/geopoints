@@ -64,8 +64,8 @@ export default function AddContentModal({ showAddContentModal }: AddContentModal
       >
         New list
       </button>
-      {showCreatePost && <CreatePostModal showCreatePost={showCreatePost} />}
-      {showCreateList && <CreateListModal showCreateList={showCreateList} />}
+      <CreatePostModal showCreatePost={showCreatePost} />
+      <CreateListModal showCreateList={showCreateList} />
     </div>
 
   )
