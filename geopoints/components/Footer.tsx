@@ -3,9 +3,8 @@ import { IoAddCircleOutline } from 'react-icons/io5';
 import { BsFillGeoFill } from 'react-icons/bs';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import ListsSidebar from './Sidebar/ListsSidebar';
-import AddContentModal from './ContentCreation/AddContentModal';
-import { MapContext } from '../contexts/MapContext';
 import Link from 'next/link';
+import New from './ContentCreation/New';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -27,7 +26,7 @@ const Footer = () => {
               }
             }}
           >
-            <IoAddCircleOutline className="w-8 h-8" />
+            <New />
           </button>
           <AiOutlineUnorderedList
             onClick={() => {
@@ -39,7 +38,6 @@ const Footer = () => {
             className="w-8 h-8"
           />
         </div>
-        <AddContentModal showAddContentModal={showAddContentModal} />
       </footer>
     </>
   );
