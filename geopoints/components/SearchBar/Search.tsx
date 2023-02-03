@@ -4,6 +4,7 @@ import AutocompleteItem from './AutocompleteItem';
 import { List } from '../../types/types';
 import { Input } from '@material-tailwind/react';
 
+// todo: fix types
 export default function Search(props: {}) {
   const [autocompleteState, setAutocompleteState] = useState({
     collections: [],
