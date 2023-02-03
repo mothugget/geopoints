@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { points } from '../../../prisma/lib/data.js';
 
 const prisma = new PrismaClient();
 
@@ -13,8 +14,11 @@ const createNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
         email,
         imagePath,
         ownLists: {
-          create: [{ title: 'My Points' }],
+          create: { title: 'My Points' },
         },
+      },
+      include: {
+        ownLists: true,
       },
     });
     res.status(200).json(newUser);
