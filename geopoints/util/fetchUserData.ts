@@ -1,7 +1,6 @@
 import { UserProfile } from '@auth0/nextjs-auth0/client';
 
 const fetchUserData = async (user: UserProfile) => {
-  console.log('hello');
   if (user) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/users/${user.email}`
