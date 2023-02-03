@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <>
-      <ListsSidebar showSidebar={showSidebar} />
+      <ListsSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <footer className="h-16 z-10 bg-white">
         <div className="p-4 flex justify-between text-gray-600 fixed bottom-0 inset-x-0 z-50 bg-white">
           <Link href="/">

@@ -1,31 +1,19 @@
-import React from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import CreatePostForm from './CreatePointForm';
 
 interface CreatePostModalProps {
   showCreatePost: boolean;
+  setShowCreatePost: Dispatch<SetStateAction<boolean>>
 }
 
-export default function CreatePointModal({ showCreatePost }: CreatePostModalProps) {
+export default function CreatePointModal({ showCreatePost, setShowCreatePost }: CreatePostModalProps) {
   return (
-    <div className={`
-    ${showCreatePost ? 'translate-x-0 ' : 'translate-x-full'
-      } fixed
-      text-left 
-      h-screen 
-      top-0 
-      right-0 
-      w-[70vw] 
-      bg-white shadow 
-      p-10 
-      pl-10  
-      text-white 
-      transition-all 
-      ease-in-out 
-      duration-600 
-      z-30
-      `}>
-      <h2 className="w-full text-2xl font-bold text-gray-800">Create Post</h2>
-      <CreatePostForm />
+    <div className={`${showCreatePost ? 'translate-x-0 ' : 'translate-x-full'} fixed text-left h-full top-0 right-0 w-screen transition-all ease-in-out duration-600 z-30`}>
+      <button className='h-full w-full z-20' onClick={() => setShowCreatePost(!showCreatePost)} />
+      <div className='fixed text-left h-full top-0 right-0 w-[70vw] bg-white shadow p-10 pl-10 z-30'>
+        <h2 className="w-full text-2xl font-bold text-gray-800">Create Post</h2>
+        <CreatePostForm />
+      </div>
     </div>
   )
 }
