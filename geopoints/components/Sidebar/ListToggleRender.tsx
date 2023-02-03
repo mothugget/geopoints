@@ -41,11 +41,12 @@ const ListToggle = ({ list }: ListToggleProps) => {
     if (toggleState !== null) {
       const toggleStateBool = JSON.parse(toggleState)
       console.log(toggleStateBool) //false
-      console.log('HELLO I AM HERE ', list.title, ' ', list.id, ' enabled ', enabled, ' localstorage ', toggleStateBool, '\n \t type ', typeof toggleStateBool)
       setEnabled(toggleStateBool)
       if (toggleStateBool) {
+        console.log(list.title, ' send')
         sendListPointsToMap()
       } else {
+        console.log(list.title, ' remove')
         removeListPointsFromMap()
       }
     }
