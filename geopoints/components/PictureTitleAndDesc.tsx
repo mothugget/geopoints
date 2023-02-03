@@ -10,16 +10,23 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
+interface PointListProps {
+  imagePath?: string;
+  title: string;
+  description?: string;
+}
+
 interface PictureTitleAndDescProps {
   imagePath: string;
   title: string;
   description: string;
-  points?: string[];
+  // points: PointListProps;
 }
 const PictureTitleAndDesc = ({
   imagePath,
   title,
   description,
+  // points,
 }: PictureTitleAndDescProps) => {
   console.log({ imagePath });
   return (
@@ -40,11 +47,7 @@ const PictureTitleAndDesc = ({
         </Typography>
       </CardBody>
       <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
+        {/* <PointUnderList imagePath={points.imagePath} title={points.title} description={points.description}/> */}
       </CardFooter>
       <CardFooter divider className="flex items-center justify-between py-3">
         <Typography variant="small">Point Image</Typography>

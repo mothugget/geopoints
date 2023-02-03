@@ -13,7 +13,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
 
-  console.log(listData)
+  console.log('points in listpage: ', listData.points)
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -30,6 +30,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
           imagePath={listData?.imagePath}
           description={listData?.description}
           title={listData?.title}
+          // points={listData.points}
         />
         {/* {listData.points.map((point) => {
           return (
