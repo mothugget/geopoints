@@ -30,18 +30,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
           imagePath={listData?.imagePath}
           description={listData?.description}
           title={listData?.title}
+          points={listData.points}
         />
-        {/* {listData.points.map((point) => {
-          return (
-            <PointUnderList
-              key={point.id}
-              imagePath={point.imagePath}
-              title={point.title}
-              description={point.description}
-              tags={listData.tags}
-            />
-          );
-        })} */}
       </div>
     )
   );

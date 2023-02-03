@@ -71,6 +71,8 @@ export default function MyTabs() {
                     imagePath={list.imagePath}
                     title={list.title}
                     description={list.description}
+                    userName={data.userName}
+                    listId={list.id!}
                   />
                 );
               })
