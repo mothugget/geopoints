@@ -1,5 +1,4 @@
-import Image from 'next/image.js';
-
+import { Point } from '../types/types';
 import PointUnderList from './PointUnderList';
 
 import {
@@ -10,25 +9,18 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-interface PointListProps {
-  imagePath?: string;
-  title: string;
-  description?: string;
-}
-
 interface PictureTitleAndDescProps {
   imagePath: string;
   title: string;
   description: string;
-  // points: PointListProps;
+  points?: Point[];
 }
 const PictureTitleAndDesc = ({
   imagePath,
   title,
   description,
-  // points,
+  points
 }: PictureTitleAndDescProps) => {
-  console.log({ imagePath });
   return (
     <Card className="w-96">
       <CardHeader color="blue" className="relative h-56">
@@ -46,58 +38,19 @@ const PictureTitleAndDesc = ({
           {description}
         </Typography>
       </CardBody>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        {/* <PointUnderList imagePath={points.imagePath} title={points.title} description={points.description}/> */}
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
-      <CardFooter divider className="flex items-center justify-between py-3">
-        <Typography variant="small">Point Image</Typography>
-        <Typography variant="small" color="gray" className="flex gap-1">
-          <i className="fas fa-map-marker-alt fa-sm mt-[3px]" />
-          Point details
-        </Typography>
-      </CardFooter>
+      {points!.map((point) => {
+          return (
+            <CardFooter divider className="py-1">
+              <PointUnderList
+                key={point.id}
+                imagePath={point.imagePath}
+                title={point.title}
+                description={point.description}
+                // tags={listData.tags}
+              />
+            </CardFooter>
+          );
+        })}
     </Card>
   );
 };
