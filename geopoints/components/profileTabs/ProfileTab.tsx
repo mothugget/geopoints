@@ -66,7 +66,7 @@ const ProfileTab = ({
           </Typography>
         </Tooltip>
       </CardFooter>
-      <Link className="fixed bottom-20 right-4" href={`../${userName}/editProfile`}>
+      <Link className="fixed bottom-20 right-4" href={`../${userName}/edit`}>
         <Button>Edit Profile</Button>
       </Link>
     </div>

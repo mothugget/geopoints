@@ -44,8 +44,14 @@ function EditProfile(props: any) {
   const [imgPath, setImgPath] = useState<string>("");
 
   const updateButtonChecker = () => {
-    if (!updateEnabled) setUpdateEnabled(true);
+    if (!updateEnabled)
+      setUpdateEnabled(true);
   };
+
+  const validateEntries =
+    updatedInput.name.length > 0 &&
+    updatedInput.userName.length > 0 &&
+    updatedInput.bio.length > 0;
 
   const nameUpdateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateButtonChecker();
@@ -84,32 +90,31 @@ function EditProfile(props: any) {
 
   return (
     <form onSubmit={editProfileHandler} className="mt-10 m-w-96 flex flex-col">
-      <Card className="h-auto w-auto object-contain">
+      <Card className="h-auto w-auto object-contain mx-6 my-6">
         <img src={data.imagePath} alt="profile-picture" className="p-6" />
       </Card>
 
       <CardBody>
-        <Input
-          className="my-2"
-          variant="outlined"
-          label="Name"
-          value={data.name}
-          placeholder={data.name}
-          onChange={nameUpdateHandler}
-          required={true}
-          maxLength={25}
-        />
-
-        <Input
-          variant="outlined"
-          className="my-2"
-          label="Username"
-          value={data.userName}
-          placeholder={data.userName}
-          onChange={usernameUpdateHandler}
-          required={true}
-          maxLength={50}
-        />
+        <div className="my-2">
+          <Input
+            variant="outlined"
+            label="Name"
+            placeholder={data.name}
+            onChange={nameUpdateHandler}
+            required={true}
+            maxLength={25}
+          />
+        </div>
+        <div className="my-2">
+          <Input
+            variant="outlined"
+            label="Username"
+            placeholder={data.userName}
+            onChange={usernameUpdateHandler}
+            required={true}
+            maxLength={50}
+          />
+        </div>
 
         {/* <div className="my-2">
           <Checkbox
@@ -128,12 +133,7 @@ function EditProfile(props: any) {
           onChange={bioUpdateHandler}
         />
 
-        <Button
-          className="my-1"
-          ripple={true}
-          type="submit"
-          disabled={updateEnabled}
-        >
+        <Button ripple={true} type="submit" disabled={!(updateEnabled && validateEntries)}>
           Update Profile Info
         </Button>
       </CardBody>
