@@ -23,6 +23,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
 
   function sendListPointsToMap() {
     const allPoints = [displayedPoints, list.points]
+    console.log(list.title,'\n\tallpoints  ', allPoints, '\n\tdisplayedPoints', displayedPoints )
     setDisplayedPoints!(allPoints.flat())
   }
 
