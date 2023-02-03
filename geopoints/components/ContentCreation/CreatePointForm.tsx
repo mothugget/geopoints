@@ -16,14 +16,11 @@ export default function CreatePointForm() {
   const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
   const { user } = useUser();
-  const { isError, isLoading, error, data } = useUserData(user!);
+  const { data } = useUserData(user!);
   const { map } = useContext(MapContext);
 
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    if (pointInput.list === undefined) {
-      pointInput.list = data?.ownLists?.at(0)?.id;
-    }
     const pointData = {
       title: pointInput.title,
       description: pointInput.description,
@@ -34,7 +31,7 @@ export default function CreatePointForm() {
       listId: pointInput.listId,
     };
     try {
-      const newPoint = await createPoint(pointData, pointInput.list);
+      const newPoint = await createPoint(pointData, pointInput.listId);
       window.location.reload();
       return newPoint;
     } catch (err) {
@@ -51,8 +48,9 @@ export default function CreatePointForm() {
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, public: e.target.value });
   };
-  const listInputHandler = (listId: string) => {
-    setPointInput({ ...pointInput, listId: Number(listId) });
+  const listInputHandler = (listId: string | undefined) => {
+    console.log({ listId });
+    setPointInput({ ...pointInput, listId });
   };
 
   return (
