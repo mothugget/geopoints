@@ -1,8 +1,7 @@
-//@ts-nocheck
-
 import { useContext, useState, useEffect } from 'react';
 import { Switch } from '@headlessui/react';
 import Link from 'next/link';
+
 import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
 import { List } from '../../types/types';
 import { Point } from '../../types/types';
@@ -23,12 +22,12 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
-  function sendListPointsToMap(pointArray) {
-    setDisplayedPoints(prevPoints=>[...prevPoints,...pointArray])
+  function sendListPointsToMap(pointArray: []) {
+    if (setDisplayedPoints) setDisplayedPoints(prevPoints => [...prevPoints, ...pointArray])
   }
 
-  function removeListPointsFromMap(listId) {
-    setDisplayedPoints(prevPoints=>{
+  function removeListPointsFromMap(listId: number) {
+    if (setDisplayedPoints) setDisplayedPoints(prevPoints => {
       return prevPoints.filter(point => (point.listId !== listId))
     })
   }
@@ -57,7 +56,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
     } else {
       removeListPointsFromMap(list.id)
     }
-  } 
+  }
 
   return (
     <>
