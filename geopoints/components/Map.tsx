@@ -8,8 +8,7 @@ import LoadingSpinner from './LoadingSpinner';
 import PointMarker from './mapMarkers/PointMarker';
 import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
 import logo from '../public/geopoints-logo-contrasted.png'
-import svg from '../node_modules/svg-icon/dist/svg/'
-import AdbIcon from '@mui/icons-material/Adb';
+
 
 
 const testCoords: Coordinates[] = [{lat: 51.59298641280394, lng: 0.19911695761843295}, {lat: 51.59093347811105, lng: 0.2012627247702207}]
@@ -32,7 +31,7 @@ function Map() {
   })
  logo
 console.log(displayedPointCoordinates)
-  console.log(svg)
+
   getUserPosition();
 
   const { isLoaded } = useJsApiLoader({
