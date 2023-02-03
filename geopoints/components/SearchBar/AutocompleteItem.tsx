@@ -1,6 +1,6 @@
-import { User, List } from '@prisma/client';
+import { User, List } from '../../types/types';
 import Link from 'next/link';
-import Image from 'next/image';
+import { Card, CardBody, Typography } from '@material-tailwind/react';
 
 interface AutocompleteItemProps {
   list: List;
@@ -8,23 +8,20 @@ interface AutocompleteItemProps {
 }
 const AutocompleteItem = ({ list, author }: AutocompleteItemProps) => {
   return (
-    <li>
-      <Link href={`${author.userName}/lists/${list.id}`}>
-        {list.imagePath && (
-          <Image
-            src={list?.imagePath || '/favicon-ico'}
-            alt={list?.title}
-            width={48}
-            height={48}
-            className="w-12 h-12 object-contain"
-          />
-        )}
-        <div>
-          <h3 className="text-sm text-gray-600 font-semibold">{list.title}</h3>
-          <p className="text-xs text-gray-600">{list.description}</p>
-        </div>
-      </Link>
-    </li>
+    author &&
+    list && (
+      <Card className="w-72 p-5">
+        <Link href={`${author.userName}/lists/${list.id}`}>
+          <img src={list.imagePath} alt="" className="w-" />
+          <CardBody className="text-left">
+            <Typography variant="h6" className="mb-2 text-sm">
+              {list.title}
+            </Typography>
+            <p className='text-sm'> {list.description}</p>
+          </CardBody>
+        </Link>
+      </Card>
+    )
   );
 };
 export default AutocompleteItem;

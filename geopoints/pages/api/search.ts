@@ -5,14 +5,14 @@ const prisma = new PrismaClient();
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { q } = req.query;
+    let { q } = req.query;
     if (q && typeof q === 'string') {
       const results = await prisma.list.findMany({
         where: {
           title: {
-            search: `${q.toLowerCase()} | ${q} | ${q.toUpperCase()}`,
+            contains: q,
           },
-          public: true,
+          isPublic: true,
         },
         include: {
           author: true,
@@ -26,7 +26,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   } catch (error) {
     console.error({ error });
-    res.status(500).json({ error });
+    res.status(500).json(['Something when wrong...']);
   }
 };
 
