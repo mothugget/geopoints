@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 import {
   Card,
@@ -7,6 +8,7 @@ import {
   CardFooter,
   Typography,
   Tooltip,
+  Button,
 } from "@material-tailwind/react";
 
 interface ProfileTabProps {
@@ -59,6 +61,9 @@ const ProfileTab = ({
           </Typography>
         </Tooltip>
       </CardFooter>
+      <Link className="fixed bottom-20 right-4" href={`../${userName}/editProfile`}>
+        <Button>Edit Profile</Button>
+      </Link>
     </div>
   )
 }
