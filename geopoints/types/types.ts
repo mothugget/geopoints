@@ -30,6 +30,7 @@ interface List {
   title: string;
   author: User;
   imagePath: string;
+  authorId?: number;
   description: string;
   createdAt?: number;
   tags: Tag[];

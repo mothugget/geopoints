@@ -93,18 +93,21 @@ export default function CreatePointForm() {
             onChange={publicInputHandler}
           />
         </div>
-        <Select
-          id="List"
-          name="List"
-          label="Select List"
-          onChange={listInputHandler}
-        >
-          {data.ownLists.map((list: List) => (
-            <Option key={list.id} value={String(list.id)}>
-              {list.title}
-            </Option>
-          ))}
-        </Select>
+
+        {data.ownList?.length > 0 && (
+          <Select
+            id="List"
+            name="List"
+            label="Select List"
+            onChange={listInputHandler}
+          >
+            {data.ownLists?.map((list: List) => (
+              <Option key={list.id} value={String(list.id)}>
+                {list.title}
+              </Option>
+            ))}
+          </Select>
+        )}
 
         <div className="my-5">
           <UploadWidget

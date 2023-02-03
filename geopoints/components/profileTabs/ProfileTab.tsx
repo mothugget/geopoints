@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import {
   Card,
@@ -9,7 +8,7 @@ import {
   CardFooter,
   Typography,
   Tooltip,
-  Button
+  Button,
 } from "@material-tailwind/react";
 
 interface ProfileTabProps {
@@ -25,8 +24,6 @@ const ProfileTab = ({
   userName,
   bio
 }: ProfileTabProps) => {
-  const router = useRouter();
-
   return (
     <div>
       <Card className="h-auto w-auto object-contain">
@@ -69,13 +66,9 @@ const ProfileTab = ({
           </Typography>
         </Tooltip>
       </CardFooter>
-
-      <Link href={`../${userName}/edit`} > 
-        <Button variant="outlined" size="sm" color="green" >
-          Edit Info
-        </Button>
+      <Link className="fixed bottom-20 right-4" href={`../${userName}/editProfile`}>
+        <Button>Edit Profile</Button>
       </Link>
-
     </div>
   );
 }

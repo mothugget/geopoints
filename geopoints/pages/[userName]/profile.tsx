@@ -4,6 +4,7 @@ import { useUserData } from '../../hooks/useUserData';
 import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
 import PointUnderList from '../../components/PointUnderList';
 import ProfileTab from '../../components/profileTabs/ProfileTab';
+import ListsTab from '../../components/profileTabs/ListsTab';
 import React from 'react';
 
 import {
@@ -19,36 +20,25 @@ const tableData = [
   {
     label: 'Lists',
     value: 'Lists',
-    desc: `It really matters and then like it really doesn't matter.
-    What matters is the people who are sparked by it. And the people
-    who are like offended by it, it doesn't matter.`,
   },
   {
     label: 'Points',
     value: 'Points',
-    desc: `Because it's about motivating the doers. Because I'm here
-    to follow my dreams and inspire other people to follow their dreams, too.`,
   },
 
   {
     label: 'Favourites',
     value: 'Favourites',
-    desc: `We're not always in the position that we want to be at.
-    We're constantly growing. We're constantly making mistakes. We're
-    constantly trying to express ourselves and actualize our dreams.`,
   },
 
   {
     label: 'Profile',
     value: 'Profile',
-    desc: `Because it's about motivating the doers. Because I'm here
-    to follow my dreams and inspire other people to follow their dreams, too.`,
   },
 ];
 
 export default function MyTabs() {
   const { user } = useUser();
-
 
   const { isError, isLoading, data, error, refetch } = useUserData(user!)
 
@@ -59,7 +49,7 @@ export default function MyTabs() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  // console.log({ data });
+  console.log({ data });
 
   return (
     <Tabs value="html" className="bg-transparent">
@@ -71,16 +61,18 @@ export default function MyTabs() {
         ))}
       </TabsHeader>
       <TabsBody>
-        {tableData.map(({ value, desc }) => (
+        {tableData.map(({ value }) => (
           <TabPanel key={value} value={value}>
             {value === 'Lists' ? (
               data?.ownLists.map((list: List) => {
                 return (
-                  <PictureTitleAndDesc
+                  <ListsTab
                     key={list.id}
                     imagePath={list.imagePath}
                     title={list.title}
                     description={list.description}
+                    userName={data.userName}
+                    listId={list.id!}
                   />
                 );
               })

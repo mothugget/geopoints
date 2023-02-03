@@ -13,6 +13,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
 
+  console.log(listData)
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -23,23 +25,13 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
 
   return (
     listData && (
-      <div className="flex flex-col mt-20">
+      <div className="flex flex-col mt-8 mb-20">
         <PictureTitleAndDesc
           imagePath={listData?.imagePath}
           description={listData?.description}
           title={listData?.title}
+          points={listData.points}
         />
-        {listData.points.map((point) => {
-          return (
-            <PointUnderList
-              key={point.id}
-              imagePath={point.imagePath}
-              title={point.title}
-              description={point.description}
-              tags={listData.tags}
-            />
-          );
-        })}
       </div>
     )
   );
