@@ -28,6 +28,7 @@ export default function CreatePointForm() {
 
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
+    console.log({ imgPath });
     const pointData = {
       title: pointInput.title,
       description: pointInput.description,
@@ -39,6 +40,7 @@ export default function CreatePointForm() {
     };
     try {
       const newPoint = await createPoint(pointData, pointInput.listId);
+      // window.location.reload();
       return newPoint;
     } catch (err) {
       console.log(err);
@@ -56,6 +58,7 @@ export default function CreatePointForm() {
     setPointInput({ ...pointInput, public: checkboxState });
   };
   const listInputHandler = (listId: string | undefined) => {
+    console.log({ listId });
     setPointInput({ ...pointInput, listId });
   };
 

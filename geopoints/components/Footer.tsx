@@ -8,7 +8,8 @@ import New from './ContentCreation/New';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showAddContentModal, setShowAddContentModal] = useState(false);
+  const [showAddContentModal, setShowAddContentModal] =
+    useState<boolean>(false);
 
   return (
     <>
@@ -21,20 +22,12 @@ const Footer = () => {
           <button
             onClick={() => {
               setShowAddContentModal(!showAddContentModal);
-              if (showSidebar) {
-                setShowSidebar(!showSidebar);
-              }
             }}
           >
             <New />
           </button>
           <AiOutlineUnorderedList
-            onClick={() => {
-              setShowSidebar(!showSidebar);
-              if (showAddContentModal) {
-                setShowAddContentModal(!showAddContentModal);
-              }
-            }}
+            onClick={() => setShowSidebar(!showSidebar)}
             className="w-8 h-8"
           />
         </div>
