@@ -29,10 +29,14 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'http',
-        hostname: 'res.cloudinary.com',
+        protocol: 'https',
+        hostname: 'nintendoeverything.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'res.cloudinary.com',
       },
     ],
   },

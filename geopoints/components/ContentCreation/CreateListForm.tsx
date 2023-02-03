@@ -3,9 +3,14 @@ import { User } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
-import { createList } from "../../util/createList";
-
-
+import { createList } from '../../util/createList';
+import {
+  Select,
+  Option,
+  Input,
+  Checkbox,
+  Button,
+} from '@material-tailwind/react';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
@@ -16,24 +21,23 @@ interface CreateListFormProps {
 }
 
 function CreateListForm() {
-  // this is how we get the user data now.
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
-  const [imgUploaded, setImgUploaded] = useState<boolean>(false);
+  const [imgUploaded, setImgUploaded] = useState(false);
   const [listInput, setListInput] = useState<any>(null);
+  const [checkboxState, setCheckboxState] = useState(false);
+
   const [imgPath, setImgPath] = useState<string>('');
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
     const listData = {
       title: listInput.title,
-      author: data,
+      author: data.id,
       description: listInput.description,
-      tags: listInput.tags,
-      isPublic: listInput?.public === "on" ? true : false,
-      imagePath: imgPath ? imgPath : "",
-      // points: [],
-      // points: data?.ownLists.title,
+      tags: [listInput.tags],
+      isPublic: checkboxState,
+      imagePath: imgPath ? imgPath : '',
     };
     console.log(listData, data?.id);
     try {
@@ -52,16 +56,10 @@ function CreateListForm() {
   };
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userEnteredTags = e.target.value;
-    const tagsRegex = /#\w+/g;
-    const parsedTags = userEnteredTags.match(tagsRegex);
-    const filteringRegex = /[^#a-zA-Z_-]/;
-    const filteredTags = parsedTags?.filter(
-      (hashtag) => !filteringRegex.test(hashtag)
-    );
-    setListInput({ ...listInput, tags: filteredTags });
+    setListInput({ ...listInput, tags: userEnteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setListInput({ ...listInput, public: e.target.value });
+    setCheckboxState(!checkboxState);
   };
 
   return (
@@ -72,53 +70,56 @@ function CreateListForm() {
     flex-col
     "
     >
-      <label htmlFor="Title" className={labelClass}>
-        Title
-      </label>
-      <input
-        id="Title"
-        type="text"
-        className={inputClass}
-        onChange={titleInputHandler}
-        required
-      />
-      <label htmlFor="Description" className={labelClass}>
-        Description
-      </label>
-      <input
-        id="Description"
-        type="textarea"
-        className={inputClass}
-        onChange={descriptionInputHandler}
-        required
-      />
+      <div className="my-2">
+        <Input
+          variant="standard"
+          label="Title"
+          onChange={titleInputHandler}
+          required={true}
+          maxLength={25}
+        />
+      </div>
+      <div className="my-2">
+        <Input
+          variant="standard"
+          label="Description"
+          onChange={descriptionInputHandler}
+          required={true}
+          maxLength={50}
+        />
+      </div>
+      <div className="my-2 mt-5">
+        <Input
+          variant="static"
+          label="Hashtag"
+          onChange={tagsInputHandler}
+          required={true}
+          maxLength={50}
+          placeholder="#reading"
+          pattern="#\b\w+\b"
+        />
+      </div>
 
-      <label htmlFor="Tags" className={labelClass}>
-        Tags
-      </label>
-      <input
-        id="Tags"
-        type="text"
-        placeholder="#tree #park #skate-park..."
-        className={inputClass}
-        onChange={tagsInputHandler}
-      />
+      <div className="my-2">
+        <Checkbox
+          label="Make public"
+          ripple={true}
+          onChange={publicInputHandler}
+        />
+      </div>
+      <div className="my-5">
+        <UploadWidget
+          setImgUploaded={setImgUploaded}
+          setImgPath={setImgPath}
+          multiple={false}
+        />
+      </div>
 
-      <label htmlFor="Public" className={labelClass}>
-        Make post public?
-      </label>
-      <span>
-        <input id="Public" type="checkbox" onChange={publicInputHandler} />
-      </span>
-
-      <UploadWidget setImgUploaded={setImgUploaded} setImgPath={setImgPath} />
-
-      <button
-        type="submit"
-        className="border-black border-2 rounded-md min-w-50 w-fit text-black mt-4 p-1"
-      >
-        Submit
-      </button>
+      <div className="my-1">
+        <Button ripple={true} type="submit">
+          Create
+        </Button>
+      </div>
     </form>
   );
 }

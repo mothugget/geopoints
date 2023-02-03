@@ -3,14 +3,12 @@ import { IoAddCircleOutline } from 'react-icons/io5';
 import { BsFillGeoFill } from 'react-icons/bs';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import ListsSidebar from './Sidebar/ListsSidebar';
-import AddContentModal from './ContentCreation/AddContentModal';
-import { MapContext } from '../contexts/MapContext';
 import Link from 'next/link';
+import New from './ContentCreation/New';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showAddContentModal, setShowAddContentModal] =
-    useState<boolean>(false);
+  const [showAddContentModal, setShowAddContentModal] = useState(false);
 
   return (
     <>
@@ -20,19 +18,17 @@ const Footer = () => {
           <Link href="/">
             <BsFillGeoFill className="w-8 h-8" />
           </Link>
-          <button
-            onClick={() => {
-              setShowAddContentModal(!showAddContentModal);
-            }}
-          >
-            <IoAddCircleOutline className="w-8 h-8" />
-          </button>
+          <New
+            showSidebar={showSidebar}
+            setShowSidebar={setShowSidebar}
+            showAddContentModal={showAddContentModal}
+            setShowAddContentModal={setShowAddContentModal}
+          />
           <AiOutlineUnorderedList
             onClick={() => setShowSidebar(!showSidebar)}
             className="w-8 h-8"
           />
         </div>
-          <AddContentModal showAddContentModal={showAddContentModal} />
       </footer>
     </>
   );

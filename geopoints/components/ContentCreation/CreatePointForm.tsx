@@ -55,7 +55,7 @@ export default function CreatePointForm() {
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckboxState(!checkboxState);
-    setPointInput({ ...pointInput, public: checkboxState });
+    // setPointInput({ ...pointInput, public: checkboxState });
   };
   const listInputHandler = (listId: string | undefined) => {
     console.log({ listId });
