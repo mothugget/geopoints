@@ -3,6 +3,8 @@ import { User } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
+import { createList } from "../../util/createList";
+
 
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
@@ -15,22 +17,31 @@ interface CreateListFormProps {
 
 function CreateListForm() {
   // this is how we get the user data now.
-  // const { user } = useUser();
-  // const { isError, isLoading, error, data } = useUserData(user!);
+  const { user } = useUser();
+  const { isError, isLoading, error, data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [listInput, setListInput] = useState<any>(null);
   const [imgPath, setImgPath] = useState<string>('');
 
-  const listFormSubmitHandler = (e: any) => {
+  const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    const inputData = {
+    const listData = {
       title: listInput.title,
-      isPublic: listInput?.public === 'on' ? true : false,
+      author: data,
       description: listInput.description,
       tags: listInput.tags,
-      // imagePath: imgPath ? [imgPath] : [],
-      // points: userData?.likedPoints,
+      isPublic: listInput?.public === "on" ? true : false,
+      imagePath: imgPath ? imgPath : "",
+      // points: [],
+      // points: data?.ownLists.title,
     };
+    console.log(listData, data?.id);
+    try {
+      const newList = await createList(listData, data?.id);
+      return newList;
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,9 +52,13 @@ function CreateListForm() {
   };
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userEnteredTags = e.target.value;
-    const tagsRegex = /^#\w+/g;
-    const parsedTags = userEnteredTags.split(tagsRegex);
-    setListInput({ ...listInput, tags: parsedTags });
+    const tagsRegex = /#\w+/g;
+    const parsedTags = userEnteredTags.match(tagsRegex);
+    const filteringRegex = /[^#a-zA-Z_-]/;
+    const filteredTags = parsedTags?.filter(
+      (hashtag) => !filteringRegex.test(hashtag)
+    );
+    setListInput({ ...listInput, tags: filteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, public: e.target.value });
@@ -51,7 +66,7 @@ function CreateListForm() {
 
   return (
     <form
-      action=""
+      onSubmit={listFormSubmitHandler}
       className="mt-10
     flex
     flex-col
@@ -96,7 +111,7 @@ function CreateListForm() {
         <input id="Public" type="checkbox" onChange={publicInputHandler} />
       </span>
 
-      <UploadWidget setImgUploaded={setImgUploaded} />
+      <UploadWidget setImgUploaded={setImgUploaded} setImgPath={setImgPath} />
 
       <button
         type="submit"

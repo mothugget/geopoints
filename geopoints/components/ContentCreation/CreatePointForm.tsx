@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { List } from '../../types/types';
-import createPoint from '../../util/createPoint';
+import { createPoint } from '../../util/createPoint';
 import { Select, Option } from '@material-tailwind/react';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
@@ -47,13 +47,6 @@ export default function CreatePointForm() {
   };
   const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, description: e.target.value });
-  };
-  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const userEnteredTags = e.target.value;
-    // const tagsRegex = /^#\w+/g;
-    // const parsedTags = userEnteredTags.split(tagsRegex);
-    // console.log(parsedTags);
-    setPointInput({ ...pointInput, tags: e.target.value });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, public: e.target.value });
@@ -116,17 +109,6 @@ export default function CreatePointForm() {
             </Option>
           ))}
         </Select>
-
-        <label htmlFor="Tags" className={labelClass}>
-          Tags
-          {/* <input
-        id="Tags"
-        type="text"
-        placeholder="#tree #park #skate-park..."
-        className={inputClass}
-        onChange={tagsInputHandler}
-      /> */}
-        </label>
 
         <div className="mt-4">
           <UploadWidget
