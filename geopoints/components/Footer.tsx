@@ -19,13 +19,21 @@ const Footer = () => {
           <Link href="/">
             <BsFillGeoFill className="w-8 h-8" />
           </Link>
-          <button
+          {/* <button
             onClick={() => {
               setShowAddContentModal(!showAddContentModal);
-            }}
-          >
-            <New />
-          </button>
+              if (showSidebar) {
+                setShowSidebar(!showSidebar);
+              }
+            }} */}
+          {/* > */}
+          <New
+            showSidebar={showSidebar}
+            setShowSidebar={setShowSidebar}
+            showAddContentModal={showAddContentModal}
+            setShowAddContentModal={setShowAddContentModal}
+          />
+          {/* </button> */}
           <AiOutlineUnorderedList
             onClick={() => setShowSidebar(!showSidebar)}
             className="w-8 h-8"
