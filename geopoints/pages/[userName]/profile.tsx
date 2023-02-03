@@ -3,6 +3,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import { useUserData } from '../../hooks/useUserData';
 import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
 import PointUnderList from '../../components/PointUnderList';
+import ProfileTab from '../../components/profileTabs/ProfileTab';
 import React from 'react';
 
 import {
@@ -12,6 +13,7 @@ import {
   Tab,
   TabPanel,
 } from '@material-tailwind/react';
+import { List, Point } from '../../types/types';
 
 const tableData = [
   {
@@ -57,7 +59,7 @@ export default function MyTabs() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  console.log({ data });
+  // console.log({ data });
 
   return (
     <Tabs value="html" className="bg-transparent">
@@ -72,7 +74,7 @@ export default function MyTabs() {
         {tableData.map(({ value, desc }) => (
           <TabPanel key={value} value={value}>
             {value === 'Lists' ? (
-              data?.ownLists.map((list) => {
+              data?.ownLists.map((list: List) => {
                 return (
                   <PictureTitleAndDesc
                     key={list.id}
@@ -83,8 +85,8 @@ export default function MyTabs() {
                 );
               })
             ) : value === 'Points' ? (
-              data?.ownLists[0].points.map((point) => {
-                console.log({ point });
+              data?.ownLists[0].points.map((point: Point) => {
+                // console.log({ point });
                 return (
                   <PointUnderList
                     key={point.id}
@@ -95,6 +97,8 @@ export default function MyTabs() {
                   />
                 );
               })
+            ) : value === 'Profile' ? (
+              <ProfileTab imagePath={data.imagePath} userName={data.userName} bio={data.bio} />
             ) : (
               <p>hello</p>
             )}
