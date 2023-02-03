@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { MapContextProvider } from '../contexts/MapContext';
 import { DisplayedPointsContextProvider } from '../contexts/DisplayedPointsContext';
 import Header from '../components/Header';
+import { ThemeProvider } from '@material-tailwind/react';
 
 const queryClient = new QueryClient();
 
@@ -13,13 +14,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
       <QueryClientProvider client={queryClient}>
-        <DisplayedPointsContextProvider>
-          <MapContextProvider>
-            <Header />
-            <Footer />
-            <Component {...pageProps} />
-          </MapContextProvider>
-        </DisplayedPointsContextProvider>
+        <ThemeProvider>
+          <DisplayedPointsContextProvider>
+            <MapContextProvider>
+              <Header />
+              <Footer />
+              <Component {...pageProps} />
+            </MapContextProvider>
+          </DisplayedPointsContextProvider>
+        </ThemeProvider>
       </QueryClientProvider>
     </UserProvider>
   );
