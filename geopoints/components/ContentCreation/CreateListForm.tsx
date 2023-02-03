@@ -79,9 +79,8 @@ function CreateListForm() {
     const filteredTags = parsedTags.filter(
       (hashtag) => !filteringRegex.test(hashtag)
     );
-    const tagsArray = filteredTags.map((tag, index) => {id: index});
     console.log(filteredTags);
-    setListInput({ ...listInput, tags: e.target.value });
+    setListInput({ ...listInput, tags: filteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, public: e.target.value });
