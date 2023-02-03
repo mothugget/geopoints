@@ -16,7 +16,6 @@ export default withPageAuthRequired(function Home() {
     return <span className="text-black">Error: {error.message}</span>;
   }
 
-  console.log({ data });
   return (
     <main className="flex flex-col h-screen justify-between bg-white">
       <Header />

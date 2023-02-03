@@ -4,6 +4,7 @@ import fetchUserData from '../util/fetchUserData';
 
 export const useUserData = (user: UserProfile) =>
   useQuery({
-    queryKey: ['fectchUserData', user!],
-    queryFn: () => fetchUserData(user!),
+    queryKey: ['fectchUserData', user],
+    queryFn: () => fetchUserData(user),
+    enabled: !!user,
   });
