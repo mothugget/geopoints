@@ -22,7 +22,7 @@ export default function CreatePointModal({
       />
       <div className="fixed text-left h-full top-0 right-0 w-[70vw] bg-white shadow p-10 pl-10 z-30">
         <h2 className="w-full text-2xl font-bold text-gray-800">Create Post</h2>
-        <CreatePostForm />
+        <CreatePostForm setShowCreatePoint={setShowCreatePoint}/>
       </div>
     </div>
   );
