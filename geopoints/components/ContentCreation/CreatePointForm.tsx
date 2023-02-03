@@ -117,7 +117,7 @@ export default function CreatePointForm() {
           <Button
             ripple={true}
             type="submit"
-            disabled={pointInput.listId ? false : true}
+            disabled={!pointInput.listId}
           >
             Create
           </Button>

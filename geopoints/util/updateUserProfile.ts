@@ -1,8 +1,8 @@
 export const updateUserProfile = async (updatedInfo: unknown, userId: number) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/points/create`,
+    `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/users/update`,
     {
-      method: "UPDATE",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ updatedInfo, userId }),
     }

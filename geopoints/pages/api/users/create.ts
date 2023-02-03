@@ -15,7 +15,7 @@ const createNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
         ownLists: {
           create: [{ title: 'My Points' }],
         },
-      },
+      }
     });
     res.status(200).json(newUser);
   } catch (error) {

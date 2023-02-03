@@ -98,7 +98,7 @@ export default function MyTabs() {
                 );
               })
             ) : value === 'Profile' ? (
-              <ProfileTab imagePath={data.imagePath} userName={data.userName} bio={data.bio} />
+              <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
             ) : (
               <p>hello</p>
             )}
