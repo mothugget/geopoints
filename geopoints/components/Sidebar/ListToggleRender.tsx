@@ -66,7 +66,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
     } else {
       removeListPointsFromMap()
     }
-  }
+  } 
 
   return (
     <>
