@@ -31,11 +31,11 @@ interface List {
   author: User;
   imagePath: string;
   description: string;
-  createdAt: number;
+  createdAt?: number;
   tags: Tag[];
   isPublic: boolean;
   spotifyPath?: string;
-  points: Point[];
+  points?: Point[];
 }
 
 interface User {

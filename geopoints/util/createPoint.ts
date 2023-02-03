@@ -1,4 +1,4 @@
-const createPoint = async (pointData: unknown, listId: number) => {
+export const createPoint = async (pointData: unknown, listId: number) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/points/create`,
     {
@@ -13,4 +13,3 @@ const createPoint = async (pointData: unknown, listId: number) => {
   return newPoint;
 };
 
-export default createPoint;

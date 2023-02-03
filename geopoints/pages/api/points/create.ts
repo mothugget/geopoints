@@ -10,6 +10,8 @@ const createPointHandler = async (
 ) => {
   try {
     const { pointData, listId } = req.body;
+    console.log({ pointData });
+    console.log({ listId });
     checkIfPointDataIsValid(pointData);
     if (!listId) throw new Error('You have to send pointData and listId');
     const newPoint = await createPoint(pointData, Number(listId));
