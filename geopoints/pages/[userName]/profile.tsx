@@ -1,12 +1,9 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
-// import { Tab } from '@headlessui/react';
-import { useContext } from 'react';
-import { useQuery } from 'react-query';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { UserDataContext } from '../../contexts/UserDataContext';
+import { useUserData } from '../../hooks/useUserData';
 import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
 import PointUnderList from '../../components/PointUnderList';
-import fetchUserData from '../../util/fetchUserData';
+import React from 'react';
 
 import {
   Tabs,
@@ -47,26 +44,11 @@ const tableData = [
   },
 ];
 
-const categories = ['Lists', 'Points', 'Favourites', 'Profile'];
 export default function MyTabs() {
   const { user } = useUser();
-  const { userData, setUserData } = useContext(UserDataContext);
 
-  const { isError, isLoading, data, error, refetch } = useQuery(
-    ['fectchUserData', user?.email],
-    async () => {
-      try {
-        const data = await fetchUserData(user!);
-        if (data && setUserData) {
-          setUserData({ ...data }); // set user data to global context
-          return data;
-        }
-      } catch (error) {
-        console.log({ error });
-        throw new Error('Error fetching data');
-      }
-    }
-  );
+
+  const { isError, isLoading, data, error, refetch } = useUserData(user!)
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -75,7 +57,7 @@ export default function MyTabs() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  console.log({ userData });
+  console.log({ data });
 
   return (
     <Tabs value="html" className="bg-transparent">
@@ -90,7 +72,7 @@ export default function MyTabs() {
         {tableData.map(({ value, desc }) => (
           <TabPanel key={value} value={value}>
             {value === 'Lists' ? (
-              userData?.ownLists.map((list) => {
+              data?.ownLists.map((list) => {
                 return (
                   <PictureTitleAndDesc
                     key={list.id}
@@ -101,7 +83,7 @@ export default function MyTabs() {
                 );
               })
             ) : value === 'Points' ? (
-              userData?.ownLists[0].points.map((point) => {
+              data?.ownLists[0].points.map((point) => {
                 console.log({ point });
                 return (
                   <PointUnderList
