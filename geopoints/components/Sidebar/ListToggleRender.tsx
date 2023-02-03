@@ -22,11 +22,11 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
-  function sendListPointsToMap(pointArray: []) {
+  function sendListPointsToMap(pointArray: Point[]) {
     if (setDisplayedPoints) setDisplayedPoints(prevPoints => [...prevPoints, ...pointArray])
   }
 
-  function removeListPointsFromMap(listId: number) {
+  function removeListPointsFromMap(listId: number| undefined) {
     if (setDisplayedPoints) setDisplayedPoints(prevPoints => {
       return prevPoints.filter(point => (point.listId !== listId))
     })
