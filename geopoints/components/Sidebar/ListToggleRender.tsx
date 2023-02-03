@@ -1,10 +1,11 @@
-import { useContext, useState, useEffect } from "react";
-import { Switch } from "@headlessui/react";
-import Link from "next/link";
-import { UserDataContext } from "../../contexts/UserDataContext";
-import { DisplayedPointsContext } from "../../contexts/DisplayedPointsContext";
-import { List } from "../../types/types";
+import { useContext, useState, useEffect } from 'react';
+import { Switch } from '@headlessui/react';
+import Link from 'next/link';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
+import { List } from '../../types/types';
 import { Point } from '../../types/types';
+import { useUserData } from '../../hooks/useUserData';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface ListToggleProps {
   list: List;
@@ -12,7 +13,8 @@ interface ListToggleProps {
 
 const ListToggle = ({ list }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
-  const { userData } = useContext(UserDataContext);
+  const { user } = useUser();
+  const { isError, isLoading, error, data } = useUserData(user!);
   const { displayedPoints, setDisplayedPoints } = useContext(
     DisplayedPointsContext
   );
@@ -48,17 +50,19 @@ function sendPointsToMap() {
       <Switch
         checked={enabled}
         onChange={setEnabled}
-        className={`${enabled ? "bg-blue-600" : "bg-gray-200"
-          } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
+        className={`${
+          enabled ? 'bg-blue-600' : 'bg-gray-200'
+        } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
       >
         <span
-          className={`${enabled ? "translate-x-6" : "translate-x-1"
-            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+          className={`${
+            enabled ? 'translate-x-6' : 'translate-x-1'
+          } inline-block h-4 w-4 transform rounded-full bg-white transition`}
         />
       </Switch>
 
-      {userData && (
-        <Link href={`/${userData.userName}/lists/${list.id}`}>
+      {data && (
+        <Link href={`/${data.userName}/lists/${list.id}`}>
           <p className="w-32 text-sm text-gray-700 underline hover:text-blue-900">
             {list.title}
           </p>

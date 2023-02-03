@@ -4,29 +4,14 @@ import { List, User } from '../../../types/types';
 import PictureTitleAndDesc from '../../../components/PictureTitleAndDesc';
 import PointUnderList from '../../../components/PointUnderList';
 import { useUser } from '@auth0/nextjs-auth0/client';
-import { useContext } from 'react';
-import { useQuery } from 'react-query';
+import { useUserData } from '../../../hooks/useUserData';
 import LoadingSpinner from '../../../components/LoadingSpinner';
-import { UserDataContext } from '../../../contexts/UserDataContext';
-import fetchUserData from '../../../util/fetchUserData';
 
 const prisma = new PrismaClient();
 
 function List({ listData, listOwner }: { listData: List; listOwner: User }) {
-  const { userData, setUserData } = useContext(UserDataContext);
   const { user } = useUser();
-  const { isError, isLoading, error } = useQuery(
-    ['fectchUserData', user!],
-    async () => {
-      if (user) {
-        const data = await fetchUserData(user);
-        if (data && setUserData && !userData) {
-          setUserData({ ...data }); // set user data to global context
-          return data;
-        }
-      }
-    }
-  );
+  const { isError, isLoading, error, data } = useUserData(user!);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -85,10 +70,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   listData = JSON.parse(JSON.stringify(listData));
   listOwner = JSON.parse(JSON.stringify(listOwner));
-  // getServerSideProps errors when passing Date objects. In this case,
-  // the createdAt property of listData.
-  // this is a way of overcoming it.
-  // check: https://github.com/vercel/next.js/issues/11993 for more info.
   return {
     props: { listData, listOwner },
   };

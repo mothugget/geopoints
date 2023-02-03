@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
 import UploadWidget from '../UploadWidget';
-import { faker } from '@faker-js/faker';
-
-import { UserDataContext } from '../../contexts/UserDataContext';
 import { MapContext } from '../../contexts/MapContext';
+import { faker } from '@faker-js/faker';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUserData } from '../../hooks/useUserData';
+import { List } from '../../types/types';
 import createPoint from '../../util/createPoint';
-
-
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 text-black';
@@ -15,7 +14,8 @@ export default function CreatePointForm() {
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
-  const { userData } = useContext(UserDataContext);
+  const { user } = useUser();
+  const { isError, isLoading, error, data } = useUserData(user!);
   const { map } = useContext(MapContext);
 
   const pointFormSubmitHandler = async (e: any) => {
@@ -107,11 +107,11 @@ export default function CreatePointForm() {
         id="List"
         name="List"
         className={inputClass}
-        selected={userData?.ownLists[0].id}
+        selected={data?.ownLists[0].id}
         onChange={listInputHandler}
       >
         {/* ACCESSING LIST INFO ??*/}
-        {userData?.ownLists.map((list) => (
+        {data?.ownLists.map((list: List) => (
           <option key={list.id} value={list.id}>
             {list.title}
           </option>
