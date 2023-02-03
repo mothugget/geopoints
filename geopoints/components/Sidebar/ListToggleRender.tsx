@@ -1,16 +1,49 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Switch } from '@headlessui/react';
 import Link from 'next/link';
-import { UserDataContext } from '../../contexts/UserDataContext';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
+import { List } from '../../types/types';
+import { Point } from '../../types/types';
+import { useUserData } from '../../hooks/useUserData';
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 interface ListToggleProps {
-  listTitle: string;
-  listId: number | undefined;
+  list: List;
 }
 
-const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
+const ListToggle = ({ list }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
-  const { userData } = useContext(UserDataContext);
+  const { user } = useUser();
+  const { isError, isLoading, error, data } = useUserData(user!);
+  const { displayedPoints, setDisplayedPoints } = useContext(
+    DisplayedPointsContext
+  );
+
+function sendPointsToMap() {
+  const allPoints = [displayedPoints, list.points]
+  if (enabled) {
+    setDisplayedPoints!(allPoints.flat())
+  } else {
+    const allPoints: Point[] = []
+    displayedPoints.forEach(point => {
+      (point.listId !== list.id) && allPoints.push(point)
+    })
+    setDisplayedPoints!(allPoints)
+  }
+}
+
+  useEffect(()=>{
+    sendPointsToMap();
+  if (list.id && window.localStorage[list.id]) { setEnabled(window.localStorage[list.id])}
+  }, [])
+
+
+  useEffect(() => {
+  sendPointsToMap();
+    // list.id && (window.localStorage[list.title+list.id] = enabled);
+  }, [enabled])
+
+ console.log(list.title, ' ', list.id, ' ', enabled)
 
   return (
     <div className="mt-5 flex justify-between">
@@ -28,10 +61,10 @@ const ListToggle = ({ listTitle, listId }: ListToggleProps) => {
         />
       </Switch>
 
-      {userData && (
-        <Link href={`/${userData.userName}/lists/${listId}`}>
+      {data && (
+        <Link href={`/${data.userName}/lists/${list.id}`}>
           <p className="w-32 text-sm text-gray-700 underline hover:text-blue-900">
-            {listTitle}
+            {list.title}
           </p>
         </Link>
       )}
