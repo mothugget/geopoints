@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import UploadWidget from '../UploadWidget';
 import { MapContext } from '../../contexts/MapContext';
-import { faker } from '@faker-js/faker';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { List } from '../../types/types';
@@ -13,9 +12,7 @@ import {
   Checkbox,
   Button,
 } from '@material-tailwind/react';
-
-const labelClass = 'w-full text-base font-bold text-gray-800';
-const inputClass = 'border-black border-2 rounded-md min-w-50 text-black';
+import LoadingSpinner from '../LoadingSpinner';
 
 export default function CreatePointForm() {
   const [checkboxState, setCheckboxState] = useState<boolean>(false);
@@ -23,8 +20,8 @@ export default function CreatePointForm() {
   const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
   const { user } = useUser();
-  const { data } = useUserData(user!);
   const { map } = useContext(MapContext);
+  const { data, isLoading, isError } = useUserData(user!);
 
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
@@ -40,12 +37,19 @@ export default function CreatePointForm() {
     };
     try {
       const newPoint = await createPoint(pointData, pointInput.listId);
-      // window.location.reload();
       return newPoint;
     } catch (err) {
       console.log(err);
     }
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (isError) {
+    return <span className="text-black">Error</span>;
+  }
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, title: e.target.value });
@@ -61,7 +65,7 @@ export default function CreatePointForm() {
     console.log({ listId });
     setPointInput({ ...pointInput, listId });
   };
-
+  console.log({ data });
   return (
     data && (
       <form
@@ -93,22 +97,18 @@ export default function CreatePointForm() {
             onChange={publicInputHandler}
           />
         </div>
-
-        {data.ownList?.length > 0 && (
-          <Select
-            id="List"
-            name="List"
-            label="Select List"
-            onChange={listInputHandler}
-          >
-            {data.ownLists?.map((list: List) => (
-              <Option key={list.id} value={String(list.id)}>
-                {list.title}
-              </Option>
-            ))}
-          </Select>
-        )}
-
+        <Select
+          id="List"
+          name="List"
+          label="Select List"
+          onChange={listInputHandler}
+        >
+          {data.ownLists?.map((list: List) => (
+            <Option key={list.id} value={String(list.id)}>
+              {list.title}
+            </Option>
+          ))}
+        </Select>
         <div className="my-5">
           <UploadWidget
             setImgUploaded={setImgUploaded}
