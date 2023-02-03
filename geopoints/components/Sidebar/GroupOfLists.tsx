@@ -18,9 +18,9 @@ const GroupOfLists = ({ title, lists }: GroupOfListsProps) => {
         </p>
       ) : (
         <ul>
-          {lists.map((list) => (
+          {lists.map((list:List) => (
             <li key={list.id}>
-              <ListToggle listTitle={list.title} listId={list.id} />
+              <ListToggle list={list} />
             </li>
           ))}
         </ul>

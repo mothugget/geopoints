@@ -1,4 +1,5 @@
 interface Tag {
+  id?: number;
   name: string;
   timesSearched?: number;
 }
@@ -9,32 +10,36 @@ interface Coordinates {
 }
 
 interface Point {
-  coordinates: Coordinates;
+  id?: number;
+  authorId?: number;
   title: string;
-  description: string;
-  date: number;
-  tags: Tag[];
-  imgPaths: string[];
-  author: User;
-  public: boolean;
-  share_id?: string;
+  description?: string;
+  isPublic: boolean;
+  lng: number;
+  lat: number;
+  imagePath: string;
+  spotifyPath?: string;
+  tags?: Tag[];
+  list: List;
+  listId?: number;
+  likedBy?: User[];
 }
 
 interface List {
-  id: number;
+  id?: number;
   title: string;
   author: User;
   imagePath: string;
   description: string;
   createdAt: number;
   tags: Tag[];
-  public: boolean;
+  isPublic: boolean;
   spotifyPath?: string;
   points: Point[];
 }
 
 interface User {
-  id: number;
+  id?: number;
   email: string;
   userName: string;
   name?: string;

@@ -1,20 +1,36 @@
 import Image from 'next/image.js';
 import React, { useContext } from 'react';
 import { useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { Coordinates } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
+import PointMarker from './mapMarkers/PointMarker';
+import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
+import svgSource from '../public/geopoints-logo.svg'
+
+console.log(svgSource)
+
+const testCoords: Coordinates[] = [{lat: 51.59298641280394, lng: 0.19911695761843295}, {lat: 51.59093347811105, lng: 0.2012627247702207}]
 
 const containerStyle = {
-  width: '100vw',
-  height: '100vh',
+  width: '100%',
+  height: '100%',
 };
+
+
 
 function Map() {
   const [currentUserLocation, setCurrentUserLocation] =
     useState<Coordinates | null>(null);
   const { map, setMap } = useContext(MapContext);
+  const { displayedPoints } = useContext(DisplayedPointsContext)
+
+  const displayedPointCoordinates: Coordinates[] = displayedPoints.map((point)=>{
+    return {lat:point.lat, lng:point.lng}
+  })
+
+console.log(displayedPointCoordinates)
 
   getUserPosition();
 
@@ -63,8 +79,8 @@ function Map() {
         flex
         justify-center
         items-center
-        h-screen
-        w-screen
+        h-full
+        w-full
         top-0
         left-0
         "
@@ -76,6 +92,8 @@ function Map() {
         onUnmount={onUnmount}
         options={{
           streetViewControl: false,
+          fullscreenControl: false,
+          rotateControl: false,
           zoomControlOptions: {
             position: google.maps.ControlPosition.LEFT_CENTER,
           },
@@ -86,10 +104,16 @@ function Map() {
           mapTypeId: 'satellite'
         }}
       >
-        {/* <Marker position={center}>
-
-                </Marker> */}
-        <></>
+        <>
+        {displayedPointCoordinates.map((coords, i) => {
+          return <Marker key={i} position={coords}/>
+        })}
+        {/* <Marker icon={{
+          url: svgSource.src,
+          scaledSize: new google.maps.Size(32, 32)
+          }} position={{lat: 51.59298641280394, lng: 0.19911695761843295}}
+        /> */}
+        </>
       </GoogleMap>
       <div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />

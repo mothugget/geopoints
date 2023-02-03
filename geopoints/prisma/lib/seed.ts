@@ -29,25 +29,46 @@ const NUMBER_OF_FAKE_USERS = 7;
           bio: faker.lorem.sentence(),
           imagePath: faker.image.avatar(),
           ownLists: {
-            create: {
-              title: faker.company.catchPhrase(),
-              description: faker.lorem.sentence(),
-              imagePath: faker.image.nature(),
-              public: true,
-              tags: {
-                create: {
-                  name: faker.random.word(),
+            create: [
+              {
+                title: 'My Points',
+                description: faker.lorem.sentence(),
+                imagePath: faker.image.nature(),
+                isPublic: true,
+                tags: {
+                  create: {
+                    name: faker.random.word(),
+                  },
+                },
+                points: {
+                  create: {
+                    title: faker.company.bsNoun(),
+                    lng: Number(faker.address.longitude()),
+                    lat: Number(faker.address.latitude()),
+                    imagePath: faker.image.nature(),
+                  },
                 },
               },
-              points: {
-                create: {
-                  title: faker.company.bsNoun(),
-                  lng: Number(faker.address.longitude()),
-                  lat: Number(faker.address.latitude()),
-                  imagePaths: faker.image.nature(),
+              {
+                title: faker.company.catchPhrase(),
+                description: faker.lorem.sentence(),
+                imagePath: faker.image.nature(),
+                isPublic: true,
+                tags: {
+                  create: {
+                    name: faker.random.word(),
+                  },
+                },
+                points: {
+                  create: {
+                    title: faker.company.bsNoun(),
+                    lng: Number(faker.address.longitude()),
+                    lat: Number(faker.address.latitude()),
+                    imagePath: faker.image.nature(),
+                  },
                 },
               },
-            },
+            ],
           },
         },
       });
@@ -61,25 +82,39 @@ const NUMBER_OF_FAKE_USERS = 7;
         bio: faker.lorem.sentence(),
         imagePath: faker.image.avatar(),
         ownLists: {
-          create: {
-            public: true,
-            title: faker.company.catchPhrase(),
-            description: faker.lorem.sentence(),
-            imagePath: faker.image.nature(),
-            tags: {
-              create: {
-                name: faker.random.word(),
+          create: [
+            {
+              title: 'My Points',
+              imagePath: faker.image.nature(),
+              points: {
+                create: {
+                  title: faker.company.bsNoun(),
+                  lng: Number(faker.address.longitude()),
+                  lat: Number(faker.address.latitude()),
+                  imagePath: faker.image.nature(),
+                },
               },
             },
-            points: {
-              create: {
-                title: faker.company.bsNoun(),
-                lng: Number(faker.address.longitude()),
-                lat: Number(faker.address.latitude()),
-                imagePaths: faker.image.nature(),
+            {
+              isPublic: true,
+              title: faker.company.catchPhrase(),
+              description: faker.lorem.sentence(),
+              imagePath: faker.image.fashion(),
+              tags: {
+                create: {
+                  name: faker.random.word(),
+                },
+              },
+              points: {
+                create: {
+                  title: faker.company.bsNoun(),
+                  lng: Number(faker.address.longitude()),
+                  lat: Number(faker.address.latitude()),
+                  imagePath: faker.image.business(),
+                },
               },
             },
-          },
+          ],
         },
       },
     });

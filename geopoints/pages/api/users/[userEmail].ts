@@ -10,7 +10,11 @@ const getUserData = async (req: NextApiRequest, res: NextApiResponse) => {
       const userData = await prisma.user.findUnique({
         where: { email: userEmail },
         include: {
-          ownLists: true,
+          ownLists: {
+            include: {
+              points: true,
+            },
+          },
           likedLists: true,
           likedPoints: true,
         },

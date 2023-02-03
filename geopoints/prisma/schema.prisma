@@ -34,21 +34,21 @@ model List {
   description String?
   imagePath   String?  @map(name: "image_path")
   createdAt   DateTime @default(now()) @map(name: "created_at")
-  public      Boolean  @default(false)
+  isPublic      Boolean  @default(false) @map(name: "is_public")
   spotifyPath String?  @map(name: "spotify_path")
   tags        Tag[]
   points      Point[]
-  liked_by    User[]   @relation("LikedLists")
+  likedBy    User[]   @relation("LikedLists")
 }
 
 model Point {
   id          Int      @id @default(autoincrement())
   title       String
   description String?
-  public      Boolean  @default(false)
+  isPublic      Boolean  @default(false) @map(name: "is_public")
   lng         Float
   lat         Float
-  imagePaths  String[] @map(name: "image_paths")
+  imagePath  String @map(name: "image_path")
   spotifyPath String?  @map(name: "spotify_path")
   tags        Tag[]
   list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
@@ -58,7 +58,7 @@ model Point {
 
 model Tag {
   id            Int     @id @default(autoincrement())
-  name          String
+  name          String  @unique
   timesSearched Int     @default(0) @map(name: "times_searched")
   points        Point[]
   lists         List[]
