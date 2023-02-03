@@ -21,7 +21,7 @@ export default function CreatePointForm() {
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
     if (pointInput.list === undefined) {
-      pointInput.list=userData?.ownLists?.at(0)?.id
+      pointInput.list=data?.ownLists?.at(0)?.id
     } 
     const pointData = {
       title: pointInput.title,
