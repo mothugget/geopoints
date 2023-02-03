@@ -8,6 +8,8 @@ const prisma = new PrismaClient();
 const createListHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { listData, authorId } = req.body;
+    console.log({ listData });
+    console.log({ authorId });
     if (!authorId) throw new Error('You must send listData and authorId');
     checkIflistDataIsValid(listData);
     const arrayOfTagIds = await createTagsIfTheyDontExist(listData.tags);
@@ -56,6 +58,9 @@ const createList = async (
         tags: {
           connect: arrayOfTagIds,
         },
+      },
+      include: {
+        tags: true,
       },
     });
   } catch (error) {

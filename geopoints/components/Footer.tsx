@@ -8,8 +8,7 @@ import New from './ContentCreation/New';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showAddContentModal, setShowAddContentModal] =
-    useState<boolean>(false);
+  const [showAddContentModal, setShowAddContentModal] = useState(false);
 
   return (
     <>
@@ -19,21 +18,12 @@ const Footer = () => {
           <Link href="/">
             <BsFillGeoFill className="w-8 h-8" />
           </Link>
-          {/* <button
-            onClick={() => {
-              setShowAddContentModal(!showAddContentModal);
-              if (showSidebar) {
-                setShowSidebar(!showSidebar);
-              }
-            }} */}
-          {/* > */}
           <New
             showSidebar={showSidebar}
             setShowSidebar={setShowSidebar}
             showAddContentModal={showAddContentModal}
             setShowAddContentModal={setShowAddContentModal}
           />
-          {/* </button> */}
           <AiOutlineUnorderedList
             onClick={() => setShowSidebar(!showSidebar)}
             className="w-8 h-8"
