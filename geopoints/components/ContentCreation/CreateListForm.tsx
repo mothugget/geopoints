@@ -4,6 +4,7 @@ import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 
+
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
@@ -14,7 +15,7 @@ interface CreateListFormProps {
 
 function CreateListForm() {
   // this is how we get the user data now.
-  // const { user } = useUser(); 
+  // const { user } = useUser();
   // const { isError, isLoading, error, data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [listInput, setListInput] = useState<any>(null);
