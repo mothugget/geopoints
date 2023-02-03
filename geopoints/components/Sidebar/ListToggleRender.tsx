@@ -17,27 +17,31 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
+function sendPointsToMap() {
+  const allPoints = [displayedPoints, list.points]
+  if (enabled) {
+    setDisplayedPoints!(allPoints.flat())
+  } else {
+    const allPoints: Point[] = []
+    displayedPoints.forEach(point => {
+      (point.listId !== list.id) && allPoints.push(point)
+    })
+    setDisplayedPoints!(allPoints)
+  }
+}
+
   useEffect(()=>{
+    sendPointsToMap();
   if (list.id && window.localStorage[list.id]) { setEnabled(window.localStorage[list.id])}
   }, [])
 
 
   useEffect(() => {
-    const allPoints = [displayedPoints, list.points]
-    if (enabled) {
-      setDisplayedPoints!(allPoints.flat())
-    } else {
-      const allPoints: Point[] = []
-      displayedPoints.forEach(point => {
-        (point.listId !== list.id)&&allPoints.push(point)
-      })
-      setDisplayedPoints!(allPoints)
-    }
-
-    // list.id && (window.localStorage[list.id] = !enabled);
+  sendPointsToMap();
+    // list.id && (window.localStorage[list.id] = enabled);
   }, [enabled])
 
-  console.log(enabled)
+ console.log(list.title, ' ', list.id, ' ', enabled)
 
   return (
     <div className="mt-5 flex justify-between">
