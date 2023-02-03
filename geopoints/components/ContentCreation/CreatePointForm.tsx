@@ -41,9 +41,6 @@ export default function CreatePointForm() {
     }
   };
 
-  console.log(userData?.ownLists?.at(0)?.id)
-  console.log(pointInput.list)
-
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, title: e.target.value });
   };
