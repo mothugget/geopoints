@@ -6,15 +6,15 @@ interface PointUnderListProps {
   imagePath?: string;
   title: string;
   description?: string;
-  tags: Tag[];
+  // tags: string;
 }
 
 const PointUnderList = ({
   imagePath,
   title,
   description,
-  tags,
-}: PointUnderListProps) => {
+}: // tags,
+PointUnderListProps) => {
   return (
     <section>
       <div className="p-3">
@@ -24,7 +24,7 @@ const PointUnderList = ({
               <Image
                 width={120}
                 height={10}
-                src={imagePath || '/favicon.ico'}
+                src={'/favicon.ico'}
                 alt={title}
                 className="flex-none overflow-hidden h-24 rounded-md"
               />
@@ -39,6 +39,7 @@ const PointUnderList = ({
                 </p>
               )}
               <div className="flex flex-wrap justify-start space-x-2">
+                {/*
                 {tags?.map((tag) => {
                   return (
                     <li key={tag.id}>
@@ -47,7 +48,7 @@ const PointUnderList = ({
                       </span>
                     </li>
                   );
-                })}
+                })} */}
               </div>
             </div>
           </div>
