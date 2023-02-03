@@ -1,26 +1,12 @@
-import { useContext } from 'react';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client';
-import { useQuery } from 'react-query';
-import { UserDataContext } from '../contexts/UserDataContext';
+import { useUserData } from '../hooks/useUserData';
 import Map from '../components/Map';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
-import fetchUserData from '../util/fetchUserData';
 
 export default withPageAuthRequired(function Home() {
-  const { userData, setUserData } = useContext(UserDataContext);
   const { user } = useUser();
-
-  const { isError, isLoading, error } = useQuery(
-    ['fectchUserData', user!],
-    async () => {
-      const data = await fetchUserData(user!);
-      if (data && setUserData) {
-        setUserData({ ...data }); // set user data to global context
-        return data;
-      }
-    }
-  );
+  const { isError, isLoading, error, data } = useUserData(user!);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -30,7 +16,7 @@ export default withPageAuthRequired(function Home() {
     return <span className="text-black">Error: {error.message}</span>;
   }
 
-  console.log(userData);
+  console.log({ data });
   return (
     <main className="flex flex-col h-screen justify-between bg-white">
       <Header />
