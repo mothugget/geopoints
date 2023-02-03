@@ -9,8 +9,7 @@ import Link from 'next/link';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [showAddContentModal, setShowAddContentModal] =
-    useState<boolean>(false);
+  const [showAddContentModal, setShowAddContentModal] = useState(false);
 
   return (
     <>
@@ -23,16 +22,24 @@ const Footer = () => {
           <button
             onClick={() => {
               setShowAddContentModal(!showAddContentModal);
+              if (showSidebar) {
+                setShowSidebar(!showSidebar);
+              }
             }}
           >
             <IoAddCircleOutline className="w-8 h-8" />
           </button>
           <AiOutlineUnorderedList
-            onClick={() => setShowSidebar(!showSidebar)}
+            onClick={() => {
+              setShowSidebar(!showSidebar);
+              if (showAddContentModal) {
+                setShowAddContentModal(!showAddContentModal);
+              }
+            }}
             className="w-8 h-8"
           />
         </div>
-          <AddContentModal showAddContentModal={showAddContentModal} />
+        <AddContentModal showAddContentModal={showAddContentModal} />
       </footer>
     </>
   );
