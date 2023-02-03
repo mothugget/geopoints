@@ -38,7 +38,7 @@ function sendPointsToMap() {
 
   useEffect(() => {
   sendPointsToMap();
-    // list.id && (window.localStorage[list.id] = enabled);
+    // list.id && (window.localStorage[list.title+list.id] = enabled);
   }, [enabled])
 
  console.log(list.title, ' ', list.id, ' ', enabled)
