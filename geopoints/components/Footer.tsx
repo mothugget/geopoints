@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image.js';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import ListsSidebar from './Sidebar/ListsSidebar';
@@ -9,6 +9,13 @@ import New from './ContentCreation/New';
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showAddContentModal, setShowAddContentModal] = useState(false);
+  const [prevRoute, setPrevRoute] = useState('');
+  const router = useRouter();
+
+  if (router.pathname !== prevRoute) {
+    setPrevRoute(router.pathname);
+    setShowSidebar(false);
+  }
 
   return (
     <>
@@ -31,8 +38,14 @@ const Footer = () => {
             setShowAddContentModal={setShowAddContentModal}
           />
           <AiOutlineUnorderedList
-            onClick={() => setShowSidebar(!showSidebar)}
-            className="w-8 h-8"
+            onClick={() => {
+              if (router.pathname === '/') {
+                setShowSidebar(!showSidebar);
+              }
+            }}
+            className={`w-8 h-8 ${
+              router.pathname === '/' ? `text-gray-600` : `text-gray-200`
+            }`}
           />
         </div>
       </footer>
