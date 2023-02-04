@@ -26,7 +26,7 @@ const createNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
       throw new Error('Incorrect data on request body');
     }
   } catch (error) {
-    // console.error({ error });
+    console.error({ error });
     if (error instanceof Error) {
       res.status(500).json({ newUser: null, error: error.message });
     } else {
