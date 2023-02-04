@@ -36,7 +36,7 @@ export default function CreatePointForm({
   const { setDisplayedPoints } = useContext(
     DisplayedPointsContext
   );
-  const {refetch} = useUserData(user!)
+  const {refetch, isLoading, isError, data} = useUserData(user!)
   
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
