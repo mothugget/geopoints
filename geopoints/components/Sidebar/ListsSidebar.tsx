@@ -10,8 +10,6 @@ interface ListsSidebarProps {
 }
 
 const ListsSidebar = ({ showSidebar, setShowSidebar }: ListsSidebarProps) => {
-  // thsi componenet needs the showSidebar prop to create a smooth animation
-  // todo work on animation
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
   

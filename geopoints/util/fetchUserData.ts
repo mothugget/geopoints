@@ -18,6 +18,7 @@ const fetchUserData = async (user: UserProfile) => {
 
 const createNewUser = async (user: UserProfile) => {
   const parsedUser = parseUser(user);
+  console.log(parsedUser);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/users/create`,
     {

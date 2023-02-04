@@ -1,8 +1,6 @@
 import React, { useState, useContext, Dispatch, SetStateAction } from 'react';
 import UploadWidget from '../UploadWidget';
 import { MapContext } from '../../contexts/MapContext';
-import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
-import { faker } from '@faker-js/faker';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { List } from '../../types/types';
@@ -14,6 +12,8 @@ import {
   Checkbox,
   Button,
 } from '@material-tailwind/react';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
+import { faker } from '@faker-js/faker';
 
 interface CreatePostFormProps {
   setShowCreatePoint: Dispatch<SetStateAction<boolean>>;
@@ -21,6 +21,7 @@ interface CreatePostFormProps {
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 text-black';
+import LoadingSpinner from '../LoadingSpinner';
 
 export default function CreatePointForm({
   setShowCreatePoint,
@@ -31,7 +32,6 @@ export default function CreatePointForm({
   const [pointInput, setPointInput] = useState<any>({});
 
   const { user } = useUser();
-  const { data } = useUserData(user!);
   const { map } = useContext(MapContext);
   const { setDisplayedPoints } = useContext(
     DisplayedPointsContext
@@ -63,6 +63,14 @@ export default function CreatePointForm({
     }
   };
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (isError) {
+    return <span className="text-black">Error</span>;
+  }
+
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPointInput({ ...pointInput, title: e.target.value });
   };
@@ -77,7 +85,7 @@ export default function CreatePointForm({
     console.log({ listId });
     setPointInput({ ...pointInput, listId });
   };
-
+  console.log({ data });
   return (
     data && (
       <form
@@ -109,22 +117,18 @@ export default function CreatePointForm({
             onChange={publicInputHandler}
           />
         </div>
-
-        {data.ownList?.length > 0 && (
-          <Select
-            id="List"
-            name="List"
-            label="Select List"
-            onChange={listInputHandler}
-          >
-            {data.ownLists?.map((list: List) => (
-              <Option key={list.id} value={String(list.id)}>
-                {list.title}
-              </Option>
-            ))}
-          </Select>
-        )}
-
+        <Select
+          id="List"
+          name="List"
+          label="Select List"
+          onChange={listInputHandler}
+        >
+          {data.ownLists?.map((list: List) => (
+            <Option key={list.id} value={String(list.id)}>
+              {list.title}
+            </Option>
+          ))}
+        </Select>
         <div className="my-5">
           <UploadWidget
             setImgUploaded={setImgUploaded}
@@ -136,7 +140,7 @@ export default function CreatePointForm({
           <Button
             ripple={true}
             type="submit"
-            disabled={pointInput.listId ? false : true}
+            disabled={!pointInput.listId}
           >
             Create
           </Button>

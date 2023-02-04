@@ -71,6 +71,8 @@ export default function MyTabs() {
                     imagePath={list.imagePath}
                     title={list.title}
                     description={list.description}
+                    userName={data.userName}
+                    listId={list.id!}
                   />
                 );
               })
@@ -88,7 +90,7 @@ export default function MyTabs() {
                 );
               })
             ) : value === 'Profile' ? (
-              <ProfileTab imagePath={data.imagePath} userName={data.userName} bio={data.bio} />
+              <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
             ) : (
               <p>hello</p>
             )}
