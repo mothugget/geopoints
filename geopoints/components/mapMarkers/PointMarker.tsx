@@ -34,16 +34,20 @@ const PointMarker = ({ point }: PointMarkerProps) => {
     })
     .start();
 
-  function pointMarkerClick() {
-    function animate(time: number) {
-      requestAnimationFrame(animate);
-      update(time);
-    }
+  // function pointMarkerClick() {
+  //   function animate(time: number) {
+  //     requestAnimationFrame(animate);
+  //     update(time);
+  //   }
 
-    requestAnimationFrame(animate);
+  //   requestAnimationFrame(animate);
+  //   setShowPointModal(true)
+  // }
+  
+  function pointMarkerClick() {
+    map?.moveCamera({center: latLangCoordinates})
     setShowPointModal(true)
   }
-  
 
 
 
