@@ -4,8 +4,8 @@ import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { createList } from '../../util/createList';
-import { useMutation, useQueryClient } from 'react-query';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
+import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
