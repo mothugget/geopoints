@@ -7,9 +7,9 @@ import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 import PointMarker from './mapMarkers/PointMarker';
 import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
-import svgSource from '../public/geopoints-logo.svg'
+import logo from '../public/geopoints-logo-contrasted.png'
 
-console.log(svgSource)
+
 
 const testCoords: Coordinates[] = [{lat: 51.59298641280394, lng: 0.19911695761843295}, {lat: 51.59093347811105, lng: 0.2012627247702207}]
 
@@ -29,7 +29,7 @@ function Map() {
   const displayedPointCoordinates: Coordinates[] = displayedPoints.map((point)=>{
     return {lat:point.lat, lng:point.lng}
   })
-
+ logo
 console.log(displayedPointCoordinates)
 
   getUserPosition();
@@ -106,7 +106,10 @@ console.log(displayedPointCoordinates)
       >
         <>
         {displayedPointCoordinates.map((coords, i) => {
-          return <Marker key={i} position={coords}/>
+          return <Marker key={i} icon={{
+            url: logo.src,
+            scaledSize: new google.maps.Size(40, 40)
+          }} position={coords}/>
         })}
         {/* <Marker icon={{
           url: svgSource.src,

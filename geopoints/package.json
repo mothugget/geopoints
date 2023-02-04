@@ -14,8 +14,12 @@
   "dependencies": {
     "@algolia/autocomplete-core": "^1.7.4",
     "@auth0/nextjs-auth0": "^2.2.1",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@headlessui/react": "^1.7.8",
     "@material-tailwind/react": "^1.2.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.7",
     "@prisma/client": "^4.9.0",
     "@react-google-maps/api": "^2.18.1",
     "next": "13.1.5",
