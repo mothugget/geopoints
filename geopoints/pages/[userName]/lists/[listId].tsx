@@ -13,8 +13,6 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
 
-  console.log(listData)
-
   if (isLoading) {
     return <LoadingSpinner />;
   }

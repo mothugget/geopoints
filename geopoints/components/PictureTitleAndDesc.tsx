@@ -1,5 +1,6 @@
 import { Point } from '../types/types';
 import PointUnderList from './PointUnderList';
+import Link from 'next/link';
 
 import {
   Card,
@@ -40,6 +41,8 @@ const PictureTitleAndDesc = ({
       </CardBody>
       {points!.map((point) => {
           return (
+            <Link href={`../../../points/${point.id}`}>
+
             <CardFooter divider className="py-1">
               <PointUnderList
                 key={point.id}
@@ -49,6 +52,7 @@ const PictureTitleAndDesc = ({
                 // tags={listData.tags}
               />
             </CardFooter>
+            </Link>
           );
         })}
     </Card>

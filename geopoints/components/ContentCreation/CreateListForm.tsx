@@ -4,33 +4,93 @@ import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { createList } from '../../util/createList';
-import {
-  Select,
-  Option,
-  Input,
-  Checkbox,
-  Button,
-} from '@material-tailwind/react';
+import { useMutation, useQueryClient } from 'react-query';
+import SmallLoadingSpinner from '../SmallLoadingSpinner';
+import { Input, Checkbox, Button } from '@material-tailwind/react';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
 interface CreateListFormProps {
-  setShowCreateList: Dispatch<SetStateAction<boolean>>
+  setShowCreateList: Dispatch<SetStateAction<boolean>>;
 }
 
-function CreateListForm({setShowCreateList} : CreateListFormProps ) {
+interface ListData {
+  title: string;
+  author: number;
+  description: string;
+  tags: string[];
+  isPublic: boolean;
+  imagePath: string;
+}
+
+function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const { user } = useUser();
-  const { isError, isLoading, error, data } = useUserData(user!);
+  const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
   const [listInput, setListInput] = useState<any>(null);
   const [checkboxState, setCheckboxState] = useState(false);
+  const [imgPath, setImgPath] = useState('');
 
-  const [imgPath, setImgPath] = useState<string>('');
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    (listData: ListData) => {
+      return createList(listData, listData.author);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('fectchUserData');
+      },
+    }
+  );
+
+  if (mutation.isLoading) {
+    return (
+      <div className="flex justify-center itmes-center h-full">
+        <SmallLoadingSpinner size={45} />
+      </div>
+    );
+  }
+
+  if (mutation.isError) {
+    return (
+      <div className="flex flex-col justify-center itmes-center h-96">
+        <p className="text-red-200 font-semibold italic animate-pulse">
+          Something went wrong while creating the list...
+        </p>
+        <Button
+          className="my-5"
+          ripple={true}
+          color="red"
+          onClick={() => mutation.reset()}
+        >
+          Try again
+        </Button>
+      </div>
+    );
+  }
+  if (mutation.isSuccess) {
+    return (
+      <div className="flex flex-col justify-center items-center h-full">
+        <div className="text-green-500 font-semibold text-xl">
+          List created! ✅
+        </div>
+        <Button
+          className="my-5"
+          ripple={true}
+          color="green"
+          onClick={() => mutation.reset()}
+        >
+          Create another one!
+        </Button>
+      </div>
+    );
+  }
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    const listData = {
+    const listData: ListData = {
       title: listInput.title,
       author: data.id,
       description: listInput.description,
@@ -38,14 +98,8 @@ function CreateListForm({setShowCreateList} : CreateListFormProps ) {
       isPublic: checkboxState,
       imagePath: imgPath ? imgPath : '',
     };
-    console.log(listData, data?.id);
-    try {
-      const newList = await createList(listData, data?.id);
-      setShowCreateList(false)
-      return newList;
-    } catch (err) {
-      console.log(err);
-    }
+    mutation.mutate(listData);
+    setListInput({});
   };
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
