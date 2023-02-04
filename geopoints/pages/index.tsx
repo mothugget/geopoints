@@ -3,6 +3,7 @@ import { useUserData } from '../hooks/useUserData';
 import Map from '../components/Map';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
+import FocusedPointModal from '../components/mapMarkers/FocusedPointModal';
 
 export default withPageAuthRequired(function Home() {
   const { user } = useUser();
@@ -21,6 +22,7 @@ export default withPageAuthRequired(function Home() {
       <Header />
       <section className="mb-auto">
         <Map />
+        <FocusedPointModal/>
       </section>
     </main>
   );

@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, Dispatch, SetStateAction } from 'react';
 import UploadWidget from '../UploadWidget';
 import { MapContext } from '../../contexts/MapContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { List } from '../../types/types';
-import { createPoint } from '../../util/createPoint';
+import {createPoint} from "../../util/createPoint"
 import {
   Select,
   Option,
@@ -12,17 +12,32 @@ import {
   Checkbox,
   Button,
 } from '@material-tailwind/react';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
+import { faker } from '@faker-js/faker';
+
+interface CreatePostFormProps {
+  setShowCreatePoint: Dispatch<SetStateAction<boolean>>;
+}
+
+const labelClass = 'w-full text-base font-bold text-gray-800';
+const inputClass = 'border-black border-2 rounded-md min-w-50 text-black';
 import LoadingSpinner from '../LoadingSpinner';
 
-export default function CreatePointForm() {
+export default function CreatePointForm({
+  setShowCreatePoint,
+}: CreatePostFormProps) {
   const [checkboxState, setCheckboxState] = useState<boolean>(false);
   const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>('');
   const [pointInput, setPointInput] = useState<any>({});
+
   const { user } = useUser();
   const { map } = useContext(MapContext);
-  const { data, isLoading, isError } = useUserData(user!);
-
+  const { setDisplayedPoints } = useContext(
+    DisplayedPointsContext
+  );
+  const {refetch, isLoading, isError, data} = useUserData(user!)
+  
   const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
     console.log({ imgPath });
@@ -37,6 +52,11 @@ export default function CreatePointForm() {
     };
     try {
       const newPoint = await createPoint(pointData, pointInput.listId);
+      console.log(newPoint.newPoint)
+      refetch()
+      window.localStorage.setItem('list' + pointInput.listId, 'true')
+      setDisplayedPoints&&setDisplayedPoints(samePoints => [...samePoints, newPoint.newPoint])
+      setShowCreatePoint(false)
       return newPoint;
     } catch (err) {
       console.log(err);

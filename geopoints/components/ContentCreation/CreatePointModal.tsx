@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import CreatePostForm from './CreatePointForm';
 
-interface CreatePostModalProps {
+interface CreatePointModalProps {
   showCreatePoint: boolean;
   setShowCreatePoint: Dispatch<SetStateAction<boolean>>;
 }
@@ -9,7 +9,7 @@ interface CreatePostModalProps {
 export default function CreatePointModal({
   showCreatePoint,
   setShowCreatePoint,
-}: CreatePostModalProps) {
+}: CreatePointModalProps) {
   return (
     <div
       className={`${
@@ -21,10 +21,8 @@ export default function CreatePointModal({
         onClick={() => setShowCreatePoint(!showCreatePoint)}
       />
       <div className="fixed text-left h-full top-0 right-0 w-[70vw] bg-white shadow p-10 pl-10 z-30">
-        <h2 className="w-full text-2xl font-bold text-gray-800">
-          Create Point
-        </h2>
-        <CreatePostForm />
+        <h2 className="w-full text-2xl font-bold text-gray-800">Create Point</h2>
+        <CreatePostForm setShowCreatePoint={setShowCreatePoint}/>
       </div>
     </div>
   );

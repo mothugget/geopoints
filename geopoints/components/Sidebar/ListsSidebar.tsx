@@ -3,6 +3,7 @@ import { useUserData } from '../../hooks/useUserData';
 import { useContext, Dispatch, SetStateAction } from 'react';
 import GroupOfLists from './GroupOfLists';
 
+
 interface ListsSidebarProps {
   showSidebar: boolean;
   setShowSidebar: Dispatch<SetStateAction<boolean>>
@@ -11,7 +12,7 @@ interface ListsSidebarProps {
 const ListsSidebar = ({ showSidebar, setShowSidebar }: ListsSidebarProps) => {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
-
+  
   return (
     <div className={`${showSidebar ? 'translate-x-0 ' : 'translate-x-full'} fixed text-left h-full top-0 right-0 w-screen transition-all ease-in-out duration-600 z-30`}>
       <button className='h-full w-full z-20' onClick={()=> setShowSidebar(!showSidebar)}/>

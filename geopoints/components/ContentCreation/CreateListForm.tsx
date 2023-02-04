@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { User } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
@@ -16,11 +16,10 @@ const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
 interface CreateListFormProps {
-  listInput: User | {};
-  setListInput: React.Dispatch<React.SetStateAction<{}>>;
+  setShowCreateList: Dispatch<SetStateAction<boolean>>
 }
 
-function CreateListForm() {
+function CreateListForm({setShowCreateList} : CreateListFormProps ) {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
@@ -42,6 +41,7 @@ function CreateListForm() {
     console.log(listData, data?.id);
     try {
       const newList = await createList(listData, data?.id);
+      setShowCreateList(false)
       return newList;
     } catch (err) {
       console.log(err);

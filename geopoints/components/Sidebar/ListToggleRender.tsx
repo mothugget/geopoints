@@ -14,8 +14,8 @@ interface ListToggleProps {
 
 const ListToggle = ({ list }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
-  const [rerender, setRerender] = useState(false)
-
+  
+  const toggleState = window.localStorage.getItem('list' + list.id)
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
   const { displayedPoints, setDisplayedPoints } = useContext(
@@ -34,7 +34,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
 
 
   useEffect(() => {
-    const toggleState = window.localStorage.getItem(list.title + list.id)
+    
     if (toggleState !== null) {
       const toggleStateBool = JSON.parse(toggleState)
       setEnabled(toggleStateBool)
@@ -44,12 +44,12 @@ const ListToggle = ({ list }: ListToggleProps) => {
         removeListPointsFromMap(list.id)
       }
     }
-  }, [])
+  }, [toggleState])
 
 
 
-  function mockSetEnabled(value: any) {
-    window.localStorage.setItem(list.title + list.id, value)
+  function makeListVisible(value: boolean) {
+    window.localStorage.setItem('list' + list.id, JSON.stringify(value))
     setEnabled(value);
     if (value) {
       sendListPointsToMap(list.points)
@@ -64,7 +64,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
       <div className="mt-5 flex justify-between">
         <Switch
           checked={enabled}
-          onChange={mockSetEnabled}
+          onChange={makeListVisible}
           className={`${enabled ? 'bg-blue-600' : 'bg-gray-200'
             } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
         >
