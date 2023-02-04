@@ -2,18 +2,26 @@ import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { Point } from '../../types/types.js';
 import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
+import PointDisplay from '../../components/PointPage/PointDisplay';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const prisma = new PrismaClient();
 
 function PointPage({ pointData }: { pointData: Point }) {
+  console.log('PointPage data: ', pointData)
+
   return (
-    <div className="flex flex-col mt-10">
-      <PictureTitleAndDesc
-        imagePath={pointData.imagePath!}
-        title={pointData.title}
-        description={pointData.description!}
-      />
-    </div>
+    pointData && pointData.imagePath ? (
+      <div className="flex flex-col mt-10">
+        <PointDisplay
+          imagePath={pointData.imagePath}
+          title={pointData.title}
+          desc={pointData.description!}
+        />
+      </div>
+    ) : (
+      <LoadingSpinner />
+    )
   );
 }
 

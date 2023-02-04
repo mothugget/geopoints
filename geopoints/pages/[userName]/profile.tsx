@@ -39,9 +39,11 @@ const tableData = [
 
 export default function MyTabs() {
   const { user } = useUser();
+  // console.log('Profile page, user: ', user)
 
   const { isError, isLoading, data, error, refetch } = useUserData(user!)
 
+  // console.log('Profile page, data: ', data)
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -52,8 +54,8 @@ export default function MyTabs() {
   console.log({ data });
 
   return (
-    <Tabs value="html" className="bg-transparent">
-      <TabsHeader className="text-gray-800 bg-transparent">
+    <Tabs value={'Lists'} className="bg-transparent">
+      <TabsHeader className="text-gray-800 bg-transparent z-10">
         {tableData.map(({ label, value }) => (
           <Tab key={value} value={value} className="bg-transparent z-50">
             {label}
@@ -66,14 +68,16 @@ export default function MyTabs() {
             {value === 'Lists' ? (
               data?.ownLists.map((list: List) => {
                 return (
-                  <ListsTab
-                    key={list.id}
-                    imagePath={list.imagePath}
-                    title={list.title}
-                    description={list.description}
-                    userName={data.userName}
-                    listId={list.id!}
-                  />
+                  <div className="flex justify-center">
+                    <ListsTab
+                      key={list.id}
+                      imagePath={list.imagePath}
+                      title={list.title}
+                      description={list.description}
+                      userName={data.userName}
+                      listId={list.id!}
+                    />
+                  </div>
                 );
               })
             ) : value === 'Points' ? (
@@ -90,7 +94,11 @@ export default function MyTabs() {
                 );
               })
             ) : value === 'Profile' ? (
-              <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
+              data && data.imagePath ? (
+                <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
+              ) : (
+                <LoadingSpinner />
+              )
             ) : (
               <p>hello</p>
             )}
