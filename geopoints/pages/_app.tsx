@@ -4,6 +4,7 @@ import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Footer from '../components/Footer';
 import { MapContextProvider } from '../contexts/MapContext';
+import { ClickedMarkerContextProvider } from '../contexts/ClickedMarkerContext';
 import { DisplayedPointsContextProvider } from '../contexts/DisplayedPointsContext';
 import Header from '../components/Header';
 import { ThemeProvider } from '@material-tailwind/react';
@@ -15,13 +16,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     <UserProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <DisplayedPointsContextProvider>
-            <MapContextProvider>
-              <Header />
-              <Footer />
-              <Component {...pageProps} />
-            </MapContextProvider>
-          </DisplayedPointsContextProvider>
+          <ClickedMarkerContextProvider>
+            <DisplayedPointsContextProvider>
+              <MapContextProvider>
+                <Header />
+                <Footer />
+                <Component {...pageProps} />
+              </MapContextProvider>
+            </DisplayedPointsContextProvider>
+          </ClickedMarkerContextProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </UserProvider>

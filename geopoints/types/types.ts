@@ -9,6 +9,16 @@ interface Coordinates {
   lng: number;
 }
 
+interface CreatePointData {
+  title: string;
+  description: string;
+  isPublic: boolean;
+  lng: number;
+  lat: number;
+  imagePath: string;
+  listId: number;
+}
+
 interface Point {
   id?: number;
   authorId?: number;
@@ -54,4 +64,4 @@ interface User {
   likedLists: List[];
 }
 
-export type { Tag, User, Coordinates, Point, List };
+export type { Tag, User, Coordinates, Point, List, CreatePointData };
