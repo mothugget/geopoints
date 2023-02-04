@@ -99,7 +99,7 @@ describe('api/users/create API Endpoint', () => {
       expect(newUser).toBe(null);
     });
 
-    it('Should return an error when request body properties are falsy', async () => {
+    it('Should return an error when a request body property is empty', async () => {
       const { req, res } = mockRequestResponse();
 
       req.body = {
