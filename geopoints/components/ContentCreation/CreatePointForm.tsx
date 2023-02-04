@@ -3,12 +3,13 @@ import UploadWidget from '../UploadWidget';
 import { MapContext } from '../../contexts/MapContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
-import { List } from '../../types/types';
+import { List, CreatePointData } from '../../types/types';
 import { createPoint } from '../../util/createPoint';
 import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
 import LoadingSpinner from '../LoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
+
 import {
   Select,
   Option,
@@ -19,15 +20,6 @@ import {
 
 interface CreatePostFormProps {
   setShowCreatePoint: Dispatch<SetStateAction<boolean>>;
-}
-interface PointData {
-  title: string;
-  description: string;
-  isPublic: boolean;
-  lng: number;
-  lat: number;
-  imagePath: string;
-  listId: number;
 }
 
 export default function CreatePointForm({
@@ -44,7 +36,7 @@ export default function CreatePointForm({
 
   const queryClient = useQueryClient();
   const mutation = useMutation(
-    (pointData: PointData) => {
+    (pointData: CreatePointData) => {
       return createPoint(pointData, pointData.listId);
     },
     {
