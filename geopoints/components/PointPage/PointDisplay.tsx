@@ -33,10 +33,7 @@ const PointDisplay = ({
         <Typography variant="h4" color="blue-gray" className="mb-2">
           {title}
         </Typography>
-        {/* <Typography variant="h4" color="blue-gray" className="mb-2">
-          {userName}
-        </Typography> */}
-        <Typography className="font-medium text-black" textGradient>
+        <Typography className="font-medium" color="blue-gray" textGradient>
           {desc}
         </Typography>
       </CardBody>
