@@ -66,8 +66,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: null };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
@@ -82,8 +80,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: undefined };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
@@ -98,8 +94,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: 234 };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
@@ -114,8 +108,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: {} };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
@@ -130,8 +122,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: [] };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
@@ -146,8 +136,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: Symbol('hello') };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
@@ -162,8 +150,6 @@ describe('api/users/[userEmail] API Endpoint', () => {
       req.query = { userEmail: true };
       await getUserData(req, res);
       const { userData, error } = res._getJSONData();
-      console.log({ userData });
-      console.log({ error });
 
       expect(res.statusCode).toBe(500);
       expect(res.getHeaders()).toEqual({ 'content-type': 'application/json' });
