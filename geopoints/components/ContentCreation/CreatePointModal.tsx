@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import CreatePostForm from './CreatePointForm';
 
-interface CreatePostModalProps {
+interface CreatePointModalProps {
   showCreatePoint: boolean;
   setShowCreatePoint: Dispatch<SetStateAction<boolean>>;
 }
@@ -9,7 +9,7 @@ interface CreatePostModalProps {
 export default function CreatePointModal({
   showCreatePoint,
   setShowCreatePoint,
-}: CreatePostModalProps) {
+}: CreatePointModalProps) {
   return (
     <div
       className={`${

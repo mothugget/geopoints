@@ -7,7 +7,7 @@ import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 import PointMarker from './mapMarkers/PointMarker';
 import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
-import logo from '../public/geopoints-logo-contrasted.png'
+
 
 
 
@@ -26,11 +26,6 @@ function Map() {
   const { map, setMap } = useContext(MapContext);
   const { displayedPoints } = useContext(DisplayedPointsContext)
 
-  const displayedPointCoordinates: Coordinates[] = displayedPoints.map((point)=>{
-    return {lat:point.lat, lng:point.lng}
-  })
- logo
-console.log(displayedPointCoordinates)
 
   getUserPosition();
 
@@ -105,17 +100,12 @@ console.log(displayedPointCoordinates)
         }}
       >
         <>
-        {displayedPointCoordinates.map((coords, i) => {
-          return <Marker key={i} icon={{
-            url: logo.src,
-            scaledSize: new google.maps.Size(40, 40)
-          }} position={coords}/>
-        })}
-        {/* <Marker icon={{
-          url: svgSource.src,
-          scaledSize: new google.maps.Size(32, 32)
-          }} position={{lat: 51.59298641280394, lng: 0.19911695761843295}}
-        /> */}
+        {/* {displayedPointCoordinates.map((coords, i) => {
+          return <Marker onClick={()=> console.log('hello world')} key={i}  position={coords}/>
+        })} */}
+          {displayedPoints.map((point) => {
+            return <PointMarker key={point.id} point={point} />
+          })}
         </>
       </GoogleMap>
       <div className="absolute z-20">

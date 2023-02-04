@@ -1,19 +1,33 @@
 import React from 'react';
-import { AiFillEnvironment } from 'react-icons/ai';
-import { Coordinates } from '../../types/types';
+import { useRouter } from 'next/router'
 import { Marker } from '@react-google-maps/api';
 
-const PointMarker = (coordinates: Coordinates) => {
-  const customIcon = {
-    position: coordinates,
-    icon: {
-      path: '../../public/geopoints-logo.svg'
-    }
+import { Point } from '../../types/types';
+import logo from '../../public/geopoints-logo-contrasted.png'
+import { MapContext } from '../../contexts/MapContext';
+
+interface PointMarkerProps {
+  point: Point
+}
+
+const PointMarker = ({ point }: PointMarkerProps) => {
+
+  const router = useRouter();
+
+  const coordinates = { lat: point.lat, lng: point.lng }
+
+  function pointMarkerClick() {
+    router.push('/points/' + point.id)
   }
 
   return (
     <Marker
+      onClick={pointMarkerClick}
       position={coordinates}
+      icon={{
+        url: logo.src,
+        scaledSize: new google.maps.Size(40, 40)
+      }}
     />
   )
 }
