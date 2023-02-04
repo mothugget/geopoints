@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useRouter } from 'next/router'
 import { Marker } from '@react-google-maps/api';
 import { Easing, Tween, update } from "@tweenjs/tween.js";
@@ -12,10 +12,9 @@ interface PointMarkerProps {
 }
 
 const PointMarker = ({ point }: PointMarkerProps) => {
-  const [showPointModal, setShowPointModal] = useState(false)
 
   const router = useRouter();
-  const { map } = useContext(MapContext);
+  const { map, setShowPointModal, setFocusedPoint } = useContext(MapContext);
 
   const coordinates = { lat: point.lat, lng: point.lng }
 
@@ -45,8 +44,10 @@ const PointMarker = ({ point }: PointMarkerProps) => {
   // }
   
   function pointMarkerClick() {
-    map?.moveCamera({center: latLangCoordinates})
-    setShowPointModal(true)
+    map?.moveCamera({center: latLangCoordinates});
+
+    setShowPointModal&&setShowPointModal(true)
+    setFocusedPoint&&setFocusedPoint(point)
   }
 
 
