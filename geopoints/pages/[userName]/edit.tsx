@@ -2,8 +2,11 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useUserData } from "../../hooks/useUserData";
 import React, { useState } from "react";
-import UploadWidget from "../../components/UploadWidget";
+// import UploadWidget from "../../components/UploadWidget";
+import EditFormImageUpload from "../../components/ContentCreation/EditFormImageUpload";
 import { updateUserProfile } from "../../util/updateUserProfile";
+import type { IconButtonProps } from "@material-tailwind/react";
+
 
 import {
   Textarea,
@@ -12,12 +15,13 @@ import {
   Button,
   Card,
   CardBody,
-  Typography,
-} from "@material-tailwind/react";
+  IconButton
+  } from "@material-tailwind/react";
 
 function EditProfile(props: any) {
   const { user } = useUser();
   const { isError, isLoading, data, error } = useUserData(user!);
+  const [uploadWidgetEnabled, setUploadWidgetEnabled] = useState<boolean>(false);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -28,7 +32,6 @@ function EditProfile(props: any) {
   }
 
   const initialUpdatedInput = {
-    id: data.id,
     name: data.name,
     userName: data.userName,
     // isPublic: data?.isPublic,
@@ -44,8 +47,7 @@ function EditProfile(props: any) {
   const [imgPath, setImgPath] = useState<string>("");
 
   const updateButtonChecker = () => {
-    if (!updateEnabled)
-      setUpdateEnabled(true);
+    if (!updateEnabled) setUpdateEnabled(true);
   };
 
   const validateEntries =
@@ -88,16 +90,23 @@ function EditProfile(props: any) {
     }
   };
 
+  const toggleUploadWidget = () => {
+    setUploadWidgetEnabled(!uploadWidgetEnabled);
+  }
+
   return (
     <form onSubmit={editProfileHandler} className="mt-10 m-w-96 flex flex-col">
-      <Card className="h-auto w-auto object-contain mx-6 my-6">
+      <Card className="h-auto w-auto object-contain mx-6 my-0">
         <img src={data.imagePath} alt="profile-picture" className="p-6" />
+        <div className="w-8 h-8 absolute left-10 bottom-10">
+          <EditFormImageUpload setImgPath={setImgPath} setImgUploaded={setImgUploaded} multiple={false}/>
+        </div>
       </Card>
 
       <CardBody>
-        <div className="my-2">
+        <div className="mb-2">
           <Input
-            variant="outlined"
+            variant="static"
             label="Name"
             placeholder={data.name}
             onChange={nameUpdateHandler}
@@ -105,9 +114,9 @@ function EditProfile(props: any) {
             maxLength={25}
           />
         </div>
-        <div className="my-2">
+        <div className="mb-2">
           <Input
-            variant="outlined"
+            variant="static"
             label="Username"
             placeholder={data.userName}
             onChange={usernameUpdateHandler}
@@ -124,18 +133,25 @@ function EditProfile(props: any) {
             onChange={publicUpdateHandler}
           />
         </div> */}
-
-        <Textarea
-          id="Bio"
-          name="Bio"
-          label="Bio"
-          placeholder={data.bio}
-          onChange={bioUpdateHandler}
-        />
-
-        <Button ripple={true} type="submit" disabled={!(updateEnabled && validateEntries)}>
-          Update Profile Info
-        </Button>
+        <div>
+          <Textarea
+            variant="static"
+            id="Bio"
+            name="Bio"
+            label="Bio"
+            placeholder={data.bio}
+            onChange={bioUpdateHandler}
+          />
+        </div>
+        <div className="mb-2">
+          <Button
+            ripple={true}
+            type="submit"
+            disabled={!(updateEnabled && validateEntries)}
+          >
+            Update Profile Info
+          </Button>
+        </div>
       </CardBody>
     </form>
   );
