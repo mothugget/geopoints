@@ -31,7 +31,7 @@ const createNewUser = async (user: UserProfile) => {
   );
 
   if (!res.ok) throw new Error('Error creating a new user');
-  const newUser = await res.json();
+  const { newUser } = await res.json();
   return newUser;
 };
 
