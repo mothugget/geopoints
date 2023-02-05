@@ -22,10 +22,10 @@ export default function ClickedMarkerDialog({
 }: ClickedMarkerDialog) {
   const [open, setOpen] = useState(false);
   const [prevClickedPoint, setPrevClickedPoint] = useState<Point | null>();
+  const [showRemoveRouteButton, setShowRemoveRouteButton] = useState(false);
   const { clickedPoint } = useContext(ClickedMarkerContext);
 
   if (prevClickedPoint?.id !== clickedPoint?.id) {
-    console.log('hello');
     setPrevClickedPoint(clickedPoint);
     setOpen(true);
     setShouldRoutesBeShown(false);
@@ -48,7 +48,7 @@ export default function ClickedMarkerDialog({
             color="blue"
             onClick={handleShowRoute}
           >
-            Show route
+            {showRemoveRouteButton ? 'Remove route' : 'Show route'}
           </Button>
           <Button
             className="my-1 w-24"
