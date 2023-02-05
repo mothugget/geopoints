@@ -1,8 +1,12 @@
-import Image from 'next/image.js';
 import React, { useEffect, useContext } from 'react';
 import { useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { Coordinates, CreatePointData, List } from '../types/types';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  DirectionsRenderer,
+  DirectionsService,
+} from '@react-google-maps/api';
+import { Coordinates, CreatePointData, List, Point } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 import PointMarker from './mapMarkers/PointMarker';
@@ -10,6 +14,7 @@ import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
+import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
 
 const testCoords: Coordinates[] = [
   { lat: 51.59298641280394, lng: 0.19911695761843295 },
@@ -31,12 +36,19 @@ const newPointDefaultData: CreatePointData = {
   lng: 0,
 };
 
-function Map() {
+interface MapProps {
+  shouldRoutesBeShown: boolean;
+}
+
+function Map({ shouldRoutesBeShown }: MapProps) {
   const [currentUserLocation, setCurrentUserLocation] = useState<Coordinates>({
     lat: 0,
     lng: 0,
   });
+  const [directionsResponse, setDirectionsResponse] =
+    useState<google.maps.DirectionsResult | null>();
   const { map, setMap } = useContext(MapContext);
+  const [prevClickedPoint, setPrevClickedPoint] = useState<Point | null>();
   const { displayedPoints } = useContext(DisplayedPointsContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
@@ -44,13 +56,11 @@ function Map() {
   const userDefaultList = data.ownLists.find(
     (list: List) => list.title === 'My Points'
   );
+  const { clickedPoint } = useContext(ClickedMarkerContext);
 
   useEffect(() => {
     getUserPosition();
-
-  }, [])
-  
-console.log('catch map rerenders')
+  }, []);
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -99,6 +109,23 @@ console.log('catch map rerenders')
     return <LoadingSpinner />;
   }
 
+  // -------- routes -----------
+
+  const travelMode: google.maps.TravelMode =
+    window.google?.maps?.TravelMode?.WALKING;
+
+  const directionsCallback = (
+    response: google.maps.DirectionsResult | null,
+    status: string
+  ) => {
+    if (status === 'OK' && prevClickedPoint?.id !== clickedPoint?.id) {
+      setPrevClickedPoint(clickedPoint);
+      setDirectionsResponse(response);
+    }
+  };
+
+  console.log({ clickedPoint });
+
   return isLoaded ? (
     <div className="fixed flex justify-center items-center h-full w-full top-0 left-0">
       <GoogleMap
@@ -125,6 +152,20 @@ console.log('catch map rerenders')
         {displayedPoints.map((point) => {
           return <PointMarker key={point.id} point={point} />;
         })}
+        <DirectionsService
+          options={{
+            destination: {
+              lat: clickedPoint?.lat ?? 0,
+              lng: clickedPoint?.lng ?? 0,
+            },
+            travelMode,
+            origin: currentUserLocation,
+          }}
+          callback={directionsCallback}
+        />
+        {shouldRoutesBeShown && directionsResponse && clickedPoint && (
+          <DirectionsRenderer options={{ directions: directionsResponse }} />
+        )}
       </GoogleMap>
       {/* <div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />

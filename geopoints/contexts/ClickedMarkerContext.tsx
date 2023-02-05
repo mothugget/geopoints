@@ -1,24 +1,25 @@
 import { createContext, useState, Dispatch, SetStateAction } from 'react';
 import React from 'react';
+import { Point } from '../types/types';
 
 interface ClickedMarkerContext {
-  clickedPointId: number | null;
-  setClickedPointId: Dispatch<SetStateAction<number | null>> | null;
+  clickedPoint: Point | null;
+  setClickedPoint: Dispatch<SetStateAction<Point | null>> | null;
 }
 
 const ClickedMarkerContext = createContext<ClickedMarkerContext>({
-  clickedPointId: null,
-  setClickedPointId: null,
+  clickedPoint: null,
+  setClickedPoint: null,
 });
 
 function ClickedMarkerContextProvider({ children }: any) {
-  const [clickedPointId, setClickedPointId] = useState<number | null>(null);
+  const [clickedPoint, setClickedPoint] = useState<Point | null>(null);
 
   return (
     <ClickedMarkerContext.Provider
       value={{
-        clickedPointId,
-        setClickedPointId,
+        clickedPoint,
+        setClickedPoint,
       }}
     >
       {children}
