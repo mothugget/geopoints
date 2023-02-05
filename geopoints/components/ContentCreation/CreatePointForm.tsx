@@ -43,7 +43,7 @@ export default function CreatePointForm({
       onSuccess: (data) => {
         queryClient.invalidateQueries('fectchUserData');
         if (setDisplayedPoints) {
-          window.localStorage.setItem('list' + data.listId, 'true');
+          window.localStorage.setItem('list' + data.newPoint.listId, 'true');
           setDisplayedPoints((samePoints) => [...samePoints, data.newPoint]);
         }
       },

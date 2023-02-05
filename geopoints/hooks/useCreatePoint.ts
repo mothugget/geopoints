@@ -16,7 +16,8 @@ const useCreatePoint = () => {
       onSuccess: (data) => {
         queryClient.invalidateQueries('fectchUserData');
         if (setDisplayedPoints) {
-          window.localStorage.setItem('list' + data.listId, 'true');
+          console.log(data)
+          window.localStorage.setItem('list' + data.newPoint.listId, 'true');
           setDisplayedPoints((samePoints) => [...samePoints, data.newPoint]);
         }
       },

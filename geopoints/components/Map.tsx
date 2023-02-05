@@ -1,5 +1,5 @@
 import Image from 'next/image.js';
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useState, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
 import { Coordinates, CreatePointData, List } from '../types/types';
@@ -45,7 +45,16 @@ function Map() {
     (list: List) => list.title === 'My Points'
   );
 
-  getUserPosition();
+  useEffect(() => {
+    getUserPosition();
+
+  }, [])
+  
+
+
+  // const cleanPoints = displayedPoints.filter((element, index) => {
+  //   return displayedPoints.indexOf(element) === index;
+  // });
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
