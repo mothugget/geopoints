@@ -41,7 +41,6 @@ describe('GroupOfLists', () => {
         const title = await screen.findByText('Your Points!');
         expect(title).toBeInTheDocument();
         expect(title).toHaveTextContent('Your Points!');
-        expect(title).to;
       });
     });
   });
