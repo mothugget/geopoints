@@ -1,7 +1,7 @@
 import { render, screen, act } from '../../tests-utils';
 import GroupOfLists from '../../../components/Sidebar/GroupOfLists';
-import '@testing-library/jest-dom';
 import { List, User } from '../../../types/types';
+import '@testing-library/jest-dom';
 
 const fakeUser: User = {
   email: '',
@@ -22,17 +22,18 @@ const fakeList: List = {
 
 describe('GroupOfLists', () => {
   describe('Renders the correct title', () => {
-    it('renders the correct title', async () => {
+    it('Should render: Your Lists!', async () => {
       act(() => {
-        render(<GroupOfLists lists={[fakeList]} title={'Your lists!'} />);
+        render(<GroupOfLists lists={[fakeList]} title={'Your Lists!'} />);
       });
       await act(async () => {
-        const title = await screen.findByText('Your lists!');
+        const title = await screen.findByText('Your Lists!');
         expect(title).toBeInTheDocument();
-        expect(title).toHaveTextContent('Your lists!');
+        expect(title).toHaveTextContent('Your Lists!');
       });
     });
-    it('renders the correct title', async () => {
+
+    it('Should render: Your Points!', async () => {
       act(() => {
         render(<GroupOfLists lists={[fakeList]} title={'Your Points!'} />);
       });
@@ -41,6 +42,54 @@ describe('GroupOfLists', () => {
         expect(title).toBeInTheDocument();
         expect(title).toHaveTextContent('Your Points!');
         expect(title).to;
+      });
+    });
+  });
+
+  describe('Shows message when no lists', () => {
+    it('Should display: Nothing here yet...', async () => {
+      act(() => {
+        render(<GroupOfLists lists={[]} title={'Your lists!'} />);
+      });
+      await act(async () => {
+        const message = await screen.findByText('Nothing here yet...');
+        expect(message).toBeInTheDocument();
+        expect(message).toHaveTextContent('Nothing here yet...');
+      });
+    });
+  });
+
+  describe('Renders the correct number of lists', () => {
+    it('Should display 3 ListToggle components', async () => {
+      act(() => {
+        render(
+          <GroupOfLists
+            lists={[
+              { ...fakeList, id: Math.random() },
+              { ...fakeList, id: Math.random() },
+              { ...fakeList, id: Math.random() },
+            ]}
+            title={'Your lists!'}
+          />
+        );
+      });
+      await act(async () => {
+        const lists = await screen.findAllByTestId('ListToggle');
+        expect(lists.length).toBe(3);
+      });
+    });
+    it('Should display 1 ListToggle component', async () => {
+      act(() => {
+        render(
+          <GroupOfLists
+            lists={[{ ...fakeList, id: Math.random() }]}
+            title={'Your lists!'}
+          />
+        );
+      });
+      await act(async () => {
+        const lists = await screen.findAllByTestId('ListToggle');
+        expect(lists.length).toBe(1);
       });
     });
   });

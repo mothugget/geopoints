@@ -19,7 +19,7 @@ const GroupOfLists = ({ title, lists }: GroupOfListsProps) => {
       ) : (
         <ul>
           {lists.map((list: List) => (
-            <li key={list?.id}>
+            <li key={list?.id} data-testid="ListToggle">
               <ListToggle list={list} />
             </li>
           ))}
