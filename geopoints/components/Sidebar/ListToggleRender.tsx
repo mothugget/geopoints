@@ -52,7 +52,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
     window.localStorage.setItem('list' + list.id, JSON.stringify(value))
     setEnabled(value);
     if (value) {
-      sendListPointsToMap(list.points)
+      list.points&&sendListPointsToMap(list.points)
     } else {
       removeListPointsFromMap(list.id)
     }

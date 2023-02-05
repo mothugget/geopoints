@@ -50,11 +50,7 @@ function Map() {
 
   }, [])
   
-
-
-  // const cleanPoints = displayedPoints.filter((element, index) => {
-  //   return displayedPoints.indexOf(element) === index;
-  // });
+console.log('hello')
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
