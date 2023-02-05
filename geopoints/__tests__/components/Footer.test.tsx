@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Footer from '../../../components/Footer';
+import Footer from '../../components/Footer';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
