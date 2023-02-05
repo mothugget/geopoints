@@ -50,7 +50,7 @@ function Map() {
 
   }, [])
   
-console.log('hello')
+console.log('catch map rerenders')
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',

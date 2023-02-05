@@ -22,8 +22,16 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
+  function ensureUniquePoints(pointArray:Point[]) {
+    return pointArray.filter((point, index) => {
+      return pointArray.indexOf(point) === index;
+    });
+  }
+
+
   function sendListPointsToMap(pointArray: Point[]) {
-    if (setDisplayedPoints) setDisplayedPoints(prevPoints => [...prevPoints, ...pointArray])
+    const allPoints = [...displayedPoints, ...pointArray]
+    if (setDisplayedPoints) setDisplayedPoints(prevPoints => ensureUniquePoints(allPoints))
   }
 
   function removeListPointsFromMap(listId: number| undefined) {
@@ -39,7 +47,7 @@ const ListToggle = ({ list }: ListToggleProps) => {
       const toggleStateBool = JSON.parse(toggleState)
       setEnabled(toggleStateBool)
       if (toggleStateBool) {
-        sendListPointsToMap(list.points)
+        list.points&&sendListPointsToMap(list.points)
       } else {
         removeListPointsFromMap(list.id)
       }

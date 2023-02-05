@@ -5,15 +5,11 @@ import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
 import Map from '../components/Map';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
-import FocusedPointModal from '../components/mapMarkers/FocusedPointModal';
 import ClickedMarkerDialog from '../components/mapMarkers/ClickedMarkerDialog';
 
 export default withPageAuthRequired(function Home() {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
-
-  const { clickedPointId, setClickedPointId } =
-    useContext(ClickedMarkerContext);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -29,7 +25,6 @@ export default withPageAuthRequired(function Home() {
       <section className="mb-auto">
         <ClickedMarkerDialog />
         <Map />
-        <FocusedPointModal />
       </section>
     </main>
   );
