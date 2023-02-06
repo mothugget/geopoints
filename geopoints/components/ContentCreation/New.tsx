@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CreatePointModal from './CreatePointModal';
 import CreateListModal from './CreateListModal';
+import CrosshairModal from './CrosshairModal';
 import { SetStateAction, Dispatch } from 'react';
 import {
   Menu,
@@ -13,14 +14,19 @@ import {
 interface NewProps {
   showSidebar: boolean;
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
+  showAddContentModal: boolean;
+  setShowAddContentModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const New = ({
   showSidebar,
   setShowSidebar,
+  showAddContentModal,
+  setShowAddContentModal,
 }: NewProps) => {
   const [showCreatePoint, setShowCreatePoint] = useState<boolean>(false);
   const [showCreateList, setShowCreateList] = useState<boolean>(false);
+  const [showCrosshairModal, setShowCrosshairModal] = useState(false);
 
   return (
     <>
@@ -28,6 +34,7 @@ const New = ({
         <MenuHandler
           onClick={() => {
             console.log('im here');
+            setShowAddContentModal(!showAddContentModal);
             if (showSidebar) {
               setShowSidebar(!showSidebar);
             }
@@ -38,7 +45,7 @@ const New = ({
           </Button>
         </MenuHandler>
         <MenuList>
-          <MenuItem onClick={() => setShowCreatePoint(!showCreatePoint)}>
+          <MenuItem onClick={() => setShowCrosshairModal(!showCrosshairModal)}>
             Point
           </MenuItem>
           <MenuItem onClick={() => setShowCreateList(!showCreateList)}>
@@ -54,6 +61,11 @@ const New = ({
         showCreateList={showCreateList}
         setShowCreateList={setShowCreateList}
       />
+  <CrosshairModal
+        showCrosshairModal={showCrosshairModal} 
+        setShowCrosshairModal={setShowCrosshairModal}
+        setShowCreatePoint={setShowCreatePoint}
+  />
     </>
   );
 };

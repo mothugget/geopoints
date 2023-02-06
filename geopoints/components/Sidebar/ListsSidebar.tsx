@@ -27,6 +27,7 @@ const ListsSidebar = ({ showSidebar, setShowSidebar }: ListsSidebarProps) => {
         </div>
         {data && <GroupOfLists title="Liked: " lists={data.likedLists} />}
       </div>
+
     </div>
   );
 };

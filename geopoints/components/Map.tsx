@@ -36,6 +36,7 @@ function Map() {
     lat: 0,
     lng: 0,
   });
+
   const { map, setMap } = useContext(MapContext);
   const { displayedPoints } = useContext(DisplayedPointsContext);
   const { user } = useUser();
