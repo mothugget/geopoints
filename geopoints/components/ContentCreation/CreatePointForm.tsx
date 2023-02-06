@@ -76,21 +76,7 @@ export default function CreatePointForm({
     );
   }
   if (mutation.isSuccess) {
-    return (
-      <div className="flex flex-col justify-center items-center h-full">
-        <div className="text-green-500 font-semibold text-xl">
-          List created! ✅
-        </div>
-        <Button
-          className="my-5"
-          ripple={true}
-          color="green"
-          onClick={() => mutation.reset()}
-        >
-          Create another one!
-        </Button>
-      </div>
-    );
+    // setShowCreatePoint(false);
   }
 
   const pointFormSubmitHandler = async (e: any) => {
@@ -107,6 +93,7 @@ export default function CreatePointForm({
 
     mutation.mutate(pointData);
     setPointInput({});
+    setShowCreatePoint(false);
   };
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
