@@ -6,6 +6,7 @@ import {
   DirectionsRenderer,
   DirectionsService,
 } from '@react-google-maps/api';
+import Image from 'next/image'
 import { Coordinates, CreatePointData, List, Point } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
@@ -48,7 +49,7 @@ function Map() {
     lat: 0,
     lng: 0,
   });
-  const { setMap } = useContext(MapContext);
+  const { showCrosshair, setMap } = useContext(MapContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
   const { displayedPoints } = useContext(DisplayedPointsContext);
@@ -62,7 +63,10 @@ function Map() {
 
   useEffect(() => {
     getUserPosition();
-  }, []);
+
+  }, [])
+
+  console.log('catch map rerenders')
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -185,9 +189,9 @@ function Map() {
           <DirectionsRenderer options={{ directions: directionsResponse }} />
         )}
       </GoogleMap>
-      {/* <div className="absolute z-20">
+      {showCrosshair && <div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
-      </div> */}
+      </div>}
     </div>
   ) : (
     <LoadingSpinner />

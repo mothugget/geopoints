@@ -5,25 +5,20 @@ import { Point } from '../types/types'
 interface MapContext {
   map: google.maps.Map | null;
   setMap: Dispatch<google.maps.Map | null> | null;
-  showPointModal: boolean;
-  setShowPointModal: Dispatch<SetStateAction<boolean>> | null;
-  focusedPoint: Point | null;
-  setFocusedPoint: Dispatch<SetStateAction<Point | null>> | null;
+  showCrosshair: boolean;
+  setShowCrosshair: Dispatch<SetStateAction<boolean>> | null;
 }
 
 const MapContext = createContext<MapContext>({
   map: null,
   setMap: null,
-  showPointModal: false,
-  setShowPointModal: null,
-  focusedPoint: null,
-  setFocusedPoint: null
+  showCrosshair: false,
+  setShowCrosshair: null,
 });
 
 function MapContextProvider({ children }: any) {
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [showPointModal, setShowPointModal] = useState(false);
-  const [focusedPoint, setFocusedPoint] = useState<Point | null>(null)
+  const [showCrosshair, setShowCrosshair] = useState(false);
 
 
 
@@ -32,10 +27,8 @@ function MapContextProvider({ children }: any) {
       value={{
         map,
         setMap,
-        showPointModal,
-        setShowPointModal,
-        focusedPoint,
-        setFocusedPoint
+        showCrosshair,
+        setShowCrosshair,
       }}
     >
       {children}
