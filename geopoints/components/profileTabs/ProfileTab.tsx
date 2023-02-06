@@ -32,13 +32,13 @@ const ProfileTab = ({
 
       <CardBody className="text-center">
         <Typography variant="h4" color="blue-gray" className="mb-2">
-          {name}
+          {name ? name : ""}
         </Typography>
         <Typography variant="h4" color="blue-gray" className="mb-2">
-          {userName}
+          {userName ? userName : ""}
         </Typography>
         <Typography className="font-medium text-black" textGradient>
-          {bio}
+          {bio ? bio : ""}
         </Typography>
       </CardBody>
       <CardFooter className="flex justify-center gap-7 pt-2">
