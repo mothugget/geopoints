@@ -100,7 +100,11 @@ function EditProfile(props: any) {
       <Card className="h-auto w-auto object-contain mx-6 my-0">
         <img src={updatedImgPath} alt="profile-picture" className="p-6" />
         <div className="w-8 h-8 absolute left-10 bottom-10">
-          <EditFormImageUpload setImgPath={setImgPath} updateButtonChecker={updateButtonChecker} multiple={false}/>
+          <EditFormImageUpload
+            setImgPath={setImgPath}
+            updateButtonChecker={updateButtonChecker}
+            multiple={false}
+          />
         </div>
       </Card>
 
@@ -111,6 +115,7 @@ function EditProfile(props: any) {
             label="Name"
             placeholder={data.name}
             onChange={nameUpdateHandler}
+            value={data.name}
             required={true}
             maxLength={25}
           />
@@ -121,6 +126,7 @@ function EditProfile(props: any) {
             label="Username"
             placeholder={data.userName}
             onChange={usernameUpdateHandler}
+            value={data.userName}
             required={true}
             maxLength={50}
           />
@@ -141,6 +147,7 @@ function EditProfile(props: any) {
             name="Bio"
             label="Bio"
             placeholder={data.bio}
+            value={data.bio ?? ""}
             onChange={bioUpdateHandler}
           />
         </div>

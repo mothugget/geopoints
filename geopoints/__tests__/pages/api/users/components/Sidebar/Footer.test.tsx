@@ -4,6 +4,7 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 
+
 describe ('Footer', () => {
   const queryClient = new QueryClient();
 
@@ -30,7 +31,6 @@ describe ('Footer', () => {
     );
 
     const button = screen.getByText(/NEW/);
-    console.log("HEREEEEEEEEEEEE", button)
     expect(button).toBeInTheDocument();
   })
 })
