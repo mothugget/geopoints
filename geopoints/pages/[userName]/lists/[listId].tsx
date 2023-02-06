@@ -45,16 +45,16 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
           />
           {data.id == listData.authorId ? (
             <Button className="fixed bottom-20 right-4"
-              // onClick={() => {
-                //delete list function
-              // }}
+              onClick={() => {
+                handleDeleteList(data.id, listData.id!)
+              }}
             >
               Delete List
             </Button>
             ) : liked ? (
               <Button
                 onClick={() => {
-                  handleToggleFavourites(data.id, listData.id!, liked)
+                  handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
                   setLiked(false)
                 }}
               >
@@ -99,6 +99,17 @@ const handleIfLiked = async (userId: Number, listId: Number) => {
   const data = await response.json()
   // console.log(data)
   return data;
+}
+
+const handleDeleteList = async (userId: Number, listId: Number) => {
+  const response = await fetch('/api/lists/deleteList', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userId: userId, listId: listId })
+  })
+  const data = await response.json()
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
