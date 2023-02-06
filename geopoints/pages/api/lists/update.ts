@@ -11,6 +11,7 @@ const updateListHandler = async (
 ) => {
   try {
     const { list } = req.body;
+    
     const updatedList = await prisma.list.update({
       where: {
         id: Number(list.id),
