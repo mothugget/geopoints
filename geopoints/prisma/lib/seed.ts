@@ -116,7 +116,6 @@ const NUMBER_OF_FAKE_USERS = 5;
         id: userThatListWilBeLiked.ownLists[0].id,
       },
     });
-    console.log({ listThatWeWantToSave });
 
     //create user with your email. Set .env to your email.
     const myUser = await prisma.user.create({
