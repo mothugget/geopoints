@@ -17,6 +17,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
 
   const [liked, setLiked] = useState(false);
 
+  //wrap in useEffect
+  // ALWAYS HANDLE ERRORS USING CATCH
   data && listData && handleIfLiked(data.id, listData.id!)
     .then((res) => {
       console.log(res)
