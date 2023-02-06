@@ -14,6 +14,7 @@ export default function EditListModal({
   setShowEditList,
   listData
 }: EditListModalProps) {
+  console.log({listData})
   return (
     <div className={`${showEditList ? 'translate-x-0 ' : 'translate-x-full'} fixed text-left h-full top-0 right-0 w-screen transition-all ease-in-out duration-600 z-30`}>
       <button className='h-full w-full z-20' onClick={() => setShowEditList(!showEditList)} />
@@ -22,7 +23,7 @@ export default function EditListModal({
         <EditListForm 
         setShowEditList={setShowEditList}
         listData={listData}
-         />
+        />
       </div>
     </div>
   );

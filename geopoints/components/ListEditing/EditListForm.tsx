@@ -27,18 +27,28 @@ interface ListData {
 
 function EditListForm({ 
   setShowEditList,
-  listData 
+  listData,
 }: EditListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
-  const [listInput, setListInput] = useState<any>({});
+
+  const initialUpdatedList = {
+    title: listData.title,
+    id: listData.id,
+    description: listData.description ?? "",
+    tags: listData.tags ?? "",
+    // isPublic: data.isPublic,
+    imagePath: listData.imagePath ?? ""
+  };
+
+  const [listInput, setListInput] = useState<any>(initialUpdatedList);
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
   let updatedPublicValue=false;
   const originalData={...listData};
- 
 
+  console.log({listInput})
 
   const queryClient = useQueryClient();
 
@@ -107,12 +117,7 @@ function EditListForm({
       isPublic: updatedPublicValue?checkboxState:originalData.isPublic,
       imagePath: imgPath ? imgPath : originalData.imagePath,
     };
-    console.log( listInput.title )
-    console.log( listData.title )
-    console.log(checkboxState)
-    console.log(listData.isPublic)
-    console.log(updatedListData)
-     mutation.mutate(updatedListData);
+    mutation.mutate(updatedListData);
     setListInput({});
   };
 
@@ -145,7 +150,8 @@ function EditListForm({
           label="Title"
           onChange={titleInputHandler}
           maxLength={25}
-          placeholder={listData.title}
+          // placeholder={listData.title}
+          value={listInput.title}
         />
       </div>
       <div className="my-2">
@@ -154,7 +160,8 @@ function EditListForm({
           label="Description"
           onChange={descriptionInputHandler}
           maxLength={50}
-          placeholder={listData.description}
+          // placeholder={listData.description}
+          value={listInput.description}
         />
       </div>
       <div className="my-2 mt-5">
@@ -163,7 +170,8 @@ function EditListForm({
           label="Tags"
           onChange={tagsInputHandler}
           maxLength={50}
-          placeholder={listData.tags.map(tag=> tag.name).join(" ")}
+          // placeholder={listData.tags.map(tag=> tag.name).join(" ")}
+          value={listInput.tags}
           pattern="#\b\w+\b"
         />
       </div>
@@ -173,7 +181,8 @@ function EditListForm({
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
-          checked={listData.isPublic}
+          // checked={listData.isPublic}
+          checked={listInput.isPublic}
         />
       </div>
       <div className="my-5">
