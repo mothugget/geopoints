@@ -13,15 +13,11 @@ import {
 interface NewProps {
   showSidebar: boolean;
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
-  showAddContentModal: boolean;
-  setShowAddContentModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const New = ({
   showSidebar,
   setShowSidebar,
-  showAddContentModal,
-  setShowAddContentModal,
 }: NewProps) => {
   const [showCreatePoint, setShowCreatePoint] = useState<boolean>(false);
   const [showCreateList, setShowCreateList] = useState<boolean>(false);
@@ -32,7 +28,6 @@ const New = ({
         <MenuHandler
           onClick={() => {
             console.log('im here');
-            setShowAddContentModal(!showAddContentModal);
             if (showSidebar) {
               setShowSidebar(!showSidebar);
             }

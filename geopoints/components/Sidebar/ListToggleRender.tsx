@@ -14,7 +14,7 @@ interface ListToggleProps {
 
 const ListToggle = ({ list }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
-  
+
   const toggleState = window.localStorage.getItem('list' + list.id)
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
@@ -22,8 +22,16 @@ const ListToggle = ({ list }: ListToggleProps) => {
     DisplayedPointsContext
   );
 
+  function ensureUniquePoints(pointArray:Point[]) {
+    return pointArray.filter((point, index) => {
+      return pointArray.indexOf(point) === index;
+    });
+  }
+
+
   function sendListPointsToMap(pointArray: Point[]) {
-    if (setDisplayedPoints) setDisplayedPoints(prevPoints => [...prevPoints, ...pointArray])
+    const allPoints = [...displayedPoints, ...pointArray]
+    if (setDisplayedPoints) setDisplayedPoints(prevPoints => ensureUniquePoints(allPoints))
   }
 
   function removeListPointsFromMap(listId: number| undefined) {
@@ -34,12 +42,12 @@ const ListToggle = ({ list }: ListToggleProps) => {
 
 
   useEffect(() => {
-    
+
     if (toggleState !== null) {
       const toggleStateBool = JSON.parse(toggleState)
       setEnabled(toggleStateBool)
       if (toggleStateBool) {
-        sendListPointsToMap(list.points)
+        list.points&&sendListPointsToMap(list.points)
       } else {
         removeListPointsFromMap(list.id)
       }
@@ -47,12 +55,11 @@ const ListToggle = ({ list }: ListToggleProps) => {
   }, [toggleState])
 
 
-
   function makeListVisible(value: boolean) {
     window.localStorage.setItem('list' + list.id, JSON.stringify(value))
     setEnabled(value);
     if (value) {
-      sendListPointsToMap(list.points)
+      list.points&&sendListPointsToMap(list.points)
     } else {
       removeListPointsFromMap(list.id)
     }

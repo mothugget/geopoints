@@ -19,6 +19,7 @@ const createNewUser = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         include: {
           ownLists: true,
+          likedLists: true
         },
       });
       res.status(200).json({ newUser, error: null });
