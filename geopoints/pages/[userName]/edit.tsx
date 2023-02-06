@@ -40,7 +40,7 @@ function EditProfile(props: any) {
     facebook: data.facebook ?? "",
     instagram: data.instagram ?? "",
   };
-
+console.log(data.imagePath)
   const [updatedInput, setUpdatedInput] = useState<any>(initialUpdatedInput);
   const [updateEnabled, setUpdateEnabled] = useState<boolean>(false);
   // const [imgUploaded, setImgUploaded] = useState<boolean>(false);
