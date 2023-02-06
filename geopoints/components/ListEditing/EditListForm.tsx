@@ -18,7 +18,7 @@ interface EditListFormProps {
 
 interface ListData {
   title: string;
-  id: number;
+  id: number|undefined;
   description: string;
   tags: string[];
   isPublic: boolean;
