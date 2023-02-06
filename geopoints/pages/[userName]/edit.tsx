@@ -2,10 +2,10 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useUserData } from "../../hooks/useUserData";
 import React, { useState } from "react";
-// import UploadWidget from "../../components/UploadWidget";
 import EditFormImageUpload from "../../components/ContentCreation/EditFormImageUpload";
 import { updateUserProfile } from "../../util/updateUserProfile";
 import type { IconButtonProps } from "@material-tailwind/react";
+import { useRouter } from "next/router";
 
 
 import {
@@ -19,6 +19,8 @@ import {
   } from "@material-tailwind/react";
 
 function EditProfile(props: any) {
+  const router = useRouter();
+
   const { user } = useUser();
   const { isError, isLoading, data, error } = useUserData(user!);
   const [uploadWidgetEnabled, setUploadWidgetEnabled] = useState<boolean>(false);
@@ -43,7 +45,6 @@ function EditProfile(props: any) {
 console.log(data.imagePath)
   const [updatedInput, setUpdatedInput] = useState<any>(initialUpdatedInput);
   const [updateEnabled, setUpdateEnabled] = useState<boolean>(false);
-  // const [imgUploaded, setImgUploaded] = useState<boolean>(false);
   const [imgPath, setImgPath] = useState<string>("");
 
   const updateButtonChecker = () => {
@@ -66,12 +67,21 @@ console.log(data.imagePath)
     updateButtonChecker();
     setUpdatedInput({ ...updatedInput, bio: e.target.value });
   };
+  const facebookUpdateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateButtonChecker();
+    setUpdatedInput({ ...updatedInput, facebook: e.target.value });
+  };
+  const instagramUpdateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updateButtonChecker();
+    setUpdatedInput({ ...updatedInput, instagram: e.target.value });
+  };
   // const publicUpdateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
   // updateButtonChecker();
   //   setUpdatedInput({...updatedInput, isPublic: !isPublic});
   // };
 
-  const updatedImgPath = imgPath ?? updatedInput.imagePath;
+  const updatedImgPath = imgPath.length > 0 ? imgPath : updatedInput.imagePath;
+  console.log({imgPath})
 
   const editProfileHandler = (e: any) => {
     e.preventDefault();
@@ -86,14 +96,11 @@ console.log(data.imagePath)
     };
     try {
       updateUserProfile(toBeSentUpdatedInfo, data.id);
+      router.push(`/${updatedInput.userName}/profile`);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const toggleUploadWidget = () => {
-  //   setUploadWidgetEnabled(!uploadWidgetEnabled);
-  // }
 
   return (
     <form onSubmit={editProfileHandler} className="mt-10 m-w-96 flex flex-col">
@@ -113,9 +120,8 @@ console.log(data.imagePath)
           <Input
             variant="static"
             label="Name"
-            placeholder={data.name}
             onChange={nameUpdateHandler}
-            value={data.name}
+            value={updatedInput.name}
             required={true}
             maxLength={25}
           />
@@ -124,9 +130,8 @@ console.log(data.imagePath)
           <Input
             variant="static"
             label="Username"
-            placeholder={data.userName}
             onChange={usernameUpdateHandler}
-            value={data.userName}
+            value={updatedInput.userName}
             required={true}
             maxLength={50}
           />
@@ -140,17 +145,39 @@ console.log(data.imagePath)
             onChange={publicUpdateHandler}
           />
         </div> */}
-        <div>
+        <div className="mb-2">
           <Textarea
             variant="static"
             id="Bio"
             name="Bio"
             label="Bio"
-            placeholder={data.bio}
-            value={data.bio ?? ""}
+            value={updatedInput.bio}
             onChange={bioUpdateHandler}
           />
         </div>
+
+        <div className="mb-3">
+          <Input
+            variant="static"
+            label="Link to Facebook page"
+            onChange={facebookUpdateHandler}
+            value={updatedInput.facebook}
+            required={false}
+            // maxLength={50}
+          />
+        </div>
+
+        <div className="mb-2">
+          <Input
+            variant="static"
+            label="Link to Instagram page"
+            onChange={instagramUpdateHandler}
+            value={updatedInput.instagram}
+            required={false}
+            // maxLength={50}
+          />
+        </div>
+
         <div className="mb-20">
           <Button
             ripple={true}
