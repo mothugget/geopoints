@@ -7,6 +7,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../../hooks/useUserData';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import { Button } from '@material-tailwind/react';
+import { useState, } from 'react';
 
 const prisma = new PrismaClient();
 
@@ -14,8 +15,16 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
 
-  // console.log(data.id)
-  // console.log(listData.id)
+  const [liked, setLiked] = useState(false);
+
+  data && listData && handleIfLiked(data.id, listData.id!)
+    .then((res) => {
+      console.log(res)
+      setLiked(res.isLiked)
+    })
+
+  // console.log('Data: ', data)
+  // console.log('ListData: ', listData)
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -26,8 +35,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   }
 
   return (
-    <>
-      listData && (
+      listData && data && (
         <div className="flex flex-col mt-8 mb-20">
           <PictureTitleAndDesc
             imagePath={listData?.imagePath}
@@ -35,52 +43,62 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             title={listData?.title}
             points={listData.points}
           />
+          {data.id == listData.authorId ? (
+            <Button className="fixed bottom-20 right-4"
+              // onClick={() => {
+                //delete list function
+              // }}
+            >
+              Delete List
+            </Button>
+            ) : liked ? (
+              <Button
+                onClick={() => {
+                  handleToggleFavourites(data.id, listData.id!, liked)
+                  setLiked(false)
+                }}
+              >
+                Liked
+              </Button>
+            ) : (
+              <Button className="fixed bottom-20 right-4"
+                onClick={() => {
+                  handleToggleFavourites(data.id, listData.id!, liked)
+                  setLiked(true)
+                }}
+              >
+                Like
+              </Button>
+            )
+          }
         </div>
       )
-      <Button className="fixed bottom-20 right-4"
-        // onClick={async () => {
-        //   try {
-        //     const res = await fetch('../../api/lists/favourite', {
-        //       method: 'POST',
-        //       headers: {
-        //         'Content-Type': 'application/json'
-        //       },
-        //       body: JSON.stringify({
-        //         listId: listData.id,
-        //         userId: data?.id
-        //       })
-        //     });
-        //     if (res.ok) {
-        //       // alert('List added to favs');
-        //       console.log('good')
-        //     } else {
-        //       // alert('Error adding list')
-        //       console.log('bad')
-        //     }
-        //   } catch (error) {
-        //     console.error(error)
-        //   }
-        // }}
-        onClick={() => {
-          handleAddToFavourites(data.id, listData.id)
-        }}
-      >
-        Add to favourites
-      </Button>
-    </>
   );
 }
 
-const handleAddToFavourites = async (id, listId) => {
+const handleToggleFavourites = async (userId: Number, listId: Number, liked: Boolean) => {
   const response = await fetch('/api/lists/favourite', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ userId: id, listId: listId })
+    body: JSON.stringify({ userId: userId, listId: listId, liked: liked })
   })
   const data = await response.json()
-  console.log(data)
+  // console.log(data)
+}
+
+const handleIfLiked = async (userId: Number, listId: Number) => {
+  const response = await fetch('/api/lists/checkIfLiked', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ userId: userId, listId: listId })
+  })
+  const data = await response.json()
+  // console.log(data)
+  return data;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
