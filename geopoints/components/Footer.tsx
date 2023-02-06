@@ -1,20 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image.js';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
+import { TbRoute } from 'react-icons/tb';
+import { BsBookmarkHeart } from 'react-icons/bs';
 import ListsSidebar from './Sidebar/ListsSidebar';
 import Link from 'next/link';
 import New from './ContentCreation/New';
+import { RoutesContext } from '../contexts/RoutesContext';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [prevRoute, setPrevRoute] = useState('');
   const router = useRouter();
+  const { destinationService, setDestinationService } =
+    useContext(RoutesContext);
 
   if (router.pathname !== prevRoute) {
     setPrevRoute(router.pathname);
     setShowSidebar(false);
   }
+
+  const handleRouteClick = () => {
+    setDestinationService &&
+      setDestinationService((destinationService) => ({
+        ...destinationService,
+        showRoute: !destinationService.showRoute,
+      }));
+  };
 
   return (
     <>
@@ -30,17 +43,21 @@ const Footer = () => {
               priority={true}
             />
           </Link>
-          <New
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
+          <TbRoute
+            onClick={handleRouteClick}
+            className={`w-6 h-8 mt-1 ${
+              destinationService.showRoute ? `text-green-400` : `text-gray-600`
+            }`}
           />
+          <New showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+          <BsBookmarkHeart className="w-6 h-8 mt-1" />
           <AiOutlineUnorderedList
             onClick={() => {
               if (router.pathname === '/') {
                 setShowSidebar(!showSidebar);
               }
             }}
-            className={`w-8 h-8 ${
+            className={`w-9 h-9 ${
               router.pathname === '/' ? `text-gray-600` : `text-gray-200`
             }`}
           />

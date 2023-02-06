@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  Fragment,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import { useContext, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -15,29 +9,37 @@ import Alerts from './Alerts';
 import { ClickedMarkerContext } from '../../contexts/ClickedMarkerContext';
 import { Point } from '../../types/types';
 import useDeletePoint from '../../hooks/useDeletePoint';
+import { RoutesContext } from '../../contexts/RoutesContext';
+import Link from 'next/link.js';
 
-interface ClickedMarkerDialog {
-  setShouldRoutesBeShown: Dispatch<SetStateAction<boolean>>;
-}
-export default function ClickedMarkerDialog({
-  setShouldRoutesBeShown,
-}: ClickedMarkerDialog) {
+export default function ClickedMarkerDialog() {
   const [open, setOpen] = useState(false);
   const [prevClickedPoint, setPrevClickedPoint] = useState<Point | null>();
-  const [showRemoveRouteButton, setShowRemoveRouteButton] = useState(false);
-  const { clickedPoint } = useContext(ClickedMarkerContext);
+  const { clickedPoint, setClickedPoint } = useContext(ClickedMarkerContext);
+  const { setDestinationService } = useContext(RoutesContext);
   const mutation = useDeletePoint();
 
   if (prevClickedPoint?.id !== clickedPoint?.id) {
     setPrevClickedPoint(clickedPoint);
     setOpen(true);
-    setShouldRoutesBeShown(false);
   }
 
-  const handleOpen = () => setOpen(!open);
+  const handleOpen = () => {
+    setOpen(!open);
+    setClickedPoint && setClickedPoint(null);
+  };
 
   const handleShowRoute = () => {
-    setShouldRoutesBeShown((shouldRoutesBeShown) => !shouldRoutesBeShown);
+    if (clickedPoint && setDestinationService) {
+      setDestinationService((setDestinationService) => ({
+        ...setDestinationService,
+        destination: {
+          lat: clickedPoint.lat,
+          lng: clickedPoint.lng,
+        },
+        showRoute: true,
+      }));
+    }
     setOpen(false);
   };
 
@@ -72,16 +74,18 @@ export default function ClickedMarkerDialog({
             color="blue"
             onClick={handleShowRoute}
           >
-            {showRemoveRouteButton ? 'Remove route' : 'Show route'}
+            {'Show route'}
           </Button>
-          <Button
-            className="my-1 w-24"
-            variant="gradient"
-            color="green"
-            onClick={handleOpen}
-          >
-            Edit
-          </Button>
+          <Link href={'/points/'}>
+            <Button
+              className="my-1 w-24"
+              variant="gradient"
+              color="green"
+              onClick={handleOpen}
+            >
+              Edit
+            </Button>
+          </Link>
           <Button
             className="my-1 w-24"
             variant="gradient"

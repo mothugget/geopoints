@@ -9,12 +9,13 @@ import {
 import { Coordinates, CreatePointData, List, Point } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
-import PointMarker from './mapMarkers/PointMarker';
+import PointMarker from './MapMarkers/PointMarker';
 import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
 import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
+import { RoutesContext } from '../contexts/RoutesContext';
 
 const testCoords: Coordinates[] = [
   { lat: 51.59298641280394, lng: 0.19911695761843295 },
@@ -36,27 +37,28 @@ const newPointDefaultData: CreatePointData = {
   lng: 0,
 };
 
-interface MapProps {
-  shouldRoutesBeShown: boolean;
-}
-
-function Map({ shouldRoutesBeShown }: MapProps) {
+function Map() {
   const [currentUserLocation, setCurrentUserLocation] = useState<Coordinates>({
     lat: 0,
     lng: 0,
   });
   const [directionsResponse, setDirectionsResponse] =
     useState<google.maps.DirectionsResult | null>();
-  const { map, setMap } = useContext(MapContext);
-  const [prevClickedPoint, setPrevClickedPoint] = useState<Point | null>();
-  const { displayedPoints } = useContext(DisplayedPointsContext);
+  const [prevDestination, setPrevDestination] = useState<Coordinates>({
+    lat: 0,
+    lng: 0,
+  });
+  const { setMap } = useContext(MapContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
+  const { displayedPoints } = useContext(DisplayedPointsContext);
+  const { destinationService } = useContext(RoutesContext);
+  const { setDestinationService } = useContext(RoutesContext);
   const mutation = useCreatePoint();
+
   const userDefaultList = data.ownLists.find(
     (list: List) => list.title === 'My Points'
   );
-  const { clickedPoint } = useContext(ClickedMarkerContext);
 
   useEffect(() => {
     getUserPosition();
@@ -101,8 +103,12 @@ function Map({ shouldRoutesBeShown }: MapProps) {
       lat: e.latLng!.lat(),
       lng: e.latLng!.lng(),
     };
-
     mutation.mutate(newPoint);
+    setDestinationService &&
+      setDestinationService((destService) => ({
+        ...destService,
+        showRoute: false,
+      }));
   };
 
   if (!currentUserLocation) {
@@ -118,13 +124,25 @@ function Map({ shouldRoutesBeShown }: MapProps) {
     response: google.maps.DirectionsResult | null,
     status: string
   ) => {
-    if (status === 'OK' && prevClickedPoint?.id !== clickedPoint?.id) {
-      setPrevClickedPoint(clickedPoint);
+    if (status === 'OK' && hasDestinationchanged()) {
+      setPrevDestination((prevDestination) => ({
+        ...prevDestination,
+        lat: destinationService.destination.lat,
+        lng: destinationService.destination.lng,
+      }));
       setDirectionsResponse(response);
     }
   };
 
-  console.log({ clickedPoint });
+  function hasDestinationchanged() {
+    if (
+      prevDestination.lat !== destinationService.destination.lat ||
+      prevDestination.lng !== destinationService.destination.lng
+    ) {
+      return true;
+    }
+    return false;
+  }
 
   return isLoaded ? (
     <div className="fixed flex justify-center items-center h-full w-full top-0 left-0">
@@ -155,15 +173,15 @@ function Map({ shouldRoutesBeShown }: MapProps) {
         <DirectionsService
           options={{
             destination: {
-              lat: clickedPoint?.lat ?? 0,
-              lng: clickedPoint?.lng ?? 0,
+              lat: destinationService.destination.lat,
+              lng: destinationService.destination.lng,
             },
             travelMode,
             origin: currentUserLocation,
           }}
           callback={directionsCallback}
         />
-        {shouldRoutesBeShown && directionsResponse && clickedPoint && (
+        {destinationService.showRoute && directionsResponse && (
           <DirectionsRenderer options={{ directions: directionsResponse }} />
         )}
       </GoogleMap>
