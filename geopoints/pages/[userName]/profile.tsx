@@ -99,8 +99,23 @@ export default function MyTabs() {
               ) : (
                 <LoadingSpinner />
               )
+            ) : value === 'Favourites' ? (
+              data?.likedLists.map((list: List) => {
+                return (
+                  <div className="flex justify-center">
+                    <ListsTab
+                      key={list.id}
+                      imagePath={list.imagePath}
+                      title={list.title}
+                      description={list.description}
+                      userName={data.userName}
+                      listId={list.id!}
+                    />
+                  </div>
+                );
+              })
             ) : (
-              <p>hello</p>
+              <p>No data found</p>
             )}
           </TabPanel>
         ))}
