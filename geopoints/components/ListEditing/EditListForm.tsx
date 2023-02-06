@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { User } from '../../types/types';
+import { List } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
@@ -13,11 +13,16 @@ const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
 interface EditListFormProps {
   setShowEditList: Dispatch<SetStateAction<boolean>>;
+  listData: List;
+
 }
 
-i
 
-function EditListForm({ setShowEditList }: CreateListFormProps) {
+
+function EditListForm({ 
+  setShowEditList,
+  listData 
+}: EditListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
@@ -171,4 +176,4 @@ function EditListForm({ setShowEditList }: CreateListFormProps) {
   );
 }
 
-export default CreateListForm;
+export default EditListForm;
