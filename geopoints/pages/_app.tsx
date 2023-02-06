@@ -8,6 +8,7 @@ import { ClickedMarkerContextProvider } from '../contexts/ClickedMarkerContext';
 import { DisplayedPointsContextProvider } from '../contexts/DisplayedPointsContext';
 import Header from '../components/Header';
 import { ThemeProvider } from '@material-tailwind/react';
+import { RoutesContextProvider } from '../contexts/RoutesContext';
 
 const queryClient = new QueryClient();
 
@@ -19,9 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ClickedMarkerContextProvider>
             <DisplayedPointsContextProvider>
               <MapContextProvider>
-                <Header />
-                <Footer />
-                <Component {...pageProps} />
+                <RoutesContextProvider>
+                  <Header />
+                  <Footer />
+                  <Component {...pageProps} />
+                </RoutesContextProvider>
               </MapContextProvider>
             </DisplayedPointsContextProvider>
           </ClickedMarkerContextProvider>

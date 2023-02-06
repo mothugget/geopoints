@@ -129,7 +129,7 @@ async function clearDatabase() {
     await prisma.point.deleteMany();
     await prisma.tag.deleteMany();
 
-    // create one record with tour email
+    // create one record with your email
     await prisma.user.create({
       data: {
         email: process.env.NEXT_PUBLIC_YOUR_EMAIL!,
