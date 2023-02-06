@@ -30,7 +30,7 @@ const New = ({
 
   return (
     <>
-      <Menu>
+      <Menu >
         <MenuHandler
           onClick={() => {
             console.log('im here');
