@@ -3,12 +3,8 @@ import Link from 'next/link';
 
 import {
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
   Typography,
-  Tooltip,
-  Button,
 } from "@material-tailwind/react";
 
 interface PointDisplayProps {
