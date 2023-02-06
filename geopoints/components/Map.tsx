@@ -37,7 +37,7 @@ function Map() {
     lng: 0,
   });
 
-  const { map, setMap } = useContext(MapContext);
+  const { showCrosshair, setMap } = useContext(MapContext);
   const { displayedPoints } = useContext(DisplayedPointsContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
@@ -127,9 +127,9 @@ console.log('catch map rerenders')
           return <PointMarker key={point.id} point={point} />;
         })}
       </GoogleMap>
-      {/* <div className="absolute z-20">
+      {showCrosshair&&<div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
-      </div> */}
+      </div>}
     </div>
   ) : (
     <LoadingSpinner />

@@ -9,7 +9,6 @@ import New from './ContentCreation/New';
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [prevRoute, setPrevRoute] = useState('');
-  const [showAddContentModal, setShowAddContentModal] = useState(false)
   const router = useRouter();
 
   if (router.pathname !== prevRoute) {
@@ -34,8 +33,6 @@ const Footer = () => {
           <New
             showSidebar={showSidebar}
             setShowSidebar={setShowSidebar}
-            showAddContentModal={showAddContentModal}
-            setShowAddContentModal={setShowAddContentModal}
           />
           <AiOutlineUnorderedList
             onClick={() => {
