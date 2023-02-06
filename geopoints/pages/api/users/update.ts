@@ -5,19 +5,12 @@ const prisma = new PrismaClient();
 
 const updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { userId, userName, name, imagePath, bio, facebook, instagram } = req.body;
+    const { updatedInfo, userId } = req.body;
     const updatedUser = await prisma.user.update({
       where: {
         id: userId,
       },
-      data: {
-        name,
-        userName,
-        bio,
-        imagePath,
-        facebook,
-        instagram,
-      },
+      data: updatedInfo
     });
     res.status(200).json(updatedUser);
   } catch (error) {

@@ -3,7 +3,7 @@ import { List } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
-import { createList } from '../../util/createList';
+import { updateList } from '../../util/updateList';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
@@ -43,8 +43,8 @@ function EditListForm({
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
-    (listData: ListData) => {
-      return createList(listData, listData.author);
+    (updatedListData: ListData) => {
+      return updateList(updatedListData);
     },
     {
       onSuccess: () => {
@@ -82,15 +82,16 @@ function EditListForm({
     return (
       <div className="flex flex-col justify-center items-center h-full">
         <div className="text-green-500 font-semibold text-xl">
-          List created! ✅
+          List updated! ✅
         </div>
         <Button
           className="my-5"
           ripple={true}
           color="green"
-          onClick={() => mutation.reset()}
+          onClick={() => {setShowEditList(false);
+          window.location.reload()}}
         >
-          Create another one!
+          Close
         </Button>
       </div>
     );
@@ -111,7 +112,7 @@ function EditListForm({
     console.log(checkboxState)
     console.log(listData.isPublic)
     console.log(updatedListData)
-    // mutation.mutate(updatedListData);
+     mutation.mutate(updatedListData);
     setListInput({});
   };
 

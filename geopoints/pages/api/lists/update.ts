@@ -5,31 +5,36 @@ import createTagsIfTheyDontExist from '../../../util/createTagsHelper';
 
 const prisma = new PrismaClient();
 
+const updateListHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
+  try {
+    const { list } = req.body;
+    
+    const updatedList = await prisma.list.update({
+      where: {
+        id: Number(list.id),
+      },
+      data: {
+        title: list.title,
+        description: list.description, 
+        isPublic: list.isPublic,
+        imagePath: list.imagePath
+      }
+    });
+    res.status(200).json({ updatedList, error: null });
+  } catch (error) {
+    console.error({ error });
+    if (error instanceof Error) {
+      res.status(400).json({ updatedList: null, error: error.message });
+    } else {
+      res
+        .status(400)
+        .json({ updatedList: null, error: 'Something went wrong' });
+    }
+  }
+};
 
-// const updateList = async (
-//   listData: List,
-// ) => {
-//   try {
-//     const { title, isPublic, description, imagePath } = listData;
-//     return await prisma.list.create({
-//       data: {
-//         title,
-//         isPublic,
-//         authorId,
-//         description,
-//         imagePath,
-//         tags: {
-//           connect: arrayOfTagIds,
-//         },
-//       },
-//       include: {
-//         tags: true,
-//       },
-//     });
-//   } catch (error) {
-//     console.error({ error });
-//     throw new Error('Error creating List', { cause: error });
-//   }
-// };
 
-// export default updateList;
+export default updateListHandler;
