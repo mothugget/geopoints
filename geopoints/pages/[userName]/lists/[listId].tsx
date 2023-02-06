@@ -1,17 +1,23 @@
+import { useState } from 'react';
 import { PrismaClient } from '@prisma/client';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import {
+  Button,
+} from '@material-tailwind/react';
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 import { List, User } from '../../../types/types';
 import PictureTitleAndDesc from '../../../components/PictureTitleAndDesc';
 import PointUnderList from '../../../components/PointUnderList';
-import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../../hooks/useUserData';
 import LoadingSpinner from '../../../components/LoadingSpinner';
-import { Button } from '@material-tailwind/react';
-import { useState, } from 'react';
+import EditListModal from '../../../components/ListEditing/EditListModal';
 
 const prisma = new PrismaClient();
 
 function List({ listData, listOwner }: { listData: List; listOwner: User }) {
+  const [showEditList, setShowEditList] = useState(false)
+
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
 
@@ -37,7 +43,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   }
 
   return (
-      listData && data && (
+    listData && 
+      <>
         <div className="flex flex-col mt-8 mb-20">
           <PictureTitleAndDesc
             imagePath={listData?.imagePath}
@@ -45,36 +52,17 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             title={listData?.title}
             points={listData.points}
           />
-          {data.id == listData.authorId ? (
-            <Button className="fixed bottom-20 right-4"
-              onClick={() => {
-                handleDeleteList(data.id, listData.id!)
-              }}
-            >
-              Delete List
-            </Button>
-            ) : liked ? (
-              <Button
-                onClick={() => {
-                  handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
-                  setLiked(false)
-                }}
-              >
-                Liked
-              </Button>
-            ) : (
-              <Button className="fixed bottom-20 right-4"
-                onClick={() => {
-                  handleToggleFavourites(data.id, listData.id!, liked)
-                  setLiked(true)
-                }}
-              >
-                Like
-              </Button>
-            )
-          }
+          <Button size="sm" variant="gradient" className="w-32" onClick={()=> setShowEditList(!showEditList) }>
+            Edit list
+          </Button>
+          <EditListModal
+            showEditList={showEditList}
+            setShowEditList={setShowEditList}
+            listData={listData}
+          />
         </div>
-      )
+      </>
+    
   );
 }
 

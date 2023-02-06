@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { User } from '../../types/types';
+import { List } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
@@ -11,26 +11,34 @@ import { Input, Checkbox, Button } from '@material-tailwind/react';
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 
-interface CreateListFormProps {
-  setShowCreateList: Dispatch<SetStateAction<boolean>>;
+interface EditListFormProps {
+  setShowEditList: Dispatch<SetStateAction<boolean>>;
+  listData: List;
 }
 
 interface ListData {
   title: string;
-  author: number;
+  id: number|undefined;
   description: string;
   tags: string[];
   isPublic: boolean;
   imagePath: string;
 }
 
-function CreateListForm({ setShowCreateList }: CreateListFormProps) {
+function EditListForm({ 
+  setShowEditList,
+  listData 
+}: EditListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
-  const [listInput, setListInput] = useState<any>(null);
+  const [listInput, setListInput] = useState<any>({});
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
+  let updatedPublicValue=false;
+  const originalData={...listData};
+ 
+
 
   const queryClient = useQueryClient();
 
@@ -90,15 +98,20 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    const listData: ListData = {
-      title: listInput.title,
-      author: data.id,
-      description: listInput.description,
-      tags: listInput.tags,
-      isPublic: checkboxState,
-      imagePath: imgPath ? imgPath : '',
+    const updatedListData: ListData = {
+      title: listInput.title||originalData.title,
+      id: originalData.id,
+      description: listInput.description||originalData.description,
+      tags: listInput.tags||originalData.tags,
+      isPublic: updatedPublicValue?checkboxState:originalData.isPublic,
+      imagePath: imgPath ? imgPath : originalData.imagePath,
     };
-    mutation.mutate(listData);
+    console.log( listInput.title )
+    console.log( listData.title )
+    console.log(checkboxState)
+    console.log(listData.isPublic)
+    console.log(updatedListData)
+    // mutation.mutate(updatedListData);
     setListInput({});
   };
 
@@ -113,6 +126,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
     setListInput({ ...listInput, tags: userEnteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updatedPublicValue=true;
     setCheckboxState(!checkboxState);
   };
 
@@ -126,20 +140,20 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
     >
       <div className="my-2">
         <Input
-          variant="standard"
+          variant="static"
           label="Title"
           onChange={titleInputHandler}
-          required={true}
           maxLength={25}
+          placeholder={listData.title}
         />
       </div>
       <div className="my-2">
         <Input
-          variant="standard"
+          variant="static"
           label="Description"
           onChange={descriptionInputHandler}
-          required={true}
           maxLength={50}
+          placeholder={listData.description}
         />
       </div>
       <div className="my-2 mt-5">
@@ -147,10 +161,9 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           variant="static"
           label="Tags"
           onChange={tagsInputHandler}
-          required={true}
           maxLength={50}
-          placeholder="Eg: firsttag secondtag"
-          
+          placeholder={listData.tags.map(tag=> tag.name).join(" ")}
+          pattern="#\b\w+\b"
         />
       </div>
 
@@ -159,6 +172,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
+          checked={listData.isPublic}
         />
       </div>
       <div className="my-5">
@@ -178,4 +192,4 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   );
 }
 
-export default CreateListForm;
+export default EditListForm;
