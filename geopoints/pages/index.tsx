@@ -4,10 +4,9 @@ import { useUserData } from '../hooks/useUserData';
 import Map from '../components/Map';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ClickedMarkerDialog from '../components/mapMarkers/ClickedMarkerDialog';
+import ClickedMarkerDialog from '../components/MapMarkers/ClickedMarkerDialog';
 
 export default withPageAuthRequired(function Home() {
-  const [shouldRoutesBeShown, setShouldRoutesBeShown] = useState(false);
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
 
@@ -23,8 +22,8 @@ export default withPageAuthRequired(function Home() {
     <main className="flex flex-col h-screen justify-between bg-white">
       <Header />
       <section className="mb-auto">
-        <ClickedMarkerDialog setShouldRoutesBeShown={setShouldRoutesBeShown} />
-        <Map shouldRoutesBeShown={shouldRoutesBeShown} />
+        <ClickedMarkerDialog />
+        <Map />
       </section>
     </main>
   );
