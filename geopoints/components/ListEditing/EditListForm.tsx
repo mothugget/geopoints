@@ -30,6 +30,7 @@ function EditListForm({
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
 
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -107,7 +108,7 @@ function EditListForm({
     setListInput({ ...listInput, description: e.target.value });
   };
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value;
+    const userEnteredTags = e.target.value.split(' ');
     setListInput({ ...listInput, tags: userEnteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,30 +125,32 @@ function EditListForm({
     >
       <div className="my-2">
         <Input
-          variant="standard"
+          variant="static"
           label="Title"
           onChange={titleInputHandler}
           required={true}
           maxLength={25}
+          placeholder={listData.title}
         />
       </div>
       <div className="my-2">
         <Input
-          variant="standard"
+          variant="static"
           label="Description"
           onChange={descriptionInputHandler}
           required={true}
           maxLength={50}
+          placeholder={listData.description}
         />
       </div>
       <div className="my-2 mt-5">
         <Input
           variant="static"
-          label="Hashtag"
+          label="Tags"
           onChange={tagsInputHandler}
           required={true}
           maxLength={50}
-          placeholder="#reading"
+          placeholder={listData.tags.map(tag=> tag.name).join(" ")}
           pattern="#\b\w+\b"
         />
       </div>
@@ -157,6 +160,7 @@ function EditListForm({
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
+          checked={listData.isPublic}
         />
       </div>
       <div className="my-5">

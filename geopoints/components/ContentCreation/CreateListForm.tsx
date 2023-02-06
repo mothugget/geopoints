@@ -94,7 +94,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       title: listInput.title,
       author: data.id,
       description: listInput.description,
-      tags: [listInput.tags],
+      tags: listInput.tags,
       isPublic: checkboxState,
       imagePath: imgPath ? imgPath : '',
     };
@@ -109,7 +109,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
     setListInput({ ...listInput, description: e.target.value });
   };
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value;
+    const userEnteredTags = e.target.value.split(' ');
     setListInput({ ...listInput, tags: userEnteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,12 +145,12 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       <div className="my-2 mt-5">
         <Input
           variant="static"
-          label="Hashtag"
+          label="Tags"
           onChange={tagsInputHandler}
           required={true}
           maxLength={50}
-          placeholder="#reading"
-          pattern="#\b\w+\b"
+          placeholder="Eg: firsttag secondtag"
+          
         />
       </div>
 
