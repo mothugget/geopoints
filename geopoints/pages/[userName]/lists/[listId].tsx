@@ -38,42 +38,45 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
 
   return (
       listData && data && (
-        <div className="flex flex-col mt-8 mb-20">
+        <>
+
+        <div className="flex flex-col pt-8">
           <PictureTitleAndDesc
             imagePath={listData?.imagePath}
             description={listData?.description}
             title={listData?.title}
             points={listData.points}
           />
+        </div>
           {data.id == listData.authorId ? (
-            <Button className="fixed bottom-20 right-4"
+            <button className="fixed bottom-20 right-4 text-black"
               onClick={() => {
                 handleDeleteList(data.id, listData.id!)
               }}
             >
               Delete List
-            </Button>
+            </button>
             ) : liked ? (
-              <Button
+              <button className="fixed bottom-20 right-4 text-black"
                 onClick={() => {
                   handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
                   setLiked(false)
                 }}
               >
                 Liked
-              </Button>
+              </button>
             ) : (
-              <Button className="fixed bottom-20 right-4"
+              <button className="fixed bottom-20 right-4 text-black"
                 onClick={() => {
                   handleToggleFavourites(data.id, listData.id!, liked)
                   setLiked(true)
                 }}
               >
                 Like
-              </Button>
+              </button>
             )
           }
-        </div>
+        </>
       )
   );
 }
