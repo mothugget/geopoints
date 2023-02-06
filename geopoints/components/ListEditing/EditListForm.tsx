@@ -14,10 +14,16 @@ const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
 interface EditListFormProps {
   setShowEditList: Dispatch<SetStateAction<boolean>>;
   listData: List;
-
 }
 
-
+interface ListData {
+  title: string;
+  id: number;
+  description: string;
+  tags: string[];
+  isPublic: boolean;
+  imagePath: string;
+}
 
 function EditListForm({ 
   setShowEditList,
@@ -26,9 +32,12 @@ function EditListForm({
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
-  const [listInput, setListInput] = useState<any>(null);
+  const [listInput, setListInput] = useState<any>({});
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
+  let updatedPublicValue=false;
+  const originalData={...listData};
+ 
 
 
   const queryClient = useQueryClient();
@@ -89,15 +98,20 @@ function EditListForm({
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    const listData: ListData = {
-      title: listInput.title,
-      author: data.id,
-      description: listInput.description,
-      tags: [listInput.tags],
-      isPublic: checkboxState,
-      imagePath: imgPath ? imgPath : '',
+    const updatedListData: ListData = {
+      title: listInput.title||originalData.title,
+      id: originalData.id,
+      description: listInput.description||originalData.description,
+      tags: listInput.tags||originalData.tags,
+      isPublic: updatedPublicValue?checkboxState:originalData.isPublic,
+      imagePath: imgPath ? imgPath : originalData.imagePath,
     };
-    mutation.mutate(listData);
+    console.log( listInput.title )
+    console.log( listData.title )
+    console.log(checkboxState)
+    console.log(listData.isPublic)
+    console.log(updatedListData)
+    // mutation.mutate(updatedListData);
     setListInput({});
   };
 
@@ -112,6 +126,7 @@ function EditListForm({
     setListInput({ ...listInput, tags: userEnteredTags });
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    updatedPublicValue=true;
     setCheckboxState(!checkboxState);
   };
 
@@ -128,7 +143,6 @@ function EditListForm({
           variant="static"
           label="Title"
           onChange={titleInputHandler}
-          required={true}
           maxLength={25}
           placeholder={listData.title}
         />
@@ -138,7 +152,6 @@ function EditListForm({
           variant="static"
           label="Description"
           onChange={descriptionInputHandler}
-          required={true}
           maxLength={50}
           placeholder={listData.description}
         />
@@ -148,7 +161,6 @@ function EditListForm({
           variant="static"
           label="Tags"
           onChange={tagsInputHandler}
-          required={true}
           maxLength={50}
           placeholder={listData.tags.map(tag=> tag.name).join(" ")}
           pattern="#\b\w+\b"
