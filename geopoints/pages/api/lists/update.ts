@@ -18,7 +18,6 @@ const updateListHandler = async (
       data: {
         title: list.title,
         description: list.description, 
-        tags: list.tags,
         isPublic: list.isPublic,
         imagePath: list.imagePath
       }
@@ -37,4 +36,4 @@ const updateListHandler = async (
 };
 
 
-// export default updateList;
+export default updateListHandler;
