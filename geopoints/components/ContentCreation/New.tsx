@@ -28,7 +28,7 @@ const New = ({
 
   function createPointHandler() {
     setShowCrosshairModal(!showCrosshairModal)
-    setShowCrosshair&&setShowCrosshair(true)
+    setShowCrosshair && setShowCrosshair(true)
   }
 
   return (
@@ -63,11 +63,11 @@ const New = ({
         showCreateList={showCreateList}
         setShowCreateList={setShowCreateList}
       />
-  <CrosshairModal
-        showCrosshairModal={showCrosshairModal} 
+      <CrosshairModal
+        showCrosshairModal={showCrosshairModal}
         setShowCrosshairModal={setShowCrosshairModal}
         setShowCreatePoint={setShowCreatePoint}
-  />
+      />
     </>
   );
 };

@@ -40,9 +40,8 @@ const Footer = () => {
                 setShowSidebar(!showSidebar);
               }
             }}
-            className={`w-8 h-8 ${
-              router.pathname === '/' ? `text-gray-600` : `text-gray-200`
-            }`}
+            className={`w-8 h-8 ${router.pathname === '/' ? `text-gray-600` : `text-gray-200`
+              }`}
           />
         </div>
       </footer>

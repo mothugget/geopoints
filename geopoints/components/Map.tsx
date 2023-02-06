@@ -50,8 +50,8 @@ function Map() {
     getUserPosition();
 
   }, [])
-  
-console.log('catch map rerenders')
+
+  console.log('catch map rerenders')
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -127,7 +127,7 @@ console.log('catch map rerenders')
           return <PointMarker key={point.id} point={point} />;
         })}
       </GoogleMap>
-      {showCrosshair&&<div className="absolute z-20">
+      {showCrosshair && <div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
       </div>}
     </div>

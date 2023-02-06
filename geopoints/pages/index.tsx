@@ -26,7 +26,7 @@ export default withPageAuthRequired(function Home() {
         <ClickedMarkerDialog />
         <Map />
       </section>
-      
+
     </main>
   );
 });
