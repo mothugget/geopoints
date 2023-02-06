@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
-const NUMBER_OF_FAKE_USERS = 7;
+const NUMBER_OF_FAKE_USERS = 5;
 
 (async () => {
   try {
@@ -50,7 +50,7 @@ const NUMBER_OF_FAKE_USERS = 7;
                 },
               },
               {
-                title: faker.company.catchPhrase(),
+                title: faker.company.bsNoun(),
                 description: faker.lorem.sentence(),
                 imagePath: faker.image.nature(),
                 isPublic: true,
@@ -73,8 +73,51 @@ const NUMBER_OF_FAKE_USERS = 7;
         },
       });
     }
+
+    const userThatListWilBeLiked = await prisma.user.create({
+      data: {
+        email: faker.internet.email(),
+        userName: faker.internet.userName(),
+        name: faker.name.fullName(),
+        bio: faker.lorem.sentence(),
+        imagePath: faker.image.avatar(),
+        ownLists: {
+          create: [
+            {
+              title: 'Best reading spots',
+              description: faker.lorem.sentence(),
+              imagePath: faker.image.nature(),
+              isPublic: true,
+              tags: {
+                create: {
+                  name: faker.random.word(),
+                },
+              },
+              points: {
+                create: {
+                  title: faker.company.bsNoun(),
+                  lng: Number(faker.address.longitude()),
+                  lat: Number(faker.address.latitude()),
+                  imagePath: faker.image.business(),
+                },
+              },
+            },
+          ],
+        },
+      },
+      include: {
+        ownLists: true,
+      },
+    });
+
+    const listThatWeWantToSave = await prisma.list.findUnique({
+      where: {
+        id: userThatListWilBeLiked.ownLists[0].id,
+      },
+    });
+
     //create user with your email. Set .env to your email.
-    await prisma.user.create({
+    const myUser = await prisma.user.create({
       data: {
         email: process.env.MY_EMAIL!,
         userName: faker.internet.userName(),
@@ -116,9 +159,16 @@ const NUMBER_OF_FAKE_USERS = 7;
             },
           ],
         },
+        likedLists: {
+          connect: {
+            id: listThatWeWantToSave?.id,
+          },
+        },
+      },
+      include: {
+        likedLists: true,
       },
     });
-
     console.log('Added data ✨');
   } catch (e) {
     console.error(e);

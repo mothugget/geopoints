@@ -1,15 +1,21 @@
-import Image from 'next/image.js';
 import React, { useEffect, useContext } from 'react';
 import { useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { Coordinates, CreatePointData, List } from '../types/types';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  DirectionsRenderer,
+  DirectionsService,
+} from '@react-google-maps/api';
+import { Coordinates, CreatePointData, List, Point } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
-import PointMarker from './mapMarkers/PointMarker';
+import PointMarker from './MapMarkers/PointMarker';
 import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
+import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
+import { RoutesContext } from '../contexts/RoutesContext';
 
 const testCoords: Coordinates[] = [
   { lat: 51.59298641280394, lng: 0.19911695761843295 },
@@ -36,12 +42,20 @@ function Map() {
     lat: 0,
     lng: 0,
   });
-
+  const [directionsResponse, setDirectionsResponse] =
+    useState<google.maps.DirectionsResult | null>();
+  const [prevDestination, setPrevDestination] = useState<Coordinates>({
+    lat: 0,
+    lng: 0,
+  });
   const { showCrosshair, setMap } = useContext(MapContext);
-  const { displayedPoints } = useContext(DisplayedPointsContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
+  const { displayedPoints } = useContext(DisplayedPointsContext);
+  const { destinationService } = useContext(RoutesContext);
+  const { setDestinationService } = useContext(RoutesContext);
   const mutation = useCreatePoint();
+
   const userDefaultList = data.ownLists.find(
     (list: List) => list.title === 'My Points'
   );
@@ -92,12 +106,45 @@ function Map() {
       lat: e.latLng!.lat(),
       lng: e.latLng!.lng(),
     };
-
     mutation.mutate(newPoint);
+    setDestinationService &&
+      setDestinationService((destService) => ({
+        ...destService,
+        showRoute: false,
+      }));
   };
 
   if (!currentUserLocation) {
     return <LoadingSpinner />;
+  }
+
+  // -------- routes -----------
+
+  const travelMode: google.maps.TravelMode =
+    window.google?.maps?.TravelMode?.WALKING;
+
+  const directionsCallback = (
+    response: google.maps.DirectionsResult | null,
+    status: string
+  ) => {
+    if (status === 'OK' && hasDestinationchanged()) {
+      setPrevDestination((prevDestination) => ({
+        ...prevDestination,
+        lat: destinationService.destination.lat,
+        lng: destinationService.destination.lng,
+      }));
+      setDirectionsResponse(response);
+    }
+  };
+
+  function hasDestinationchanged() {
+    if (
+      prevDestination.lat !== destinationService.destination.lat ||
+      prevDestination.lng !== destinationService.destination.lng
+    ) {
+      return true;
+    }
+    return false;
   }
 
   return isLoaded ? (
@@ -126,6 +173,20 @@ function Map() {
         {displayedPoints.map((point) => {
           return <PointMarker key={point.id} point={point} />;
         })}
+        <DirectionsService
+          options={{
+            destination: {
+              lat: destinationService.destination.lat,
+              lng: destinationService.destination.lng,
+            },
+            travelMode,
+            origin: currentUserLocation,
+          }}
+          callback={directionsCallback}
+        />
+        {destinationService.showRoute && directionsResponse && (
+          <DirectionsRenderer options={{ directions: directionsResponse }} />
+        )}
       </GoogleMap>
       {showCrosshair && <div className="absolute z-20">
         <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />

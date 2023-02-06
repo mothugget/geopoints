@@ -1,11 +1,10 @@
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client';
-import { useContext } from 'react';
+import { useState } from 'react';
 import { useUserData } from '../hooks/useUserData';
-import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
 import Map from '../components/Map';
 import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
-import ClickedMarkerDialog from '../components/mapMarkers/ClickedMarkerDialog';
+import ClickedMarkerDialog from '../components/MapMarkers/ClickedMarkerDialog';
 
 export default withPageAuthRequired(function Home() {
   const { user } = useUser();

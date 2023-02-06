@@ -2,12 +2,12 @@ import React from 'react';
 import Image from 'next/image.js';
 import { Point, Tag } from '../types/types';
 
-// interface PointUnderListProps {
-//   imagePath?: string;
-//   title: string;
-//   description?: string;
-//   // tags: string;
-// }
+interface PointUnderListProps {
+  imagePath?: string;
+  title: string;
+  description?: string;
+  // tags: string;
+}
 
 // const PointUnderList = ({
 //   imagePath,
@@ -15,7 +15,7 @@ import { Point, Tag } from '../types/types';
 //   description,
 // }: // tags,
 // PointUnderListProps) => {
-  const PointUnderList = ({imagePath, title, description}:Point) => {
+  const PointUnderList = ({imagePath, title, description}:PointUnderListProps) => {
   return (
     <section>
       <div className="p-3">
