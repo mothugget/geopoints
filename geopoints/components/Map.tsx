@@ -54,7 +54,7 @@ function Map() {
     lat: 0,
     lng: 0,
   });
-  const { showCrosshair, setMap } = useContext(MapContext);
+  const { showCrosshair, setMap, setCurrentUserPosition } = useContext(MapContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
   const { displayedPoints } = useContext(DisplayedPointsContext);
@@ -87,6 +87,8 @@ function Map() {
     },
     [currentUserLocation, setMap]
   );
+
+  setCurrentUserPosition&&setCurrentUserPosition(currentUserLocation);
 
   const onUnmount = useCallback(
     function callback(map: google.maps.Map) {
