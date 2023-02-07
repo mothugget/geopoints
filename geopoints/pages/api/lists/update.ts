@@ -11,7 +11,7 @@ const updateListHandler = async (
 ) => {
   try {
     const { list } = req.body;
-    
+    const arrayOfTagIds = await createTagsIfTheyDontExist(list.tags);
     const updatedList = await prisma.list.update({
       where: {
         id: Number(list.id),
@@ -20,7 +20,10 @@ const updateListHandler = async (
         title: list.title,
         description: list.description, 
         isPublic: list.isPublic,
-        imagePath: list.imagePath
+        imagePath: list.imagePath,
+        tags: {
+          connect: arrayOfTagIds,
+        },
       }
     });
     res.status(200).json({ updatedList, error: null });
