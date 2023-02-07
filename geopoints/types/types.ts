@@ -15,6 +15,7 @@ interface CreatePointData {
   isPublic: boolean;
   lng: number;
   lat: number;
+  markerPath: string;
   imagePath: string;
   listId: number;
 }

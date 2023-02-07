@@ -4,19 +4,18 @@ import { Button } from '@material-tailwind/react';
 
 interface UploadWidgetProps {
   setImgPath: React.Dispatch<React.SetStateAction<string>>;
-  setImgUploaded: React.Dispatch<React.SetStateAction<boolean>>;
   multiple: boolean;
+  buttonString: string;
 }
 
 export default function UploadWidget({
   setImgPath,
-  setImgUploaded,
   multiple,
+  buttonString,
 }: UploadWidgetProps) {
   function onUpload(error: any, result: any, widget: any) {
     console.log(result);
     if (result.event === 'success') {
-      setImgUploaded(true);
       setImgPath(result.info.url);
     }
   }
@@ -32,7 +31,7 @@ export default function UploadWidget({
             e.preventDefault();
             open();
           }
-          return <Button onClick={handleOnClick}>Upload an Image</Button>;
+          return <Button className='mt-2' onClick={handleOnClick}>{buttonString}</Button>;
         }}
       </CldUploadWidget>
     </div>
