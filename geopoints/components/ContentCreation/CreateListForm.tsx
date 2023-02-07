@@ -27,7 +27,6 @@ interface ListData {
 function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
-  const [imgUploaded, setImgUploaded] = useState(false);
   const [listInput, setListInput] = useState<any>(null);
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
@@ -163,7 +162,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       </div>
       <div className="my-5">
         <UploadWidget
-          setImgUploaded={setImgUploaded}
+          buttonString={'Upload a marker'}
           setImgPath={setImgPath}
           multiple={false}
         />

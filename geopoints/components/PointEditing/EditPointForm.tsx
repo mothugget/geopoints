@@ -36,7 +36,6 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
   const { setDisplayedPoints } = useContext(DisplayedPointsContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
-  const [imgUploaded, setImgUploaded] = useState(false);
   const [checkboxState, setCheckboxState] = useState(false);
   const router = useRouter();
   const initialUpdatedPoint = {
@@ -200,7 +199,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
       </Select>
       <div className="my-5">
         <UploadWidget
-          setImgUploaded={setImgUploaded}
+          buttonString={'Upload a marker'}
           setImgPath={setImgPath}
           multiple={false}
         />
