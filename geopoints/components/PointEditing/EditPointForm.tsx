@@ -1,58 +1,76 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { List } from '../../types/types';
+import React, { useState, Dispatch, SetStateAction, useContext } from 'react';
+import { List, Point } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
-import { updateList } from '../../util/updateList';
+import { updatePoint } from '../../util/updatePoint';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
-import { Input, Checkbox, Button } from '@material-tailwind/react';
+import {
+  Input,
+  Checkbox,
+  Button,
+  Select,
+  Option,
+} from '@material-tailwind/react';
 import { useRouter } from 'next/router';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
 
-interface EditListFormProps {
-  setShowEditList: Dispatch<SetStateAction<boolean>>;
-  listData: List;
+interface EditPointFormProps {
+  setShowEditPoint: Dispatch<SetStateAction<boolean>>;
+  pointData: Point;
 }
 
-interface ListData {
+interface PointData {
   title: string;
   id: number | undefined;
   description: string;
-  tags: string[];
   isPublic: boolean;
   imagePath: string;
+  listId: number;
+  newListId: number;
+  userDefaultListId: number;
 }
 
-function EditListForm({ setShowEditList, listData }: EditListFormProps) {
+function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
+  const { setDisplayedPoints } = useContext(DisplayedPointsContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
+  const [checkboxState, setCheckboxState] = useState(false);
   const router = useRouter();
-
-  const initialUpdatedList = {
-    title: listData.title ?? '',
-    id: listData.id,
-    description: listData.description ?? '',
-    tags: listData.tags ?? '',
-    isPublic: data.isPublic,
-    imagePath: listData.imagePath ?? '',
+  const initialUpdatedPoint = {
+    title: pointData?.title,
+    id: pointData?.id,
+    description: pointData?.description,
+    isPublic: pointData?.isPublic,
+    imagePath: pointData?.imagePath,
+    listId: pointData.listId,
   };
 
-  const [listInput, setListInput] = useState<any>(initialUpdatedList);
+  const [pointInput, setPointInput] = useState<any>(initialUpdatedPoint);
   const [imgPath, setImgPath] = useState('');
   let updatedPublicValue = false;
-  let publicValue = listData.isPublic;
-  const originalData = { ...listData };
+  let publicValue = pointData?.isPublic;
+  const originalData = { ...pointData };
+  const userDefaultList = data.ownLists.find(
+    (list: List) => list.title === 'My Points'
+  );
 
+  console.log({ pointData });
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
-    (updatedListData: ListData) => {
-      return updateList(updatedListData);
+    (updatedPointData: PointData) => {
+      return updatePoint(updatedPointData);
     },
     {
-      onSuccess: () => {
+      onSuccess: (updatedPoint) => {
         queryClient.invalidateQueries('fectchUserData');
+        setDisplayedPoints &&
+          setDisplayedPoints((displayedPoints) =>
+            displayedPoints.filter((point) => point.id !== updatedPoint.id)
+          );
       },
     }
   );
@@ -69,7 +87,7 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
     return (
       <div className="flex flex-col justify-center itmes-center h-96">
         <p className="text-red-200 font-semibold italic animate-pulse">
-          Something went wrong while creating the list...
+          Something went wrong while creating the Point...
         </p>
         <Button
           className="my-5"
@@ -86,7 +104,7 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
     return (
       <div className="flex flex-col justify-center items-center h-full">
         <div className="text-green-500 font-semibold text-xl">
-          List updated! ✅
+          Point updated! ✅
         </div>
         <Button
           className="my-5"
@@ -94,9 +112,9 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
           color="green"
           onClick={() => {
             mutation.reset();
-            router.replace(router.asPath);
             // this makes getServerSideProps to fire again to get te latest data
-            setShowEditList(false);
+            router.replace(router.asPath);
+            setShowEditPoint(false);
           }}
         >
           Close
@@ -105,38 +123,39 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
     );
   }
 
-  const listFormSubmitHandler = async (e: any) => {
+  const pointFormSubmitHandler = async (e: any) => {
     e.preventDefault();
-    const updatedListData: ListData = {
-      title: listInput.title || originalData.title,
+    const updatedPointData: PointData = {
+      title: pointInput.title ?? originalData.title,
       id: originalData.id,
-      description: listInput.description || originalData.description,
-      tags: listInput.tags || originalData.tags,
-      isPublic: updatedPublicValue ? publicValue : originalData.isPublic,
-      imagePath: imgPath ? imgPath : originalData.imagePath,
+      description: pointInput.description ?? originalData.description,
+      isPublic: updatedPublicValue ? publicValue! : originalData?.isPublic!,
+      imagePath: imgPath ? imgPath! : originalData.imagePath!,
+      listId: pointInput.listId,
+      newListId: pointInput?.newListId,
+      userDefaultListId: userDefaultList.id,
     };
-    mutation.mutate(updatedListData);
-    setListInput({});
+    mutation.mutate(updatedPointData);
+    setPointInput({});
   };
 
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setListInput({ ...listInput, title: e.target.value });
+    setPointInput({ ...pointInput, title: e.target.value });
   };
   const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setListInput({ ...listInput, description: e.target.value });
+    setPointInput({ ...pointInput, description: e.target.value });
   };
-  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value.split(' ');
-    setListInput({ ...listInput, tags: userEnteredTags });
-  };
+
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updatedPublicValue = true;
-    publicValue = !publicValue;
+    setCheckboxState(!checkboxState);
+  };
+  const listInputHandler = (newListId: string | undefined) => {
+    setPointInput({ ...pointInput, newListId });
   };
 
   return (
     <form
-      onSubmit={listFormSubmitHandler}
+      onSubmit={pointFormSubmitHandler}
       className="mt-10
     flex
     flex-col
@@ -148,7 +167,7 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
           label="Title"
           onChange={titleInputHandler}
           maxLength={25}
-          value={listInput.title}
+          value={pointInput.title}
         />
       </div>
       <div className="my-2">
@@ -157,28 +176,28 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
           label="Description"
           onChange={descriptionInputHandler}
           maxLength={50}
-          value={listInput.description}
+          value={pointInput?.description}
         />
       </div>
-      <div className="my-2 mt-5">
-        <Input
-          variant="static"
-          label="Tags"
-          onChange={tagsInputHandler}
-          maxLength={50}
-          placeholder={listInput?.tags?.map((tag: any) => tag.name).join(' ')}
-        />
-      </div>
-
       <div className="my-2">
         <Checkbox
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
-          defaultChecked={listData.isPublic}
-          checked={listInput.isPublic}
         />
       </div>
+      <Select
+        id="List"
+        name="List"
+        label="Select List"
+        onChange={listInputHandler}
+      >
+        {data.ownLists?.map((list: List) => (
+          <Option key={list.id} value={String(list.id)}>
+            {list.title}
+          </Option>
+        ))}
+      </Select>
       <div className="my-5">
         <UploadWidget
           setImgUploaded={setImgUploaded}
@@ -186,7 +205,6 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
           multiple={false}
         />
       </div>
-
       <div className="my-1">
         <Button ripple={true} type="submit">
           Update
@@ -196,4 +214,4 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
   );
 }
 
-export default EditListForm;
+export default EditPointForm;

@@ -29,9 +29,9 @@ export default function CreatePointForm({
   const [imgUploaded, setImgUploaded] = useState(false);
   const [imgPath, setImgPath] = useState('');
   const [pointInput, setPointInput] = useState<any>({});
-  const { user } = useUser();
   const { map } = useContext(MapContext);
   const { setDisplayedPoints } = useContext(DisplayedPointsContext);
+  const { user } = useUser();
   const { data } = useUserData(user!);
 
   const queryClient = useQueryClient();
@@ -74,9 +74,6 @@ export default function CreatePointForm({
         </Button>
       </div>
     );
-  }
-  if (mutation.isSuccess) {
-    // setShowCreatePoint(false);
   }
 
   const pointFormSubmitHandler = async (e: any) => {

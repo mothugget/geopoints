@@ -10,14 +10,20 @@ import { ClickedMarkerContext } from '../../contexts/ClickedMarkerContext';
 import { Point } from '../../types/types';
 import useDeletePoint from '../../hooks/useDeletePoint';
 import { RoutesContext } from '../../contexts/RoutesContext';
-import Link from 'next/link.js';
+import EditPointModal from '../PointEditing/EditPointModal';
 
 export default function ClickedMarkerDialog() {
+  const [showEditPoint, setShowEditPoint] = useState(false);
   const [open, setOpen] = useState(false);
   const [prevClickedPoint, setPrevClickedPoint] = useState<Point | null>();
   const { clickedPoint, setClickedPoint } = useContext(ClickedMarkerContext);
   const { setDestinationService } = useContext(RoutesContext);
   const mutation = useDeletePoint();
+
+  let pointWeAreGoingToEdit;
+  if (clickedPoint) {
+    pointWeAreGoingToEdit = clickedPoint;
+  }
 
   if (prevClickedPoint?.id !== clickedPoint?.id) {
     setPrevClickedPoint(clickedPoint);
@@ -27,6 +33,12 @@ export default function ClickedMarkerDialog() {
   const handleOpen = () => {
     setOpen(!open);
     setClickedPoint && setClickedPoint(null);
+  };
+
+  const handleEditClick = () => {
+    setShowEditPoint(true);
+    setOpen(false);
+    // setClickedPoint && setClickedPoint(null);
   };
 
   const handleShowRoute = () => {
@@ -52,6 +64,13 @@ export default function ClickedMarkerDialog() {
 
   return (
     <>
+      {pointWeAreGoingToEdit && (
+        <EditPointModal
+          showEditPoint={showEditPoint}
+          setShowEditPoint={setShowEditPoint}
+          pointData={pointWeAreGoingToEdit}
+        />
+      )}
       {mutation.isSuccess ? (
         <Alerts
           message="Point deleted correctly"
@@ -76,16 +95,14 @@ export default function ClickedMarkerDialog() {
           >
             {'Show route'}
           </Button>
-          <Link href={'/points/'}>
-            <Button
-              className="my-1 w-24"
-              variant="gradient"
-              color="green"
-              onClick={handleOpen}
-            >
-              Edit
-            </Button>
-          </Link>
+          <Button
+            className="my-1 w-24"
+            variant="gradient"
+            color="green"
+            onClick={() => handleEditClick()}
+          >
+            Edit
+          </Button>
           <Button
             className="my-1 w-24"
             variant="gradient"
