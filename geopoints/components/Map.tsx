@@ -19,6 +19,7 @@ import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
 import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
 import { RoutesContext } from '../contexts/RoutesContext';
+import homeMarker from '../public/home-marker.png'
 
 const testCoords: Coordinates[] = [
   { lat: 51.59298641280394, lng: 0.19911695761843295 },
@@ -177,7 +178,10 @@ function Map() {
         {displayedPoints.map((point) => {
           return <PointMarker key={point.id} point={point} />;
         })}
-        <Marker position={currentUserLocation}></Marker>
+        <Marker position={currentUserLocation} icon={{
+          url: homeMarker.src,
+          scaledSize: new google.maps.Size(40, 40),
+        }}></Marker>
         <InfoWindow
           position={{
             lat: currentUserLocation.lat + 0.0007,
