@@ -5,20 +5,20 @@ import { IconButton } from "@material-tailwind/react";
 
 interface UploadWidgetProps {
   setImgPath: React.Dispatch<React.SetStateAction<string>>;
-  setImgUploaded: React.Dispatch<React.SetStateAction<boolean>>;
+  updateButtonChecker: () => void;
   multiple: boolean;
 }
 
 export default function EditFormImageUpload({
   setImgPath,
-  setImgUploaded,
+  updateButtonChecker,
   multiple,
 }: UploadWidgetProps) {
 
   function onUpload(error: any, result: any, widget: any) {
     console.log(result);
     if (result.event === "success") {
-      setImgUploaded(true);
+      updateButtonChecker();
       setImgPath(result.info.url);
     }
   }

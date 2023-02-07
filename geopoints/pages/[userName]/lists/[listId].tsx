@@ -43,15 +43,44 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   }
 
   return (
-    listData && 
-      <>
-        <div className="flex flex-col mt-8 mb-20">
+      listData && data && (
+        <>
+        <div className="flex flex-col pt-8">
           <PictureTitleAndDesc
             imagePath={listData?.imagePath}
             description={listData?.description}
             title={listData?.title}
             points={listData.points}
           />
+        </div>
+          {data.id == listData.authorId ? (
+            <button className="fixed bottom-20 right-4 text-black"
+              onClick={() => {
+                handleDeleteList(data.id, listData.id!)
+              }}
+            >
+              Delete List
+            </button>
+            ) : liked ? (
+              <button className="fixed bottom-20 right-4 text-black"
+                onClick={() => {
+                  handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
+                  setLiked(false)
+                }}
+              >
+                Liked
+              </button>
+            ) : (
+              <button className="fixed bottom-20 right-4 text-black"
+                onClick={() => {
+                  handleToggleFavourites(data.id, listData.id!, liked)
+                  setLiked(true)
+                }}
+              >
+                Like
+              </button>
+            )
+          }
           <Button size="sm" variant="gradient" className="w-32" onClick={()=> setShowEditList(!showEditList) }>
             Edit list
           </Button>
@@ -60,9 +89,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             setShowEditList={setShowEditList}
             listData={listData}
           />
-        </div>
-      </>
-    
+        </>
+      )
   );
 }
 

@@ -35,10 +35,10 @@ const ListTab = ({
         </CardHeader>
         <CardBody className="text-center">
           <Typography variant="h5" className="mb-2">
-            {title}
+            {title ? title : ""}
           </Typography>
           <Typography>
-            {description}
+            {description ? description : ""}
           </Typography>
         </CardBody>
       </Card>

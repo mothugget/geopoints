@@ -68,9 +68,8 @@ export default function MyTabs() {
             {value === 'Lists' ? (
               data?.ownLists.map((list: List) => {
                 return (
-                  <div className="flex justify-center">
+                  <div key={list.id} className="flex justify-center">
                     <ListsTab
-                      key={list.id}
                       imagePath={list.imagePath}
                       title={list.title}
                       description={list.description}
