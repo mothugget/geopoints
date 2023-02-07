@@ -6,6 +6,8 @@ import PointUnderList from '../../components/PointUnderList';
 import ProfileTab from '../../components/profileTabs/ProfileTab';
 import ListsTab from '../../components/profileTabs/ListsTab';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { NextPageContext } from 'next';
 
 import {
   Tabs,
@@ -39,7 +41,9 @@ const tableData = [
 
 export default function MyTabs() {
   const { user } = useUser();
-  const [tabDefault, setTabDefault] = useState('Lists')
+
+  const router = useRouter();
+  const [tabDefault, setTabDefault] = useState(router.query.tabDefault || 'Lists')
 
   const { isError, isLoading, data, error, refetch } = useUserData(user!)
 
@@ -122,3 +126,8 @@ export default function MyTabs() {
     </Tabs>
   );
 }
+
+MyTabs.getInitialProps = async (ctx: NextPageContext) => {
+  const { query } = ctx;
+  return { tabDefault: query.tabDefault || 'Lists' };
+};

@@ -56,14 +56,14 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
           {data.id == listData.authorId ? (
             <div>
 
-              <Button className="fixed bottom-20 right-4"
+              <Button ripple={false} className="fixed bottom-20 right-4"
                 onClick={() => {
                   handleDeleteList(data.id, listData.id!)
                 }}
               >
                 Delete List
               </Button>
-                <Button size="sm" variant="gradient" className="w-32" onClick={()=> setShowEditList(!showEditList) }>
+                <Button ripple={false} className="fixed bottom-20 left-4" onClick={()=> setShowEditList(!showEditList) }>
                   Edit list
                 </Button>
                 <EditListModal
@@ -73,7 +73,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
                 />
             </div>
             ) : liked ? (
-              <Button className="fixed bottom-20 right-4"
+              <Button ripple={false} className="fixed bottom-20 right-4"
                 onClick={() => {
                   handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
                   setLiked(false)
@@ -82,7 +82,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
                 Liked
               </Button>
             ) : (
-              <Button className="fixed bottom-20 right-4"
+              <Button ripple={false} className="fixed bottom-20 right-4"
                 onClick={() => {
                   handleToggleFavourites(data.id, listData.id!, liked)
                   setLiked(true)

@@ -54,7 +54,7 @@ const Footer = () => {
             }`}
           />
           <New showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-          <Link href={`/${data?.userName}/profile`}>
+          <Link href={`/${data?.userName}/profile?tabDefault=Favourites`}>
             <BsBookmarkHeart className="w-6 h-8 mt-1" />
           </Link>
           <AiOutlineUnorderedList
