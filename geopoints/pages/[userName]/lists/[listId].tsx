@@ -56,7 +56,6 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
         </div>
           {data.id == listData.authorId ? (
             <div>
-
               <Button ripple={false} className="fixed bottom-20 right-4"
                 onClick={() => {
                   handleDeleteList(data.id, listData.id!)
