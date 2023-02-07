@@ -28,6 +28,7 @@ export default function CreatePointForm({
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgUploaded, setImgUploaded] = useState(false);
   const [imgPath, setImgPath] = useState('');
+  const [markerPath, setMarkerPath] = useState('');
   const [pointInput, setPointInput] = useState<any>({});
   const { map } = useContext(MapContext);
   const { setDisplayedPoints } = useContext(DisplayedPointsContext);
@@ -85,6 +86,7 @@ export default function CreatePointForm({
       lng: Number(map?.getCenter()?.lng()),
       lat: Number(map?.getCenter()?.lat()),
       imagePath: imgPath ?? '/favicon.ico',
+      markerPath: markerPath ?? 'http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png',
       listId: pointInput.listId,
     };
 
@@ -130,13 +132,6 @@ export default function CreatePointForm({
             maxLength={50}
           />
         </div>
-        <div className="my-2">
-          <Checkbox
-            label="Make public"
-            ripple={true}
-            onChange={publicInputHandler}
-          />
-        </div>
         <Select
           id="List"
           name="List"
@@ -151,13 +146,19 @@ export default function CreatePointForm({
         </Select>
         <div className="my-5">
           <UploadWidget
-            setImgUploaded={setImgUploaded}
             setImgPath={setImgPath}
             multiple={false}
+            buttonString={'Upload an image'}
+
+          />
+          <UploadWidget
+            setImgPath={setMarkerPath}
+            multiple={false}
+            buttonString={'Upload a marker'}
           />
         </div>
         <div className="my-1">
-          <Button ripple={true} type="submit" disabled={!pointInput.listId}>
+          <Button ripple={true} type="submit" disabled={!pointInput.listId} >
             Create
           </Button>
         </div>

@@ -19,6 +19,7 @@ const updatePointHandler = async (
         description: point.description,
         isPublic: point.isPublic,
         imagePath: point.imagePath,
+        markerPath: point.markerPath,
       },
     });
     if (point.newListId && point.newListId !== point.listId) {
