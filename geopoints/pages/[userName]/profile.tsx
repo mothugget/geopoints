@@ -17,6 +17,7 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 import { List, Point } from '../../types/types';
+import Link from 'next/link.js';
 
 const tableData = [
   {
@@ -86,15 +87,14 @@ export default function MyTabs() {
               })
             ) : value === 'Points' ? (
               data?.ownLists[0].points.map((point: Point) => {
-                // console.log({ point });
                 return (
-                  <PointUnderList
-                    key={point.id}
-                    title={point.title}
-                    imagePath={point.imagePath}
-                    description={point.description}
-                    // tags={point.tags?.at(0)}
-                  />
+                  <Link href={`/points/${point.id}`} key={point.id}>
+                    <PointUnderList
+                      title={point.title}
+                      imagePath={point.imagePath}
+                      description={point.description}
+                    />
+                  </Link>
                 );
               })
             ) : value === 'Profile' ? (

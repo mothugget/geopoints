@@ -21,10 +21,10 @@ const PointUnderList = ({
   description,
 }: PointUnderListProps) => {
   return (
-    <section>
-      <div className="p-3">
+    <section className="rounded">
+      <div className="p-3 ">
         <div className=" w-full lg:max-w-full lg:flex">
-          <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-row items-center leading-normal">
+          <div className="bg-white rounded-b rounded lg:rounded-b-none lg:rounded-r p-4 flex flex-row items-center leading-normal">
             <div className="w-36">
               <img
                 src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
