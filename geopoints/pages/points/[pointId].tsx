@@ -3,16 +3,14 @@ import { GetServerSideProps } from "next";
 import { Point } from "../../types/types.js";
 import PointDisplay from "../../components/PointPage/PointDisplay";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { useUser } from "@auth0/nextjs-auth0/client";
-// import { Button } from '@material-tailwind/react';
+import { Button } from '@material-tailwind/react';
 import { useRouter } from "next/router.js";
-import { Button } from "@mui/material";
 
 const prisma = new PrismaClient();
 
 function PointPage({ pointData }: { pointData: Point }) {
   const router = useRouter();
-  const user = useUser();
+
   // const {data} = useUserData(user);
   // const userName = data?.userName;
   // console.log(userName)
@@ -30,11 +28,7 @@ function PointPage({ pointData }: { pointData: Point }) {
         <LoadingSpinner />
       )}
       <Button
-        style={{
-          borderRadius: 8,
-          backgroundColor: "#399EF1",
-        }}
-        variant="contained"
+        ripple={false}
         onClick={() => {
           router.back();
         }}

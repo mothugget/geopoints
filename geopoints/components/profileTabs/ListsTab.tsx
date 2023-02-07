@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import RouteToListAuthor from '../RouteToListAuthor/RouteToListAuthor';
 
 import {
   Card,
@@ -35,9 +36,14 @@ const ListTab = ({
         </CardHeader>
         <CardBody className="text-center">
           <Typography variant="h5" className="mb-2">
-            {title ? title : 'Untitled'}
+            {title ? title : "Untitled"}
           </Typography>
-          <Typography>{description ? description : 'No description'}</Typography>
+          <Typography>
+            {description ? description : "No description"}
+          </Typography>
+          <div>
+            <RouteToListAuthor userName={userName} />
+          </div>
         </CardBody>
       </Card>
     </Link>
