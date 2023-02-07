@@ -21,8 +21,8 @@ const PointUnderList = ({
   description,
 }: PointUnderListProps) => {
   return (
-    <section>
-      <div className="p-3">
+    <section className="rounded">
+      <div className="p-3 ">
         <div className=" w-full lg:max-w-full lg:flex">
           <div className="bg-white p-4 flex flex-row items-center leading-normal bg-amber-50 rounded-xl">
             <div className="w-36">

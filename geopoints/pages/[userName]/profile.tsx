@@ -7,7 +7,14 @@ import ProfileTab from '../../components/profileTabs/ProfileTab';
 import ListsTab from '../../components/profileTabs/ListsTab';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { NextPageContext } from 'next';
+import { NextPageContext, NextApiRequest } from 'next';
+import { PrismaClient } from '@prisma/client';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { List, Point, User } from '../../types/types';
+import Link from 'next/link';
+
+
+const prisma = new PrismaClient();
 
 import {
   Tabs,
@@ -15,8 +22,8 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Button,
 } from '@material-tailwind/react';
-import { List, Point } from '../../types/types';
 
 const tableData = [
   {
@@ -39,16 +46,14 @@ const tableData = [
   },
 ];
 
-export default function MyTabs() {
+export default function MyTabs({ profileUser }: { profileUser: User }) {
   const { user } = useUser();
-
   const router = useRouter();
   const [tabDefault, setTabDefault] = useState(
     router.query.tabDefault || 'Lists'
   );
 
-  const { isError, isLoading, data, error, refetch } = useUserData(user!);
-
+  const { isError, isLoading, data, error, refetch } = useUserData(profileUser!)
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -56,7 +61,6 @@ export default function MyTabs() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  console.log({ data });
 
   return (
     <Tabs value={tabDefault} className="bg-transparent">
@@ -69,7 +73,7 @@ export default function MyTabs() {
       </TabsHeader>
       <TabsBody>
         {tableData.map(({ value }) => (
-          <TabPanel key={value} value={value}>
+          <TabPanel key={value} value={value} className="mb-20">
             {value === 'Lists' ? (
               data?.ownLists.slice(1).map((list: List) => {
                 return (
@@ -86,25 +90,25 @@ export default function MyTabs() {
               })
             ) : value === 'Points' ? (
               data?.ownLists[0].points.map((point: Point) => {
-                // console.log({ point });
                 return (
                   <PointUnderList
                     key={point.id}
                     title={point.title}
                     imagePath={point.imagePath}
                     description={point.description}
-                    // tags={point.tags?.at(0)}
                   />
                 );
               })
             ) : value === 'Profile' ? (
               data && data.imagePath ? (
-                <ProfileTab
-                  imagePath={data.imagePath}
-                  name={data.name}
-                  userName={data.userName}
-                  bio={data.bio}
-                />
+                <>
+                <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
+                {user && user.email === profileUser.email && (
+                  <Link className="fixed bottom-20 right-4" href={`../${data.userName}/edit`}>
+                    <Button>Edit Profile</Button>
+                  </Link>
+                )}
+                </>
               ) : (
                 <LoadingSpinner />
               )
@@ -132,7 +136,22 @@ export default function MyTabs() {
   );
 }
 
-MyTabs.getInitialProps = async (ctx: NextPageContext) => {
-  const { query } = ctx;
-  return { tabDefault: query.tabDefault || 'Lists' };
-};
+// MyTabs.getInitialProps = async (ctx: NextPageContext) => {
+//   const { query } = ctx;
+//   return { tabDefault: query.tabDefault || 'Lists' };
+// };
+
+export async function getServerSideProps({ query }: { query: NextApiRequest['query']}) {
+  const username = typeof query.userName === 'string' ? query.userName : query.userName![0];
+  const profileUser = await prisma.user.findUnique({
+    where: {
+      userName: username
+    }
+  });
+
+  return{
+    props: {
+      profileUser
+    }
+  }
+}

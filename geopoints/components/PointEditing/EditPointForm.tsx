@@ -58,7 +58,6 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
   const userDefaultList = data.ownLists.find(
     (list: List) => list.title === 'My Points'
   );
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -66,20 +65,13 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
       return updatePoint(updatedPointData);
     },
     {
-      onSuccess: (data) => {
+      onSuccess: (updatedPoint) => {
         queryClient.invalidateQueries('fectchUserData');
-        console.log('data on mutate: ', data);
-        console.log({ pointInput });
-        if (
-          pointInput.newListId &&
-          pointInput.listId &&
-          pointInput.newListId !== pointInput.listId
-        ) {
-          setDisplayedPoints &&
-            setDisplayedPoints((displayedPoints) =>
-              displayedPoints.filter((point) => point.id !== data.id)
-            );
-        }
+        setDisplayedPoints &&
+          setDisplayedPoints((displayedPoints) =>
+           { const filteredPoints = displayedPoints.filter((point) => point.id !== updatedPoint.id)
+            return [...filteredPoints,updatedPoint]}
+          );
       },
     }
   );

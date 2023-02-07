@@ -11,7 +11,6 @@ const PointMarker = ({ point }: PointMarkerProps) => {
   const { setClickedPoint } = useContext(ClickedMarkerContext);
 
   const coordinates = { lat: point.lat, lng: point.lng };
-
   const handleClick = () => {
     if (setClickedPoint && point) {
       setClickedPoint(point);

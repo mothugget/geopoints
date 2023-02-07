@@ -22,18 +22,15 @@ function PointPage({ pointData }: { pointData: Point }) {
       ) : (
         <LoadingSpinner />
       )}
-      <Button className="fixed bottom-20 right-4">Add to favourites</Button>
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let { pointId } = context.query;
-
-  let pointData = await prisma.point.findUnique({
+  const { pointId } = context.query;
+  const pointData = await prisma.point.findUnique({
     where: { id: Number(pointId) },
   });
-
   return {
     props: { pointData },
   };

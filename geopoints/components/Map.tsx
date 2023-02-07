@@ -5,8 +5,10 @@ import {
   useJsApiLoader,
   DirectionsRenderer,
   DirectionsService,
+  Marker,
+  InfoWindow,
 } from '@react-google-maps/api';
-import Image from 'next/image'
+import Image from 'next/image';
 import { Coordinates, CreatePointData, List, Point } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
@@ -34,7 +36,8 @@ const newPointDefaultData: CreatePointData = {
   isPublic: false,
   imagePath: '',
   listId: 0,
-  markerPath:'http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png',
+  markerPath:
+    'http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png',
   lat: 0,
   lng: 0,
 };
@@ -64,10 +67,9 @@ function Map() {
 
   useEffect(() => {
     getUserPosition();
+  }, []);
 
-  }, [])
-
-  console.log('catch map rerenders')
+  console.log('catch map rerenders');
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -175,6 +177,18 @@ function Map() {
         {displayedPoints.map((point) => {
           return <PointMarker key={point.id} point={point} />;
         })}
+        <Marker position={currentUserLocation}></Marker>
+        <InfoWindow
+          position={{
+            lat: currentUserLocation.lat + 0.0007,
+            lng: currentUserLocation.lng,
+          }}
+        >
+          <h3 className="text-black text-base">
+            You are here: <span className="font-normal">Double tap</span> or{' '}
+            <span className="font-normal">press new</span> to create points 🤞🏼
+          </h3>
+        </InfoWindow>
         <DirectionsService
           options={{
             destination: {
@@ -190,9 +204,11 @@ function Map() {
           <DirectionsRenderer options={{ directions: directionsResponse }} />
         )}
       </GoogleMap>
-      {showCrosshair && <div className="absolute z-20">
-        <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
-      </div>}
+      {showCrosshair && (
+        <div className="absolute z-20">
+          <Image src="/crosshair.png" alt="crosshair" width={40} height={40} />
+        </div>
+      )}
     </div>
   ) : (
     <LoadingSpinner />
