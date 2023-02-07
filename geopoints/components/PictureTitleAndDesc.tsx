@@ -41,7 +41,7 @@ const PictureTitleAndDesc = ({
         <Typography>{description ? description : 'No description'}</Typography>
         <div className="flex justify-center">
           {tags?.map((tag, i) => {
-            return <Chip key={i} value={tag.name} className="mr-2 ml-2" />;
+            return <Chip key={i} value={tag.name} className="mr-2 ml-2 bg-gray-400" />;
           })}
         </div>
       </CardBody>

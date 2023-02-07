@@ -11,7 +11,7 @@ const AutocompleteItem = ({ list, author }: AutocompleteItemProps) => {
     author &&
     list && (
       <Card className="w-72 p-5">
-        <Link href={`${author.userName}/lists/${list.id}`}>
+        <Link href={`/${author.userName}/lists/${list.id}`}>
           <img
             src={list.imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
             alt=""
