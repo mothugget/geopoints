@@ -1,4 +1,6 @@
 import { useState, useContext, SetStateAction, Dispatch } from 'react';
+import { useRouter } from 'next/router';
+
 import CreatePointModal from './CreatePointModal';
 import CreateListModal from './CreateListModal';
 import CrosshairModal from './CrosshairModal';
@@ -26,7 +28,10 @@ const New = ({
   const [showCrosshairModal, setShowCrosshairModal] = useState(false);
   const { setShowCrosshair } = useContext(MapContext);
 
+  const router = useRouter()
+
   function createPointHandler() {
+    if(router.pathname!='/'){router.push('/')}
     setShowCrosshairModal(!showCrosshairModal)
     setShowCrosshair && setShowCrosshair(true)
   }
