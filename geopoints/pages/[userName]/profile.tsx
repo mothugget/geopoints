@@ -7,8 +7,11 @@ import ProfileTab from '../../components/profileTabs/ProfileTab';
 import ListsTab from '../../components/profileTabs/ListsTab';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { NextPageContext } from 'next';
+import { NextPageContext, NextApiRequest } from 'next';
 import { PrismaClient } from '@prisma/client';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { List, Point, User } from '../../types/types';
+
 
 const prisma = new PrismaClient();
 
@@ -20,7 +23,6 @@ import {
   TabPanel,
   Button,
 } from '@material-tailwind/react';
-import { List, Point } from '../../types/types';
 import Link from 'next/link';
 
 const tableData = [
@@ -44,17 +46,15 @@ const tableData = [
   },
 ];
 
-export default function MyTabs({ profileUser }) {
+export default function MyTabs({ profileUser }: { profileUser: User }) {
   const { user } = useUser();
-  console.log('User: ',user)
+  console.log(user)
   const router = useRouter();
-  // const userProfile = router.query.userName
-  console.log('UserProfile: ',profileUser)
   const [tabDefault, setTabDefault] = useState(router.query.tabDefault || 'Lists')
-  // const [tabDefault, setTabDefault] = useState('Lists')
 
   const { isError, isLoading, data, error, refetch } = useUserData(profileUser!)
-  console.log('Data: ', data)
+  // console.log('Data: ', data)
+  console.log(profileUser)
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -99,7 +99,6 @@ export default function MyTabs({ profileUser }) {
                     title={point.title}
                     imagePath={point.imagePath}
                     description={point.description}
-                    // tags={point.tags?.at(0)}
                   />
                 );
               })
@@ -146,8 +145,8 @@ export default function MyTabs({ profileUser }) {
 //   return { tabDefault: query.tabDefault || 'Lists' };
 // };
 
-export async function getServerSideProps({ query }) {
-  const username = query.userName;
+export async function getServerSideProps({ query }: { query: NextApiRequest['query']}) {
+  const username = typeof query.userName === 'string' ? query.userName : query.userName![0];
   const profileUser = await prisma.user.findUnique({
     where: {
       userName: username
