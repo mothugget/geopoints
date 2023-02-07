@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { Marker } from '@react-google-maps/api';
 import { Point } from '../../types/types';
-import logo from '../../public/geopoints-logo-contrasted.png';
 import { ClickedMarkerContext } from '../../contexts/ClickedMarkerContext';
 
 interface PointMarkerProps {
@@ -24,7 +23,7 @@ const PointMarker = ({ point }: PointMarkerProps) => {
       onClick={handleClick}
       position={coordinates}
       icon={{
-        url: logo.src,
+        url: point.markerPath,
         scaledSize: new google.maps.Size(40, 40),
       }}
     />
