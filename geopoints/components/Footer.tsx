@@ -8,13 +8,17 @@ import ListsSidebar from './Sidebar/ListsSidebar';
 import Link from 'next/link';
 import New from './ContentCreation/New';
 import { RoutesContext } from '../contexts/RoutesContext';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUserData } from '../hooks/useUserData';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [prevRoute, setPrevRoute] = useState('');
   const router = useRouter();
-  const { destinationService, setDestinationService } =
-    useContext(RoutesContext);
+  const { destinationService, setDestinationService } = useContext(RoutesContext);
+
+  const { user } = useUser();
+  const { data } = useUserData(user!);
 
   if (router.pathname !== prevRoute) {
     setPrevRoute(router.pathname);
@@ -50,7 +54,9 @@ const Footer = () => {
             }`}
           />
           <New showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-          <BsBookmarkHeart className="w-6 h-8 mt-1" />
+          <Link href={`/${data?.userName}/profile`}>
+            <BsBookmarkHeart className="w-6 h-8 mt-1" />
+          </Link>
           <AiOutlineUnorderedList
             onClick={() => {
               if (router.pathname === '/') {
