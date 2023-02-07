@@ -41,17 +41,19 @@ const PictureTitleAndDesc = ({
         <Typography>
           {description ? description : ""}
         </Typography>
-        {/* {tags?.map((tag, i) => {
-          return(
-            <Chip key={i} variant="filled" value="chip filled" children={tag.name} />
-          )
-        })} */}
+        <div className="flex justify-center">
+          {tags?.map((tag, i) => {
+            return(
+              <Chip key={i} value={tag.name} className="mr-2 ml-2"/>
+            )
+          })}
+        </div>
       </CardBody>
       {points!.map((point) => {
           return (
             <Link key={point.id} href={`../../../points/${point.id}`}>
             <CardFooter divider className="py-1">
-              <PointUnderList 
+              <PointUnderList
                 imagePath={point.imagePath}
                 title={point.title}
                 description={point.description}

@@ -51,6 +51,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             description={listData?.description}
             title={listData?.title}
             points={listData.points}
+            tags={listData.tags}
           />
         </div>
           {data.id == listData.authorId ? (
