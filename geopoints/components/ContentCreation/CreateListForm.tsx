@@ -83,6 +83,17 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
         >
           Create another one!
         </Button>
+        <Button
+          className="my-5"
+          ripple={true}
+          color="blue"
+          onClick={() => {
+            mutation.reset();
+            setShowCreateList(false);
+          }}
+        >
+          Close
+        </Button>
       </div>
     );
   }
@@ -149,7 +160,6 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           required={true}
           maxLength={50}
           placeholder="Eg: firsttag secondtag"
-          
         />
       </div>
 
