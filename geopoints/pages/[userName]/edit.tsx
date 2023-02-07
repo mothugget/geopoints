@@ -104,7 +104,7 @@ console.log(data.imagePath)
 
   return (
     <form onSubmit={editProfileHandler} className="mt-10 m-w-96 flex flex-col">
-      <Card className="h-auto w-auto object-contain mx-6 my-0">
+      <Card className="h-auto w-auto object-contain mx-6 my-0 bg-amber-50">
         <img src={updatedImgPath} alt="profile-picture" className="p-6" />
         <div className="w-8 h-8 absolute left-10 bottom-10">
           <EditFormImageUpload

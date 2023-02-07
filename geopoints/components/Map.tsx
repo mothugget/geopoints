@@ -34,6 +34,7 @@ const newPointDefaultData: CreatePointData = {
   isPublic: false,
   imagePath: '',
   listId: 0,
+  markerPath:'http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png',
   lat: 0,
   lng: 0,
 };

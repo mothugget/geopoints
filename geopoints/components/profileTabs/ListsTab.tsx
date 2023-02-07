@@ -25,7 +25,7 @@ const ListTab = ({
 }: ListTabProps) => {
   return (
     <Link href={`../${userName}/lists/${listId}`}>
-      <Card className="w-96 mt-10 mb-10">
+      <Card className="w-96 mt-10 mb-10 bg-amber-50">
         <CardHeader color="blue" className="relative h-56">
           <img
             src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}

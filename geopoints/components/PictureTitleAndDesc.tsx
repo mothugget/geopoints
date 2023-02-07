@@ -41,15 +41,13 @@ const PictureTitleAndDesc = ({
         <Typography>{description ? description : 'No description'}</Typography>
         <div className="flex justify-center">
           {tags?.map((tag, i) => {
-            return(
-              <Chip key={i} value={tag.name} className="mr-2 ml-2"/>
-            )
+            return <Chip key={i} value={tag.name} className="mr-2 ml-2" />;
           })}
         </div>
       </CardBody>
       {points!.map((point) => {
-          return (
-            <Link key={point.id} href={`../../../points/${point.id}`}>
+        return (
+          <Link key={point.id} href={`../../../points/${point.id}`}>
             <CardFooter divider className="py-1">
               <PointUnderList
                 imagePath={
@@ -59,9 +57,9 @@ const PictureTitleAndDesc = ({
                 description={point.description}
               />
             </CardFooter>
-            </Link>
-          );
-        })}
+          </Link>
+        );
+      })}
     </Card>
   );
 };
