@@ -48,13 +48,12 @@ const tableData = [
 
 export default function MyTabs({ profileUser }: { profileUser: User }) {
   const { user } = useUser();
-  console.log(user)
   const router = useRouter();
-  const [tabDefault, setTabDefault] = useState(router.query.tabDefault || 'Lists')
+  const [tabDefault, setTabDefault] = useState(
+    router.query.tabDefault || 'Lists'
+  );
 
   const { isError, isLoading, data, error, refetch } = useUserData(profileUser!)
-  // console.log('Data: ', data)
-  console.log(profileUser)
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -62,7 +61,6 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  // console.log({ data });
 
   return (
     <Tabs value={tabDefault} className="bg-transparent">
@@ -77,7 +75,7 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
         {tableData.map(({ value }) => (
           <TabPanel key={value} value={value} className="mb-20">
             {value === 'Lists' ? (
-              data?.ownLists.map((list: List) => {
+              data?.ownLists.slice(1).map((list: List) => {
                 return (
                   <div key={list.id} className="flex justify-center">
                     <ListsTab
@@ -92,7 +90,6 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
               })
             ) : value === 'Points' ? (
               data?.ownLists[0].points.map((point: Point) => {
-                // console.log({ point });
                 return (
                   <PointUnderList
                     key={point.id}
@@ -118,9 +115,8 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
             ) : value === 'Favourites' ? (
               data?.likedLists.map((list: List) => {
                 return (
-                  <div className="flex justify-center">
+                  <div className="flex justify-center" key={list.id}>
                     <ListsTab
-                      key={list.id}
                       imagePath={list.imagePath}
                       title={list.title}
                       description={list.description}

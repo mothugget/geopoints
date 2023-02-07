@@ -181,9 +181,9 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
       </div>
       <div className="my-5">
         <UploadWidget
-          setImgUploaded={setImgUploaded}
           setImgPath={setImgPath}
           multiple={false}
+          buttonString={'Upload an image'}
         />
       </div>
 

@@ -45,9 +45,9 @@ const checkIfPointDataIsValid = (pointData: Point) => {
 
 const createPoint = async (pointData: Point, listId: number) => {
   try {
-    const { title, isPublic, lng, lat, description, imagePath } = pointData;
+    const { title, isPublic, lng, lat, description, imagePath, markerPath } = pointData;
     return await prisma.point.create({
-      data: { title, isPublic, lng, lat, listId, description, imagePath },
+      data: { title, isPublic, lng, lat, listId, description, imagePath, markerPath, },
     });
   } catch (error) {
     console.error({ error });

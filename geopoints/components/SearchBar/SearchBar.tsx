@@ -14,17 +14,7 @@ export const SearchBar = () => {
     <div>
       <button
         onClick={toggleSearch}
-        className="fixed
-            left-0
-            top-0
-            flex
-            z-20
-            justify-center
-            items-center
-            rounded-br-lg
-            backdrop-blur-sm
-            w-16
-            h-16"
+        className="fixed left-0 top-0 flex z-20 justify-center items-center rounded-br-lg backdrop-blur-sm w-16 h-16"
       >
         <Image
           src={'/search-icon.png'}
@@ -35,19 +25,7 @@ export const SearchBar = () => {
         />
       </button>
       {showSearchInput && (
-        <div
-          className="fixed
-                flex
-                shadow-none
-                border-none
-                backdrop-blur-sm
-                top-0
-                z-10
-                pl-16
-                pr-16
-                h-16
-                w-screen"
-        >
+        <div className="fixed flex shadow-none border-none backdrop-blur-sm top-0 z-10 pl-16 pr-16 h-16 w-screen">
           <Search />
         </div>
       )}

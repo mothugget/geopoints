@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Link from 'next/link';
 
 import {
@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardBody,
   Typography,
-} from "@material-tailwind/react";
+} from '@material-tailwind/react';
 
 interface ListTabProps {
   imagePath: string;
@@ -21,29 +21,27 @@ const ListTab = ({
   title,
   description,
   listId,
-  userName
-} : ListTabProps) => {
+  userName,
+}: ListTabProps) => {
   return (
     <Link href={`../${userName}/lists/${listId}`}>
-      <Card className="w-96 mt-10 mb-4">
+      <Card className="w-96 mt-10 mb-10 bg-amber-50">
         <CardHeader color="blue" className="relative h-56">
           <img
-            src={imagePath}
+            src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
             alt="img-blur-shadow"
             className="h-full w-full"
           />
         </CardHeader>
         <CardBody className="text-center">
           <Typography variant="h5" className="mb-2">
-            {title ? title : ""}
+            {title ? title : 'Untitled'}
           </Typography>
-          <Typography>
-            {description ? description : ""}
-          </Typography>
+          <Typography>{description ? description : 'No description'}</Typography>
         </CardBody>
       </Card>
     </Link>
-  )
-}
+  );
+};
 
 export default ListTab;

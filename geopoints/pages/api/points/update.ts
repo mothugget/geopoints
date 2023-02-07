@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { Point } from '../../../types/types';
-import createTagsIfTheyDontExist from '../../../util/createTagsHelper';
-import { title } from 'process';
 
 const prisma = new PrismaClient();
 
@@ -22,21 +19,23 @@ const updatePointHandler = async (
         description: point.description,
         isPublic: point.isPublic,
         imagePath: point.imagePath,
+        markerPath: point.markerPath,
       },
     });
-
-    await prisma.list.update({
-      where: {
-        id: Number(point.newListId),
-      },
-      data: {
-        points: {
-          connect: {
-            id: point.id,
+    if (point.newListId && point.newListId !== point.listId) {
+      await prisma.list.update({
+        where: {
+          id: Number(point.newListId),
+        },
+        data: {
+          points: {
+            connect: {
+              id: point.id,
+            },
           },
         },
-      },
-    });
+      });
+    }
 
     res.status(200).json({ updatedPoint, error: null });
   } catch (error) {
