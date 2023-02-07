@@ -51,44 +51,47 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             description={listData?.description}
             title={listData?.title}
             points={listData.points}
+            tags={listData.tags}
           />
         </div>
           {data.id == listData.authorId ? (
-            <button className="fixed bottom-20 right-4 text-black"
-              onClick={() => {
-                handleDeleteList(data.id, listData.id!)
-              }}
-            >
-              Delete List
-            </button>
+            <div>
+              <Button ripple={false} className="fixed bottom-20 right-4"
+                onClick={() => {
+                  handleDeleteList(data.id, listData.id!)
+                }}
+              >
+                Delete List
+              </Button>
+                <Button ripple={false} className="fixed bottom-20 left-4" onClick={()=> setShowEditList(!showEditList) }>
+                  Edit list
+                </Button>
+                <EditListModal
+                  showEditList={showEditList}
+                  setShowEditList={setShowEditList}
+                  listData={listData}
+                />
+            </div>
             ) : liked ? (
-              <button className="fixed bottom-20 right-4 text-black"
+              <Button ripple={false} className="fixed bottom-20 right-4"
                 onClick={() => {
                   handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
                   setLiked(false)
                 }}
               >
                 Liked
-              </button>
+              </Button>
             ) : (
-              <button className="fixed bottom-20 right-4 text-black"
+              <Button ripple={false} className="fixed bottom-20 right-4"
                 onClick={() => {
                   handleToggleFavourites(data.id, listData.id!, liked)
                   setLiked(true)
                 }}
               >
                 Like
-              </button>
+              </Button>
             )
           }
-          <Button size="sm" variant="gradient" className="w-32" onClick={()=> setShowEditList(!showEditList) }>
-            Edit list
-          </Button>
-          <EditListModal
-            showEditList={showEditList}
-            setShowEditList={setShowEditList}
-            listData={listData}
-          />
         </>
       )
   );

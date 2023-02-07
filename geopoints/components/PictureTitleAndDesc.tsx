@@ -1,4 +1,4 @@
-import { Point } from '../types/types';
+import { Point, Tag } from '../types/types';
 import PointUnderList from './PointUnderList';
 import Link from 'next/link';
 
@@ -8,6 +8,7 @@ import {
   CardBody,
   CardFooter,
   Typography,
+  Chip
 } from "@material-tailwind/react";
 
 interface PictureTitleAndDescProps {
@@ -15,12 +16,14 @@ interface PictureTitleAndDescProps {
   title: string;
   description: string;
   points?: Point[];
+  tags: Tag[];
 }
 const PictureTitleAndDesc = ({
   imagePath,
   title,
   description,
-  points
+  points,
+  tags
 }: PictureTitleAndDescProps) => {
   return (
     <Card className="w-96">
@@ -33,23 +36,27 @@ const PictureTitleAndDesc = ({
       </CardHeader>
       <CardBody className="text-center">
         <Typography variant="h5" className="mb-2">
-          {title}
+          {title ? title : ""}
         </Typography>
         <Typography>
-          {description}
+          {description ? description : ""}
         </Typography>
+        <div className="flex justify-center">
+          {tags?.map((tag, i) => {
+            return(
+              <Chip key={i} value={tag.name} className="mr-2 ml-2"/>
+            )
+          })}
+        </div>
       </CardBody>
       {points!.map((point) => {
           return (
-            <Link href={`../../../points/${point.id}`}>
-
+            <Link key={point.id} href={`../../../points/${point.id}`}>
             <CardFooter divider className="py-1">
               <PointUnderList
-                key={point.id}
                 imagePath={point.imagePath}
                 title={point.title}
                 description={point.description}
-                // tags={listData.tags}
               />
             </CardFooter>
             </Link>
@@ -60,38 +67,3 @@ const PictureTitleAndDesc = ({
 };
 
 export default PictureTitleAndDesc;
-
-
-// import Image from 'next/image.js';
-
-// interface PictureTitleAndDescProps {
-//   imagePath: string;
-//   title: string;
-//   description: string;
-//   points?: string[];
-// }
-// const PictureTitleAndDesc = ({
-//   imagePath,
-//   title,
-//   description,
-// }: PictureTitleAndDescProps) => {
-//   console.log({ imagePath });
-//   return (
-//     <section className="h-96 text-gray-800 mb-10">
-//       {imagePath && (
-//         <Image
-//           src={imagePath || '/favicon.ico'}
-//           width={320}
-//           height={320}
-//           alt={`Picture list: ${title}`}
-//           priority={true}
-//           className="relative left-9 rounded-md"
-//         />
-//       )}
-//       <h4 className="relative ml-9 w-80 text-2xl mt-4">{title}</h4>
-//       <p className="relative ml-9 mt-3 w-80">{description}</p>
-//     </section>
-//   );
-// };
-
-// export default PictureTitleAndDesc;
