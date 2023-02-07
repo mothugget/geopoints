@@ -21,19 +21,20 @@ const updatePointHandler = async (
         imagePath: point.imagePath,
       },
     });
-
-    await prisma.list.update({
-      where: {
-        id: Number(point.newListId),
-      },
-      data: {
-        points: {
-          connect: {
-            id: point.id,
+    if (point.newListId && point.newListId !== point.listId) {
+      await prisma.list.update({
+        where: {
+          id: Number(point.newListId),
+        },
+        data: {
+          points: {
+            connect: {
+              id: point.id,
+            },
           },
         },
-      },
-    });
+      });
+    }
 
     res.status(200).json({ updatedPoint, error: null });
   } catch (error) {
