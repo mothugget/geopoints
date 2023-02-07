@@ -86,7 +86,7 @@ export default function CreatePointForm({
       lng: Number(map?.getCenter()?.lng()),
       lat: Number(map?.getCenter()?.lat()),
       imagePath: imgPath ?? '/favicon.ico',
-      markerPath: markerPath ?? 'http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png',
+      markerPath: markerPath || 'http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png',
       listId: pointInput.listId,
     };
 
