@@ -71,7 +71,7 @@ export default function MyTabs() {
         {tableData.map(({ value }) => (
           <TabPanel key={value} value={value}>
             {value === 'Lists' ? (
-              data?.ownLists.map((list: List) => {
+              data?.ownLists.slice(1).map((list: List) => {
                 return (
                   <div key={list.id} className="flex justify-center">
                     <ListsTab
