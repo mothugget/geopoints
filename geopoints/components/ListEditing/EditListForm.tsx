@@ -171,7 +171,7 @@ function EditListForm({
           onChange={tagsInputHandler}
           maxLength={50}
           // placeholder={listData.tags.map(tag=> tag.name).join(" ")}
-          value={listInput.tags}
+          value={listInput.tags.map((tag:any) => tag.name).join(" ")}
           pattern="#\b\w+\b"
         />
       </div>
