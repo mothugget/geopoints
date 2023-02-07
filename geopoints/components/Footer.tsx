@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image.js';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
+import { MapContext } from '../contexts/MapContext';
 import { TbRoute } from 'react-icons/tb';
 import { BsBookmarkHeart } from 'react-icons/bs';
 import ListsSidebar from './Sidebar/ListsSidebar';
@@ -10,12 +11,21 @@ import New from './ContentCreation/New';
 import { RoutesContext } from '../contexts/RoutesContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../hooks/useUserData';
+import { Coordinates } from '../types/types';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [prevRoute, setPrevRoute] = useState('');
   const router = useRouter();
   const { destinationService, setDestinationService } = useContext(RoutesContext);
+  const { map, currentUserPosition } = useContext(MapContext);
+
+  const cameraOptions: google.maps.CameraOptions = {
+    center: currentUserPosition,
+  };
+
+ console.log(currentUserPosition)
+  
 
   const { user } = useUser();
   const { data } = useUserData(user!);
@@ -23,6 +33,11 @@ const Footer = () => {
   if (router.pathname !== prevRoute) {
     setPrevRoute(router.pathname);
     setShowSidebar(false);
+  }
+
+  function logoHandler (){
+    map?.moveCamera(cameraOptions);
+    router.push('/')
   }
 
   const handleRouteClick = () => {
@@ -38,7 +53,7 @@ const Footer = () => {
       <ListsSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <footer className="h-16 z-10">
         <div className="p-4 flex justify-between text-gray-600 fixed bottom-0 inset-x-0 z-50 bg-white">
-          <Link href="/">
+          <button onClick={logoHandler}>
             <Image
               src={'/geopoints-logo.png'}
               alt="home logo"
@@ -46,12 +61,11 @@ const Footer = () => {
               height={40}
               priority={true}
             />
-          </Link>
+          </button>
           <TbRoute
             onClick={handleRouteClick}
-            className={`w-6 h-8 mt-1 ${
-              destinationService.showRoute ? `text-green-400` : `text-gray-600`
-            }`}
+            className={`w-6 h-8 mt-1 ${destinationService.showRoute ? `text-green-400` : `text-gray-600`
+              }`}
           />
           <New showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
           <Link href={`/${data?.userName}/profile?tabDefault=Favourites`}>
@@ -63,9 +77,8 @@ const Footer = () => {
                 setShowSidebar(!showSidebar);
               }
             }}
-            className={`w-9 h-9 ${
-              router.pathname === '/' ? `text-gray-600` : `text-gray-200`
-            }`}
+            className={`w-9 h-9 ${router.pathname === '/' ? `text-gray-600` : `text-gray-200`
+              }`}
           />
         </div>
       </footer>
