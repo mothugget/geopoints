@@ -70,10 +70,12 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
       onSuccess: (updatedPoint) => {
        console.log('heloloooooooooo:',updatedPoint)
         queryClient.invalidateQueries('fectchUserData');
-        window.localStorage.setItem('refresh', !!!JSON.parse(window.localStorage.getItem('refresh'))) 
         setDisplayedPoints &&
           setDisplayedPoints((displayedPoints) =>
-            displayedPoints.filter((point) => point.id !== updatedPoint.id)
+           { const filteredPoints = displayedPoints.filter((point) => point.id !== updatedPoint.id)
+            console.log(filteredPoints)
+            console.log(updatedPoint)
+            return [...filteredPoints,updatedPoint]}
           );
       },
     }
