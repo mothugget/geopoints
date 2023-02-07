@@ -43,9 +43,11 @@ export default function MyTabs() {
   const { user } = useUser();
 
   const router = useRouter();
-  const [tabDefault, setTabDefault] = useState(router.query.tabDefault || 'Lists')
+  const [tabDefault, setTabDefault] = useState(
+    router.query.tabDefault || 'Lists'
+  );
 
-  const { isError, isLoading, data, error, refetch } = useUserData(user!)
+  const { isError, isLoading, data, error, refetch } = useUserData(user!);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -97,16 +99,20 @@ export default function MyTabs() {
               })
             ) : value === 'Profile' ? (
               data && data.imagePath ? (
-                <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
+                <ProfileTab
+                  imagePath={data.imagePath}
+                  name={data.name}
+                  userName={data.userName}
+                  bio={data.bio}
+                />
               ) : (
                 <LoadingSpinner />
               )
             ) : value === 'Favourites' ? (
               data?.likedLists.map((list: List) => {
                 return (
-                  <div className="flex justify-center">
+                  <div className="flex justify-center" key={list.id}>
                     <ListsTab
-                      key={list.id}
                       imagePath={list.imagePath}
                       title={list.title}
                       description={list.description}

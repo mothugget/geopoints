@@ -47,9 +47,9 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
         <>
         <div className="flex flex-col pt-8">
           <PictureTitleAndDesc
-            imagePath={listData?.imagePath}
-            description={listData?.description}
-            title={listData?.title}
+            imagePath={listData.imagePath}
+            description={listData.description}
+            title={listData.title}
             points={listData.points}
             tags={listData.tags}
           />

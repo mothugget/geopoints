@@ -14,7 +14,7 @@ export default function UploadWidget({
   multiple,
 }: UploadWidgetProps) {
   function onUpload(error: any, result: any, widget: any) {
-    console.log(result);
+    console.log({result});
     if (result.event === 'success') {
       setImgUploaded(true);
       setImgPath(result.info.url);

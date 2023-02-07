@@ -23,7 +23,7 @@ const Header = () => {
         <Menu>
           <MenuHandler>
             <Image
-              src={data?.imagePath || '/favicon.ico'}
+              src={data?.imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
               alt="Profile picture"
               width={40}
               height={40}
