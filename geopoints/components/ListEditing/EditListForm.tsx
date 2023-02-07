@@ -105,7 +105,6 @@ function EditListForm({
     );
   }
 
-  console.log()
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
