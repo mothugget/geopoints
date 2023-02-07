@@ -18,11 +18,11 @@ const PointDisplay = ({
 }: PointDisplayProps) => {
   return (
     <div>
-      <Card className="h-auto w-auto object-contain">
+      <Card className="m-8">
         <img
           src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
           alt="point-picture"
-          className="p-36"
+          className="p-10"
         />
       </Card>
       <CardBody className="text-center">
