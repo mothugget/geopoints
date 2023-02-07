@@ -43,8 +43,9 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   }
 
   return (
-      listData && data && (
-        <>
+    listData &&
+    data && (
+      <>
         <div className="flex flex-col pt-8">
           <PictureTitleAndDesc
             imagePath={listData?.imagePath}
@@ -54,46 +55,55 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             tags={listData.tags}
           />
         </div>
-          {data.id == listData.authorId ? (
-            <div>
-              <Button ripple={false} className="fixed bottom-20 right-4"
-                onClick={() => {
-                  handleDeleteList(data.id, listData.id!)
-                }}
-              >
-                Delete List
-              </Button>
-                <Button ripple={false} className="fixed bottom-20 left-4" onClick={()=> setShowEditList(!showEditList) }>
-                  Edit list
-                </Button>
-                <EditListModal
-                  showEditList={showEditList}
-                  setShowEditList={setShowEditList}
-                  listData={listData}
-                />
-            </div>
-            ) : liked ? (
-              <Button ripple={false} className="fixed bottom-20 right-4"
-                onClick={() => {
-                  handleToggleFavourites(data.id, listData.id!, liked) // move to modal: Confirm Delete? Yes/No -> redirect to Home
-                  setLiked(false)
-                }}
-              >
-                Liked
-              </Button>
-            ) : (
-              <Button ripple={false} className="fixed bottom-20 right-4"
-                onClick={() => {
-                  handleToggleFavourites(data.id, listData.id!, liked)
-                  setLiked(true)
-                }}
-              >
-                Like
-              </Button>
-            )
-          }
-        </>
-      )
+        {data.id == listData.authorId ? (
+          <div>
+            <Button
+              ripple={false}
+              className="fixed bottom-20 right-4"
+              onClick={() => {
+                handleDeleteList(data.id, listData.id!);
+              }}
+            >
+              Delete List
+            </Button>
+            <Button
+              ripple={false}
+              className="fixed bottom-20 left-4"
+              onClick={() => setShowEditList(!showEditList)}
+            >
+              Edit list
+            </Button>
+            <EditListModal
+              showEditList={showEditList}
+              setShowEditList={setShowEditList}
+              listData={listData}
+            />
+          </div>
+        ) : liked ? (
+          <Button
+            ripple={false}
+            className="fixed bottom-20 right-4"
+            onClick={() => {
+              handleToggleFavourites(data.id, listData.id!, liked); // move to modal: Confirm Delete? Yes/No -> redirect to Home
+              setLiked(false);
+            }}
+          >
+            Liked
+          </Button>
+        ) : (
+          <Button
+            ripple={false}
+            className="fixed bottom-20 right-4"
+            onClick={() => {
+              handleToggleFavourites(data.id, listData.id!, liked);
+              setLiked(true);
+            }}
+          >
+            Like
+          </Button>
+        )}
+      </>
+    )
   );
 }
 

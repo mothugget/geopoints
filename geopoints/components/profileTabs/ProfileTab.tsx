@@ -25,7 +25,7 @@ const ProfileTab = ({
 }: ProfileTabProps) => {
   return (
     <div>
-      <Card className="h-auto w-auto object-contain">
+      <Card className="h-auto w-auto object-contain bg-amber-50">
         <img src={imagePath} alt="profile-picture" className="p-6" />
       </Card>
       <CardBody className="text-center">

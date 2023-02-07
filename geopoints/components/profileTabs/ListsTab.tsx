@@ -25,7 +25,7 @@ const ListTab = ({
 } : ListTabProps) => {
   return (
     <Link href={`../${userName}/lists/${listId}`}>
-      <Card className="w-96 mt-10 mb-10">
+      <Card className="w-96 mt-10 mb-10 bg-amber-50">
         <CardHeader color="blue" className="relative h-56">
           <img
             src={imagePath}
@@ -37,13 +37,11 @@ const ListTab = ({
           <Typography variant="h5" className="mb-2">
             {title ? title : ""}
           </Typography>
-          <Typography>
-            {description ? description : ""}
-          </Typography>
+          <Typography>{description ? description : ""}</Typography>
         </CardBody>
       </Card>
     </Link>
-  )
+  );
 }
 
 export default ListTab;
