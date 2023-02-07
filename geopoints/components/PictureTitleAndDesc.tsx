@@ -36,10 +36,10 @@ const PictureTitleAndDesc = ({
       </CardHeader>
       <CardBody className="text-center">
         <Typography variant="h5" className="mb-2">
-          {title}
+          {title ? title : ""}
         </Typography>
         <Typography>
-          {description}
+          {description ? description : ""}
         </Typography>
         {/* {tags?.map((tag, i) => {
           return(
@@ -49,11 +49,9 @@ const PictureTitleAndDesc = ({
       </CardBody>
       {points!.map((point) => {
           return (
-            <Link href={`../../../points/${point.id}`}>
-
+            <Link key={point.id} href={`../../../points/${point.id}`}>
             <CardFooter divider className="py-1">
-              <PointUnderList
-                key={point.id}
+              <PointUnderList 
                 imagePath={point.imagePath}
                 title={point.title}
                 description={point.description}

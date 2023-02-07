@@ -3,7 +3,7 @@ import { List } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
-import { createList } from '../../util/createList';
+import { updateList } from '../../util/updateList';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
@@ -27,24 +27,32 @@ interface ListData {
 
 function EditListForm({ 
   setShowEditList,
-  listData 
+  listData,
 }: EditListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
-  const [listInput, setListInput] = useState<any>({});
-  const [checkboxState, setCheckboxState] = useState(false);
+
+  const initialUpdatedList = {
+    title: listData.title,
+    id: listData.id,
+    description: listData.description ?? "",
+    tags: listData.tags ?? "",
+    isPublic: data.isPublic,
+    imagePath: listData.imagePath ?? ""
+  };
+
+  const [listInput, setListInput] = useState<any>(initialUpdatedList);
   const [imgPath, setImgPath] = useState('');
   let updatedPublicValue=false;
+  let publicValue=listData.isPublic
   const originalData={...listData};
- 
-
 
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
-    (listData: ListData) => {
-      return createList(listData, listData.author);
+    (updatedListData: ListData) => {
+      return updateList(updatedListData);
     },
     {
       onSuccess: () => {
@@ -82,19 +90,21 @@ function EditListForm({
     return (
       <div className="flex flex-col justify-center items-center h-full">
         <div className="text-green-500 font-semibold text-xl">
-          List created! ✅
+          List updated! ✅
         </div>
         <Button
           className="my-5"
           ripple={true}
           color="green"
-          onClick={() => mutation.reset()}
+          onClick={() => {setShowEditList(false);
+          window.location.reload()}}
         >
-          Create another one!
+          Close
         </Button>
       </div>
     );
   }
+
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
@@ -103,15 +113,10 @@ function EditListForm({
       id: originalData.id,
       description: listInput.description||originalData.description,
       tags: listInput.tags||originalData.tags,
-      isPublic: updatedPublicValue?checkboxState:originalData.isPublic,
+      isPublic: updatedPublicValue?publicValue:originalData.isPublic,
       imagePath: imgPath ? imgPath : originalData.imagePath,
     };
-    console.log( listInput.title )
-    console.log( listData.title )
-    console.log(checkboxState)
-    console.log(listData.isPublic)
-    console.log(updatedListData)
-    // mutation.mutate(updatedListData);
+    mutation.mutate(updatedListData);
     setListInput({});
   };
 
@@ -127,7 +132,7 @@ function EditListForm({
   };
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     updatedPublicValue=true;
-    setCheckboxState(!checkboxState);
+    publicValue = !publicValue;
   };
 
   return (
@@ -144,7 +149,7 @@ function EditListForm({
           label="Title"
           onChange={titleInputHandler}
           maxLength={25}
-          placeholder={listData.title}
+          value={listInput.title}
         />
       </div>
       <div className="my-2">
@@ -153,7 +158,7 @@ function EditListForm({
           label="Description"
           onChange={descriptionInputHandler}
           maxLength={50}
-          placeholder={listData.description}
+          value={listInput.description}
         />
       </div>
       <div className="my-2 mt-5">
@@ -162,8 +167,7 @@ function EditListForm({
           label="Tags"
           onChange={tagsInputHandler}
           maxLength={50}
-          placeholder={listData.tags.map(tag=> tag.name).join(" ")}
-          pattern="#\b\w+\b"
+          placeholder={listInput.tags.map((tag:any) => tag.name).join(" ")}
         />
       </div>
 
@@ -172,7 +176,8 @@ function EditListForm({
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
-          checked={listData.isPublic}
+          defaultChecked={listData.isPublic}
+          checked={listInput.isPublic}
         />
       </div>
       <div className="my-5">
@@ -185,7 +190,7 @@ function EditListForm({
 
       <div className="my-1">
         <Button ripple={true} type="submit">
-          Create
+          Update
         </Button>
       </div>
     </form>
