@@ -67,7 +67,7 @@ export default function MyTabs() {
       </TabsHeader>
       <TabsBody>
         {tableData.map(({ value }) => (
-          <TabPanel key={value} value={value}>
+          <TabPanel key={value} value={value} className="mb-20">
             {value === 'Lists' ? (
               data?.ownLists.map((list: List) => {
                 return (
