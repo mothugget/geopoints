@@ -8,6 +8,9 @@ import ListsTab from '../../components/profileTabs/ListsTab';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { NextPageContext } from 'next';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 import {
   Tabs,
@@ -15,8 +18,10 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  Button,
 } from '@material-tailwind/react';
 import { List, Point } from '../../types/types';
+import Link from 'next/link';
 
 const tableData = [
   {
@@ -39,14 +44,17 @@ const tableData = [
   },
 ];
 
-export default function MyTabs() {
+export default function MyTabs({ profileUser }) {
   const { user } = useUser();
-
+  console.log('User: ',user)
   const router = useRouter();
+  // const userProfile = router.query.userName
+  console.log('UserProfile: ',profileUser)
   const [tabDefault, setTabDefault] = useState(router.query.tabDefault || 'Lists')
+  // const [tabDefault, setTabDefault] = useState('Lists')
 
-  const { isError, isLoading, data, error, refetch } = useUserData(user!)
-
+  const { isError, isLoading, data, error, refetch } = useUserData(profileUser!)
+  console.log('Data: ', data)
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -54,7 +62,7 @@ export default function MyTabs() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
-  console.log({ data });
+  // console.log({ data });
 
   return (
     <Tabs value={tabDefault} className="bg-transparent">
@@ -97,7 +105,14 @@ export default function MyTabs() {
               })
             ) : value === 'Profile' ? (
               data && data.imagePath ? (
+                <>
                 <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
+                {user && user.email === profileUser.email && (
+                  <Link className="fixed bottom-20 right-4" href={`../${data.userName}/edit`}>
+                    <Button>Edit Profile</Button>
+                  </Link>
+                )}
+                </>
               ) : (
                 <LoadingSpinner />
               )
@@ -126,7 +141,22 @@ export default function MyTabs() {
   );
 }
 
-MyTabs.getInitialProps = async (ctx: NextPageContext) => {
-  const { query } = ctx;
-  return { tabDefault: query.tabDefault || 'Lists' };
-};
+// MyTabs.getInitialProps = async (ctx: NextPageContext) => {
+//   const { query } = ctx;
+//   return { tabDefault: query.tabDefault || 'Lists' };
+// };
+
+export async function getServerSideProps({ query }) {
+  const username = query.userName;
+  const profileUser = await prisma.user.findUnique({
+    where: {
+      userName: username
+    }
+  });
+
+  return{
+    props: {
+      profileUser
+    }
+  }
+}

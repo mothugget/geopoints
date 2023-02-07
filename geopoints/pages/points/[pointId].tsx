@@ -25,7 +25,6 @@ function PointPage({ pointData }: { pointData: Point }) {
       ) : (
         <LoadingSpinner />
       )
-      <Button className="fixed bottom-20 right-4">Add to favourites</Button>
     </>
   );
 }
