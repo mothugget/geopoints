@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
@@ -34,26 +34,27 @@ model List {
   description String?
   imagePath   String?  @map(name: "image_path")
   createdAt   DateTime @default(now()) @map(name: "created_at")
-  isPublic      Boolean  @default(false) @map(name: "is_public")
+  isPublic    Boolean  @default(false) @map(name: "is_public")
   spotifyPath String?  @map(name: "spotify_path")
   tags        Tag[]
   points      Point[]
-  likedBy    User[]   @relation("LikedLists")
+  likedBy     User[]   @relation("LikedLists")
 }
 
 model Point {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
   description String?
-  isPublic      Boolean  @default(false) @map(name: "is_public")
+  isPublic    Boolean @default(false) @map(name: "is_public")
   lng         Float
   lat         Float
-  imagePath  String @map(name: "image_path")
-  spotifyPath String?  @map(name: "spotify_path")
+  imagePath   String  @map(name: "image_path")
+  spotifyPath String? @map(name: "spotify_path")
   tags        Tag[]
-  list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
-  listId      Int      @map(name: "list_id")
-  likedBy     User[]   @relation("LikedPoints")
+  markerPath  String  @default("http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png")
+  list        List    @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId      Int     @map(name: "list_id")
+  likedBy     User[]  @relation("LikedPoints")
 }
 
 model Tag {

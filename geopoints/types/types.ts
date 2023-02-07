@@ -30,6 +30,7 @@ interface Point {
   imagePath: string;
   spotifyPath?: string;
   tags?: Tag[];
+  markerPath:  string;
   list: List;
   listId?: number;
   likedBy?: User[];
