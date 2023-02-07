@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { Point } from '../../../types/types';
-import createTagsIfTheyDontExist from '../../../util/createTagsHelper';
-import { title } from 'process';
 
 const prisma = new PrismaClient();
 
