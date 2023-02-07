@@ -36,8 +36,8 @@ const Footer = () => {
   return (
     <>
       <ListsSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <footer className="h-16 z-10">
-        <div className="p-4 flex justify-between text-gray-600 fixed bottom-0 inset-x-0 z-50 bg-white">
+      <footer className="h-16 z-10 bg-light-green-100">
+        <div className="p-4 flex justify-between text-gray-600 fixed bottom-0 inset-x-0 z-50 bg-light-green-400">
           <Link href="/">
             <Image
               src={'/geopoints-logo.png'}
@@ -64,7 +64,7 @@ const Footer = () => {
               }
             }}
             className={`w-9 h-9 ${
-              router.pathname === '/' ? `text-gray-600` : `text-gray-200`
+              router.pathname === '/' ? `text-white` : `text-gray-200`
             }`}
           />
         </div>

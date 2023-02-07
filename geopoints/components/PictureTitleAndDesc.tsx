@@ -26,7 +26,7 @@ const PictureTitleAndDesc = ({
   tags,
 }: PictureTitleAndDescProps) => {
   return (
-    <Card className="w-96 bg-amber-50">
+    <Card className="w-96 bg-white">
       <CardHeader color="white" className="relative h-56">
         <img
           src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}

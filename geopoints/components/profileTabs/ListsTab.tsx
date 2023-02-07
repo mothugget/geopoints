@@ -25,19 +25,32 @@ const ListTab = ({
 }: ListTabProps) => {
   return (
     <Link href={`../${userName}/lists/${listId}`}>
-      <Card className="w-96 mt-10 mb-10 bg-amber-50">
-        <CardHeader color="blue" className="relative h-56">
-          <img
-            src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
-            alt="img-blur-shadow"
-            className="h-full w-full"
-          />
+      <Card className="w-80 mt-10 mb-10 pt-14">
+        <CardHeader
+          color="white"
+          className="relative h-56 flex justify-center items-center"
+        >
+          {imagePath ? (
+            <img
+              src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
+              alt=""
+              className="w-45 rounded"
+            />
+          ) : (
+            <img
+              src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
+              alt=""
+              className="w-10"
+            />
+          )}
         </CardHeader>
         <CardBody className="text-center">
           <Typography variant="h5" className="mb-2">
             {title ? title : 'Untitled'}
           </Typography>
-          <Typography>{description ? description : 'No description'}</Typography>
+          <Typography>
+            {description ? description : 'No description'}
+          </Typography>
         </CardBody>
       </Card>
     </Link>
