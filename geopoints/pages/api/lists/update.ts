@@ -12,8 +12,6 @@ const updateListHandler = async (
   try {
     const { list } = req.body;
     const arrayOfTagIds = await createTagsIfTheyDontExist(list.tags);
-    console.log(list.tags)
-    console.log(arrayOfTagIds)
     const updatedList = await prisma.list.update({
       where: {
         id: Number(list.id),
