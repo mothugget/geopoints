@@ -30,6 +30,7 @@ interface PointData {
   listId: number;
   newListId: number;
   userDefaultListId: number;
+  markerPath: string;
 }
 
 function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
@@ -37,6 +38,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [checkboxState, setCheckboxState] = useState(false);
+  const [markerPath, setMarkerPath] = useState('');
   const router = useRouter();
   const initialUpdatedPoint = {
     title: pointData?.title,
@@ -45,6 +47,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
     isPublic: pointData?.isPublic,
     imagePath: pointData?.imagePath,
     listId: pointData.listId,
+    markerPath: pointData.markerPath
   };
 
   const [pointInput, setPointInput] = useState<any>(initialUpdatedPoint);
@@ -133,6 +136,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
       listId: pointInput.listId,
       newListId: pointInput?.newListId,
       userDefaultListId: userDefaultList.id,
+      markerPath: markerPath? markerPath! : originalData.markerPath!
     };
     mutation.mutate(updatedPointData);
     setPointInput({});
@@ -198,9 +202,15 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
         ))}
       </Select>
       <div className="my-5">
+
+        <UploadWidget
+          buttonString={'Upload an image'}
+          setImgPath={setImgPath}
+          multiple={false}
+        />        
         <UploadWidget
           buttonString={'Upload a marker'}
-          setImgPath={setImgPath}
+          setImgPath={setMarkerPath}
           multiple={false}
         />
       </div>
