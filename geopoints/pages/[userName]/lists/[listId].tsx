@@ -33,6 +33,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
     setOpen(!open);
   };
 
+  // console.log('listowner: ',listOwner)
+
 
   //wrap in useEffect
   // ALWAYS HANDLE ERRORS USING CATCH
@@ -43,7 +45,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
     })
 
   // console.log('Data: ', data)
-  // console.log('ListData: ', listData)
+  console.log('ListData: ', listData)
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -57,7 +59,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   return (
     listData &&
     data && (
-      <>
+      <div className="flex justify-center">
         <div className="flex flex-col pt-4">
           <PictureTitleAndDesc
             imagePath={listData.imagePath}
@@ -65,10 +67,11 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             title={listData.title}
             points={listData.points}
             tags={listData.tags}
+            author={listOwner.userName}
           />
-          
+
           <div className= "relative top-2 left-5">
-            <RouteToListAuthor userName={listOwner.userName} />
+            {/* <RouteToListAuthor userName={listOwner.userName} /> */}
           </div>
         </div>
         {data.id == listData.authorId ? (
@@ -142,7 +145,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
           </Button>
         </DialogFooter>
       </Dialog>
-      </>
+      </div>
     )
   );
 }

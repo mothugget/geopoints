@@ -17,6 +17,7 @@ interface PictureTitleAndDescProps {
   description: string;
   points?: Point[];
   tags: Tag[];
+  author: string;
 }
 const PictureTitleAndDesc = ({
   imagePath,
@@ -24,6 +25,7 @@ const PictureTitleAndDesc = ({
   description,
   points,
   tags,
+  author,
 }: PictureTitleAndDescProps) => {
   return (
     <Card className="w-96 bg-white shadow-none">
@@ -39,11 +41,16 @@ const PictureTitleAndDesc = ({
           {title ? title : 'Untitled'}
         </Typography>
         <Typography>{description ? description : 'No description'}</Typography>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-2 mb-2">
           {tags?.map((tag, i) => {
             return <Chip key={i} value={tag.name} className="mr-2 ml-2 bg-gray-400" />;
           })}
         </div>
+        <Link href={`/${author}/profile?tabDefault=Profile`}>
+          <Typography variant="subtitle1" className="text-cyan-500">
+            {author}
+          </Typography>
+        </Link>
       </CardBody>
       {points!.map((point) => {
         return (
