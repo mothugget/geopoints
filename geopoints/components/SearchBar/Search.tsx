@@ -6,6 +6,7 @@ import { Input } from '@material-tailwind/react';
 
 // todo: fix types
 export default function Search(props: {}) {
+  // const [clicked, setClicked] = useState(false);
   const [autocompleteState, setAutocompleteState] = useState({
     collections: [],
     isOpen: false,
@@ -40,6 +41,8 @@ export default function Search(props: {}) {
       }),
     [props]
   );
+
+  console.log(autocompleteState)
 
   const formRef = useRef(null);
   const inputRef = useRef(null);
@@ -77,11 +80,14 @@ export default function Search(props: {}) {
                     >
                       {items.slice(0, 2).map((item: List) => {
                         return (
-                          <AutocompleteItem
+                          <div onClick={() => {setAutocompleteState({...autocompleteState, isOpen: false})}}>
+                            <AutocompleteItem
                             key={item.id}
                             list={item}
                             author={item.author}
                           />
+                          </div>
+                          
                         );
                       })}
                     </ul>
