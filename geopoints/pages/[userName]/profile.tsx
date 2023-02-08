@@ -74,17 +74,19 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
           <TabPanel key={value} value={value} className="mb-20">
             {value === 'Lists' ? (
               data?.ownLists.slice(1).map((list: List) => {
-                return (
-                  <div key={list.id} className="flex justify-center">
-                    <ListsTab
-                      imagePath={list.imagePath}
-                      title={list.title}
-                      description={list.description}
-                      userName={data.userName}
-                      listId={list.id!}
-                    />
-                  </div>
-                );
+                if (list.isPublic === true || user!.email === profileUser.email) {
+                  return (
+                    <div key={list.id} className="flex justify-center">
+                      <ListsTab
+                        imagePath={list.imagePath}
+                        title={list.title}
+                        description={list.description}
+                        userName={data.userName}
+                        listId={list.id!}
+                      />
+                    </div>
+                  );
+                }
               })
             ) : value === 'Points' ? (
               data?.ownLists[0].points.map((point: Point) => {
