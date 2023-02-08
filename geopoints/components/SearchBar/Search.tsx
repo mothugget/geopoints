@@ -6,6 +6,7 @@ import { Input } from '@material-tailwind/react';
 
 // todo: fix types
 export default function Search(props: {}) {
+  // const [clicked, setClicked] = useState(false);
   const [autocompleteState, setAutocompleteState] = useState({
     collections: [],
     isOpen: false,
@@ -41,6 +42,8 @@ export default function Search(props: {}) {
     [props]
   );
 
+  console.log(autocompleteState)
+
   const formRef = useRef(null);
   const inputRef = useRef(null);
   const panelRef = useRef(null);
@@ -57,7 +60,7 @@ export default function Search(props: {}) {
       <div className="flex relative mt-3">
         <input
           ref={inputRef}
-          className=" p-5 ml-2 rounded w-60 text-gray-800"
+          className=" p-5 ml-2 rounded-full w-60 text-gray-800"
           {...inputProps}
         />
         {autocompleteState.isOpen && (
@@ -77,11 +80,14 @@ export default function Search(props: {}) {
                     >
                       {items.slice(0, 2).map((item: List) => {
                         return (
-                          <AutocompleteItem
+                          <div onClick={() => {setAutocompleteState({...autocompleteState, isOpen: false})}}>
+                            <AutocompleteItem
                             key={item.id}
                             list={item}
                             author={item.author}
                           />
+                          </div>
+                          
                         );
                       })}
                     </ul>

@@ -6,15 +6,8 @@ interface PointUnderListProps {
   imagePath?: string;
   title: string;
   description?: string;
-  // tags: string;
 }
 
-// const PointUnderList = ({
-//   imagePath,
-//   title,
-//   description,
-// }: // tags,
-// PointUnderListProps) => {
 const PointUnderList = ({
   imagePath,
   title,
@@ -24,7 +17,7 @@ const PointUnderList = ({
     <section className="rounded">
       <div className="p-3 ">
         <div className=" w-full lg:max-w-full lg:flex">
-          <div className="bg-light-green-100 p-4 flex flex-row items-center leading-normal rounded-xl">
+          <div className="bg-white p-4 flex flex-row items-center leading-normal rounded-xl">
             <div className="w-36">
               <img
                 src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}

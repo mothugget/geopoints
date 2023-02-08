@@ -27,19 +27,23 @@ const ProfileTab = ({ imagePath, name, userName, bio }: ProfileTabProps) => {
         <Typography variant="h4" color="blue-gray" className="mb-2">
           {name ? name : ''}
         </Typography>
-        <Typography variant="h4" color="blue-gray" className="mb-2">
-          {userName ? userName : ''}
+        <Typography
+          variant="h4"
+          color="blue-gray"
+          className="mb-2 font-medium text-gray-500"
+        >
+          {userName ? `@${userName}` : ''}
         </Typography>
-        <Typography className="font-medium text-black" textGradient>
+        <Typography className="font-medium text-gray-300" textGradient>
           {bio ? bio : ''}
         </Typography>
       </CardBody>
       <CardFooter className="flex justify-center gap-7 pt-2">
         <Tooltip content="Like">
-          <BsInstagram className="text-blue-500 w-7 h-7" />
+          <BsFacebook className="h-7 w-7" />
         </Tooltip>
         <Tooltip content="Follow">
-          <BsFacebook className="text-blue-500 w-7 h-7" />
+          <BsInstagram className="h-7 w-7" />
         </Tooltip>
       </CardFooter>
       {/* <Link className="fixed bottom-20 right-4" href={`../${userName}/edit`}>

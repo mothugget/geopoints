@@ -26,7 +26,7 @@ const ListTab = ({
 }: ListTabProps) => {
   return (
     <Link href={`../${userName}/lists/${listId}`}>
-      <Card className="mt-0 mb-2 bg-light-green-50 w-screen rounded-none">
+      <Card className="mt-0 mb-2 bg-white w-screen rounded-none shadow-none">
         <CardHeader
           className="relative h-56 mt-6 flex justify-center items-center bg-light-green-100"
         >

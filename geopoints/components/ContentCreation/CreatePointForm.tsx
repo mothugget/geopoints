@@ -158,7 +158,7 @@ export default function CreatePointForm({
           />
         </div>
         <div className="my-1">
-          <Button ripple={true} type="submit" disabled={!pointInput.listId} >
+          <Button ripple={true} className="bg-light-green-700" type="submit" disabled={!pointInput.listId} >
             Create
           </Button>
         </div>
