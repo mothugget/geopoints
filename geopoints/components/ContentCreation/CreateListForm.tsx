@@ -7,6 +7,7 @@ import { createList } from '../../util/createList';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
+import TagsInput from '../TagsInput';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
@@ -30,7 +31,9 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const [listInput, setListInput] = useState<any>(null);
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
+  const [tags, setTags] = useState([])
 
+console.log(tags)
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -104,7 +107,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       title: listInput.title,
       author: data.id,
       description: listInput.description,
-      tags: listInput.tags,
+      tags: tags,
       isPublic: checkboxState,
       imagePath: imgPath ? imgPath : '',
     };
@@ -115,13 +118,12 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, title: e.target.value });
   };
+
   const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, description: e.target.value });
   };
-  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value.split(' ');
-    setListInput({ ...listInput, tags: userEnteredTags });
-  };
+
+
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckboxState(!checkboxState);
   };
@@ -152,17 +154,12 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           maxLength={50}
         />
       </div>
-      <div className="my-2 mt-5">
-        <Input
-          variant="static"
-          label="Tags"
-          onChange={tagsInputHandler}
-          required={true}
-          maxLength={50}
-          placeholder="Eg: firsttag secondtag"
-        />
-      </div>
 
+      <TagsInput 
+      tags={tags}
+      setTags={setTags}
+      />
+      
       <div className="my-2">
         <Checkbox
           label="Make public"
@@ -170,6 +167,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           onChange={publicInputHandler}
         />
       </div>
+
       <div className="my-5">
         <UploadWidget
           buttonString={'Upload a marker'}
