@@ -107,7 +107,7 @@ console.log(tags)
       title: listInput.title,
       author: data.id,
       description: listInput.description,
-      tags: listInput.tags,
+      tags: tags,
       isPublic: checkboxState,
       imagePath: imgPath ? imgPath : '',
     };
@@ -123,10 +123,6 @@ console.log(tags)
     setListInput({ ...listInput, description: e.target.value });
   };
 
-  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value.split(' ');
-    setListInput({ ...listInput, tags: userEnteredTags });
-  };
 
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckboxState(!checkboxState);

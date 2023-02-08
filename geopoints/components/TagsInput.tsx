@@ -1,4 +1,6 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+
+
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { render } from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 
@@ -12,7 +14,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 const KeyCodes = {
     comma: 188,
     enter: 13,
-    space:32,
+    space: 32,
 };
 
 interface TagsInputProps {
@@ -23,29 +25,42 @@ interface TagsInputProps {
 const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.space];
 
 const TagsInput = ({ tags, setTags }: TagsInputProps) => {
-    // const [tags, setTags] = useState([
-    //     { id: 'Thailand', text: 'Thailand' },
-    //     { id: 'India', text: 'India' },
-    //     { id: 'Vietnam', text: 'Vietnam' },
-    //     { id: 'Turkey', text: 'Turkey' }
-    // ]);
+    const [parsedTags, setParsedTags] = useState([]);
+
+    useEffect(() => {
+        setParsedTags(
+            tags.map((tag: string) => {
+                return {
+                    id: tag,
+                    text: tag
+                };
+            }))
+    }, [])
+    
+    useEffect(() => {
+        setTags(
+            parsedTags.map(tag=>tag.text)
+        )
+    }, [parsedTags])
+
 
     const handleDelete = i => {
-        setTags(tags.filter((tag: any, index: any) => index !== i));
+        setParsedTags(
+            parsedTags.filter((tag: any, index: any) => index !== i));
     };
 
     const handleAddition = (tag: any) => {
-        setTags([...tags, tag]);
+        setParsedTags([...parsedTags, tag]);
     };
 
     const handleDrag = (tag: any, currPos: number, newPos: number) => {
-        const newTags = tags.slice();
+        const newTags = parsedTags.slice();
 
         newTags.splice(currPos, 1);
         newTags.splice(newPos, 0, tag);
 
         // re-render
-        setTags(newTags);
+        setParsedTags(newTags);
     };
 
     const handleTagClick = (index: any) => {
@@ -57,9 +72,10 @@ const TagsInput = ({ tags, setTags }: TagsInputProps) => {
             <label className='font-normal text-blue-gray-600 text-sm'>
                 Tags <span className='text-red-500'>*</span></label>
             <ReactTags
-                tags={tags}
+                tags={parsedTags}
                 // suggestions={suggestions}
                 delimiters={delimiters}
+                placeholder='Add new tag'
                 handleDelete={handleDelete}
                 handleAddition={handleAddition}
                 handleDrag={handleDrag}
@@ -67,9 +83,9 @@ const TagsInput = ({ tags, setTags }: TagsInputProps) => {
                 inputFieldPosition="bottom"
                 autocomplete
                 classNames={{
-                    tags: '',
+                    tags: 'font-normal text-sm',
                     tagInput: '',
-                    tagInputField: 'border-black w-fill h-6',
+                    tagInputField: 'w-fill h-6',
                     selected: '',
                     tag: 'mx-1 font-normal text-blue-gray-300  text-sm ',
                     remove: 'removeClass',
@@ -80,7 +96,7 @@ const TagsInput = ({ tags, setTags }: TagsInputProps) => {
                     clearAll: 'clearAllClass',
                 }}
             />
-            <div className=''></div>
+            <div className='border-width-1 border-solid border-black h-[1px] w-fill bg-blue-gray-200 mt-2'></div>
         </div>
     );
 };
