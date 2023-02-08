@@ -9,9 +9,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (q && typeof q === 'string') {
       const results = await prisma.list.findMany({
         where: {
-          title: {
-            contains: q,
-          },
+          OR: [
+            {
+              title: {
+                contains: q
+              }
+            },
+            {
+              tags: {
+                some: {
+                  name: {
+                    contains: q
+                  }
+                }
+              }
+            }
+          ],
           isPublic: true,
         },
         include: {
