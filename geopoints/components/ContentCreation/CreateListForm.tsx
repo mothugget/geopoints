@@ -162,6 +162,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
 
       <div className="my-2">
         <Switch
+          color='green'
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}

@@ -179,6 +179,7 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
 
       <div className="my-2">
         <Checkbox
+        color='green'
         label='Make public'
         defaultChecked={publicValue}
         />
