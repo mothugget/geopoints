@@ -24,7 +24,6 @@ const Footer = () => {
     center: currentUserPosition,
   };
 
- console.log(currentUserPosition)
   
 
   const { user } = useUser();
