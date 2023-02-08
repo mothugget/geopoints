@@ -27,9 +27,7 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.space];
 
 const TagsInput = ({ updateState, tags, setTags }: TagsInputProps) => {
     const [parsedTags, setParsedTags] = useState([]);
-    console.log('tags input tags', tags)
     useEffect(() => {
-        console.log('useeffect runs', tags)
         setParsedTags(
             tags.map((tag: string) => {
                 return {
@@ -39,8 +37,6 @@ const TagsInput = ({ updateState, tags, setTags }: TagsInputProps) => {
             }))
     }, [updateState])
 
-
-    console.log(updateState)
     useEffect(() => {
         setTags(
             parsedTags.map(tag => tag.text)
