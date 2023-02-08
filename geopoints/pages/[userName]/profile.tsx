@@ -1,15 +1,13 @@
 import { useUser } from '@auth0/nextjs-auth0/client';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { useUserData } from '../../hooks/useUserData';
-import PictureTitleAndDesc from '../../components/PictureTitleAndDesc';
 import PointUnderList from '../../components/PointUnderList';
 import ProfileTab from '../../components/profileTabs/ProfileTab';
 import ListsTab from '../../components/profileTabs/ListsTab';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { NextPageContext, NextApiRequest } from 'next';
+import {  NextApiRequest } from 'next';
 import { PrismaClient } from '@prisma/client';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { List, Point, User } from '../../types/types';
 import Link from 'next/link';
 
