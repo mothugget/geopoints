@@ -52,7 +52,7 @@ const Footer = () => {
         <div className="p-4 flex justify-between text-gray-600 fixed bottom-0 inset-x-0 z-50 bg-light-green-400">
           <button onClick={logoHandler}>
             <Image
-              src={'/geopoints-logo.png'}
+              src={'/geopoints-logo-white.png'}
               alt="home logo"
               width={40}
               height={40}
