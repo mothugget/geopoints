@@ -18,7 +18,7 @@ const PointDisplay = ({
 }: PointDisplayProps) => {
   return (
     <div>
-      <Card className="m-8">
+      <Card className="m-8 bg-amber-50">
         <img
           src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
           alt="point-picture"
