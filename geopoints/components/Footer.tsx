@@ -50,12 +50,12 @@ const Footer = () => {
           <TbRoute
             onClick={handleRouteClick}
             className={`w-6 h-8 mt-1 ${
-              destinationService.showRoute ? `text-green-400` : `text-gray-600`
+              destinationService.showRoute ? `text-white` : `text-gray-200`
             }`}
           />
           <New showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
           <Link href={`/${data?.userName}/profile?tabDefault=Favourites`}>
-            <BsBookmarkHeart className="w-6 h-8 mt-1" />
+            <BsBookmarkHeart className="w-6 h-8 mt-1 text-white" />
           </Link>
           <AiOutlineUnorderedList
             onClick={() => {

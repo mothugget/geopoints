@@ -185,8 +185,8 @@ function Map() {
           }}
         >
           <h3 className="text-black text-base">
-            You are here: <span className="font-normal">Double tap</span> or{' '}
-            <span className="font-normal">press new</span> to create points 🤞🏼
+            You are here: <span className="font-bold text-light-green-900">Double tap</span> or{' '}
+            <span className="font-bold text-light-green-900">press new</span> to create points 🤞🏼
           </h3>
         </InfoWindow>
         <DirectionsService
