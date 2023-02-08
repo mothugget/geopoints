@@ -15,7 +15,11 @@ const getUserData = async (req: NextApiRequest, res: NextApiResponse) => {
               points: true,
             },
           },
-          likedLists: true,
+          likedLists: {
+          include: {
+            points: true,
+          },
+        },
           likedPoints: true,
         },
       });

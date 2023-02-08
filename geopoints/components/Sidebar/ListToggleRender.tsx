@@ -27,7 +27,6 @@ const ListToggle = ({ list }: ListToggleProps) => {
     });
   }
 
-
   function sendListPointsToMap(pointArray: Point[]) {
     const allPoints = [...displayedPoints, ...pointArray]
     if (setDisplayedPoints) setDisplayedPoints(prevPoints => ensureUniquePoints(allPoints))
