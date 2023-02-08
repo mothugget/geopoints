@@ -59,7 +59,7 @@ export default function Search(props: {}) {
       <div className="flex relative mt-3">
         <input
           ref={inputRef}
-          className=" p-5 ml-2 rounded w-60 text-gray-800"
+          className=" p-5 ml-2 rounded-full w-60 text-gray-800"
           {...inputProps}
         />
         {autocompleteState.isOpen && (
