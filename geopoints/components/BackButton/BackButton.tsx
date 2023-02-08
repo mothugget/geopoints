@@ -10,7 +10,7 @@ function BackButton({text}: {text: string}) {
       onClick={() => {
         router.back();
       }}
-      className="fixed bottom-20 right-4"
+      className="fixed bottom-20 right-4 bg-light-green-700"
     >
       {text}
     </Button>
