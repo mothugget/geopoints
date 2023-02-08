@@ -7,6 +7,7 @@ import { createList } from '../../util/createList';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
+import TagsInput from '../TagsInput';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
 const inputClass = 'border-black border-2 rounded-md min-w-50 w-fit text-black';
@@ -115,13 +116,16 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const titleInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, title: e.target.value });
   };
+
   const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, description: e.target.value });
   };
+
   const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userEnteredTags = e.target.value.split(' ');
     setListInput({ ...listInput, tags: userEnteredTags });
   };
+
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckboxState(!checkboxState);
   };
@@ -162,7 +166,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           placeholder="Eg: firsttag secondtag"
         />
       </div>
-
+      <TagsInput />
       <div className="my-2">
         <Checkbox
           label="Make public"
@@ -170,6 +174,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           onChange={publicInputHandler}
         />
       </div>
+
       <div className="my-5">
         <UploadWidget
           buttonString={'Upload a marker'}
