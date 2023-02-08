@@ -19,6 +19,7 @@ import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
 import { RoutesContext } from '../contexts/RoutesContext';
 import homeMarker from '../public/home-marker.png';
+import SmallLoadingSpinner from './SmallLoadingSpinner';
 
 const containerStyle = {
   width: '100%',
@@ -204,6 +205,11 @@ function Map() {
         />
         {destinationService.showRoute && directionsResponse && (
           <DirectionsRenderer options={{ directions: directionsResponse }} />
+        )}
+        {mutation.isLoading && (
+          <div className="h-full flex justify-center items-center">
+            <SmallLoadingSpinner size={50} />
+          </div>
         )}
       </GoogleMap>
       {showCrosshair && (

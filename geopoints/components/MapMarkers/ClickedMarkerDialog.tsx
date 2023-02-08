@@ -11,6 +11,7 @@ import { Point } from '../../types/types';
 import useDeletePoint from '../../hooks/useDeletePoint';
 import { RoutesContext } from '../../contexts/RoutesContext';
 import EditPointModal from '../PointEditing/EditPointModal';
+import SmallLoadingSpinner from '../SmallLoadingSpinner';
 
 export default function ClickedMarkerDialog() {
   const [showEditPoint, setShowEditPoint] = useState(false);
@@ -71,7 +72,11 @@ export default function ClickedMarkerDialog() {
           pointData={pointWeAreGoingToEdit}
         />
       )}
-      {mutation.isSuccess ? (
+      {mutation.isLoading ? (
+        <div className="h-full flex justify-center items-center z-40">
+          <SmallLoadingSpinner size={50} />
+        </div>
+      ) : mutation.isSuccess ? (
         <Alerts
           message="Point deleted correctly"
           color="green"
