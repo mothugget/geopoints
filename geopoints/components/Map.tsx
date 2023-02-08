@@ -9,7 +9,7 @@ import {
   InfoWindow,
 } from '@react-google-maps/api';
 import Image from 'next/image';
-import { Coordinates, CreatePointData, List, Point } from '../types/types';
+import { Coordinates, CreatePointData, List } from '../types/types';
 import { MapContext } from '../contexts/MapContext';
 import LoadingSpinner from './LoadingSpinner';
 import PointMarker from './MapMarkers/PointMarker';
@@ -17,14 +17,8 @@ import { DisplayedPointsContext } from '../contexts/DisplayedPointsContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
-import { ClickedMarkerContext } from '../contexts/ClickedMarkerContext';
 import { RoutesContext } from '../contexts/RoutesContext';
-import homeMarker from '../public/home-marker.png'
-
-const testCoords: Coordinates[] = [
-  { lat: 51.59298641280394, lng: 0.19911695761843295 },
-  { lat: 51.59093347811105, lng: 0.2012627247702207 },
-];
+import homeMarker from '../public/home-marker.png';
 
 const containerStyle = {
   width: '100%',
@@ -54,7 +48,8 @@ function Map() {
     lat: 0,
     lng: 0,
   });
-  const { showCrosshair, setMap, setCurrentUserPosition } = useContext(MapContext);
+  const { showCrosshair, setMap, setCurrentUserPosition } =
+    useContext(MapContext);
   const { user } = useUser();
   const { data } = useUserData(user!);
   const { displayedPoints } = useContext(DisplayedPointsContext);
@@ -69,8 +64,6 @@ function Map() {
   useEffect(() => {
     getUserPosition();
   }, []);
-
-  console.log('catch map rerenders');
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -88,7 +81,7 @@ function Map() {
     [currentUserLocation, setMap]
   );
 
-  setCurrentUserPosition&&setCurrentUserPosition(currentUserLocation);
+  setCurrentUserPosition && setCurrentUserPosition(currentUserLocation);
 
   const onUnmount = useCallback(
     function callback(map: google.maps.Map) {
@@ -180,10 +173,13 @@ function Map() {
         {displayedPoints.map((point) => {
           return <PointMarker key={point.id} point={point} />;
         })}
-        <Marker position={currentUserLocation} icon={{
-          url: homeMarker.src,
-          scaledSize: new google.maps.Size(40, 40),
-        }}></Marker>
+        <Marker
+          position={currentUserLocation}
+          icon={{
+            url: homeMarker.src,
+            scaledSize: new google.maps.Size(40, 40),
+          }}
+        ></Marker>
         <InfoWindow
           position={{
             lat: currentUserLocation.lat + 0.0007,

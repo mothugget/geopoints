@@ -18,8 +18,7 @@ export default withPageAuthRequired(function Home() {
   }
 
   return (
-    <main className="flex flex-col h-screen justify-between bg-white">
-      <Header />
+    <main className="flex flex-col h-full justify-between bg-white">
       <section className="mb-auto">
         <ClickedMarkerDialog />
         <Map />
