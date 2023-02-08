@@ -11,7 +11,10 @@ const prisma = new PrismaClient();
 
 function PointPage({ pointData }: { pointData: Point }) {
   const router = useRouter();
-
+  const user = useUser();
+  // const {data} = useUserData(user);
+  // const userName = data?.userName;
+  // console.log(userName)
   return (
     <>
       {pointData ? (

@@ -15,7 +15,7 @@ import PointUnderList from '../../../components/PointUnderList';
 import { useUserData } from '../../../hooks/useUserData';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import EditListModal from '../../../components/ListEditing/EditListModal';
-import Link from 'next/link';
+import RouteToListAuthor from '../../../components/RouteToListAuthor/RouteToListAuthor';
 
 const prisma = new PrismaClient();
 
@@ -64,6 +64,9 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             points={listData.points}
             tags={listData.tags}
           />
+          <div className= "relative bottom-10 left-5">
+            <RouteToListAuthor userName={data.userName} />
+          </div>
         </div>
         {data.id == listData.authorId ? (
           <div>
