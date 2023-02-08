@@ -2,11 +2,10 @@ import { useMemo, useRef, useState } from 'react';
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import AutocompleteItem from './AutocompleteItem';
 import { List } from '../../types/types';
-import { Input } from '@material-tailwind/react';
+import {uuid} from 'uuidv4'
 
 // todo: fix types
 export default function Search(props: {}) {
-  // const [clicked, setClicked] = useState(false);
   const [autocompleteState, setAutocompleteState] = useState({
     collections: [],
     isOpen: false,
@@ -69,10 +68,10 @@ export default function Search(props: {}) {
             ref={panelRef}
             {...autocomplete.getPanelProps()}
           >
-            {autocompleteState.collections.map((collection, index) => {
+            {autocompleteState.collections.map((collection) => {
               const { items } = collection;
               return (
-                <section key={`section-${index}`} className="overflow-auto">
+                <section key={`section-${uuid()}`} className="overflow-auto">
                   {items.length > 0 && (
                     <ul
                       {...autocomplete.getListProps()}
