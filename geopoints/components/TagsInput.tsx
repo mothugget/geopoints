@@ -29,6 +29,7 @@ const TagsInput = ({ updateState, tags, setTags }: TagsInputProps) => {
     const [parsedTags, setParsedTags] = useState([]);
     console.log('tags input tags', tags)
     useEffect(() => {
+        console.log('useeffect runs', tags)
         setParsedTags(
             tags.map((tag: string) => {
                 return {
@@ -83,6 +84,7 @@ const TagsInput = ({ updateState, tags, setTags }: TagsInputProps) => {
                 handleAddition={handleAddition}
                 handleDrag={handleDrag}
                 handleTagClick={handleTagClick}
+                onTagUpdate={()=>{console.log('handleinputchange')}}
                 inputFieldPosition="bottom"
                 autocomplete
                 classNames={{

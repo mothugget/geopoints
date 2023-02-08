@@ -32,10 +32,9 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
   const router = useRouter();
   const [tags, setTags] = useState([])
 
-  useEffect(() => {
-    setTags(noTags => listData.tags.map((tag: any) => tag.name))
-  }, [showEditList])
-  console.log(tags)
+ 
+    let passedTags = listData.tags.map((tag: any) => tag.name)
+
   const initialUpdatedList = {
     title: listData.title ?? '',
     id: listData.id,
@@ -167,7 +166,7 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
 
       <TagsInput
         updateState={showEditList}
-        tags={tags}
+        tags={passedTags}
         setTags={setTags}
       />
 
