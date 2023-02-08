@@ -1,15 +1,25 @@
 import { PrismaClient } from "@prisma/client";
+import {useContext} from 'react'
 import { GetServerSideProps } from "next";
-import { Point } from "../../types/types.js";
+import { Button } from '@material-tailwind/react';
+import { Point } from "../../types/types";
 import PointDisplay from "../../components/PointPage/PointDisplay";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { useRouter } from "next/router.js";
+import { useRouter } from "next/router";
 import BackButton from "../../components/BackButton/BackButton";
 
 const prisma = new PrismaClient();
 
 function PointPage({ pointData }: { pointData: Point }) {
   const router = useRouter();
+
+
+  function goToPoint() {
+    router.push(`/?lat=${pointData.lat}&lng=${pointData.lng}`);
+  }
+
+
+
 
   return (
     <>
@@ -25,6 +35,7 @@ function PointPage({ pointData }: { pointData: Point }) {
         <LoadingSpinner />
       )}
       <BackButton text="Back to List"/>
+      <Button onClick={goToPoint}>Go to point on map</Button>
     </>
   );
 }
