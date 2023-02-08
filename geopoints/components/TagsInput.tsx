@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { render } from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
 
-// const suggestions = COUNTRIES.map((country):string => {
+// const suggestions = COUNTRIES map((country):string => {
 //     return {
 //         id: country,
 //         text: country
@@ -15,28 +15,29 @@ const KeyCodes = {
 };
 
 interface TagsInputProps {
-    setShowCreateList: Dispatch<SetStateAction<boolean>>;
+    tags: any;
+    setTags: Dispatch<SetStateAction<any>>;
 }
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-const TagsInput = () => {
-    const [tags, setTags] = React.useState([
-        { id: 'Thailand', text: 'Thailand' },
-        { id: 'India', text: 'India' },
-        { id: 'Vietnam', text: 'Vietnam' },
-        { id: 'Turkey', text: 'Turkey' }
-    ]);
+const TagsInput = ({ tags, setTags }: TagsInputProps) => {
+    // const [tags, setTags] = useState([
+    //     { id: 'Thailand', text: 'Thailand' },
+    //     { id: 'India', text: 'India' },
+    //     { id: 'Vietnam', text: 'Vietnam' },
+    //     { id: 'Turkey', text: 'Turkey' }
+    // ]);
 
     const handleDelete = i => {
-        setTags(tags.filter((tag, index) => index !== i));
+        setTags(tags.filter((tag: any, index: any) => index !== i));
     };
 
-    const handleAddition = (tag:any) => {
+    const handleAddition = (tag: any) => {
         setTags([...tags, tag]);
     };
 
-    const handleDrag = (tag:any, currPos:number, newPos:number) => {
+    const handleDrag = (tag: any, currPos: number, newPos: number) => {
         const newTags = tags.slice();
 
         newTags.splice(currPos, 1);
@@ -46,26 +47,25 @@ const TagsInput = () => {
         setTags(newTags);
     };
 
-    const handleTagClick = (index:any) => {
+    const handleTagClick = (index: any) => {
         console.log('The tag at index ' + index + ' was clicked');
     };
 
     return (
-        <div className="app">
-            <h1> React Tags Example </h1>
-            <div>
-                <ReactTags
-                    tags={tags}
-                    // suggestions={suggestions}
-                    delimiters={delimiters}
-                    handleDelete={handleDelete}
-                    handleAddition={handleAddition}
-                    handleDrag={handleDrag}
-                    handleTagClick={handleTagClick}
-                    inputFieldPosition="bottom"
-                    autocomplete
-                />
-            </div>
+        <div className='mt-2'>
+            <label className='font-normal text-sm'>
+                Tags <span className='text-red-500'>*</span></label>
+            <ReactTags
+                tags={tags}
+                // suggestions={suggestions}
+                delimiters={delimiters}
+                handleDelete={handleDelete}
+                handleAddition={handleAddition}
+                handleDrag={handleDrag}
+                handleTagClick={handleTagClick}
+                inputFieldPosition="bottom"
+                autocomplete
+            />
         </div>
     );
 };

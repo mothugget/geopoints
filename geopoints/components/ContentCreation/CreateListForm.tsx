@@ -31,7 +31,9 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const [listInput, setListInput] = useState<any>(null);
   const [checkboxState, setCheckboxState] = useState(false);
   const [imgPath, setImgPath] = useState('');
+  const [tags, setTags] = useState([])
 
+console.log(tags)
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -156,17 +158,10 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           maxLength={50}
         />
       </div>
-      <div className="my-2 mt-5">
-        <Input
-          variant="static"
-          label="Tags"
-          onChange={tagsInputHandler}
-          required={true}
-          maxLength={50}
-          placeholder="Eg: firsttag secondtag"
-        />
-      </div>
-      <TagsInput />
+      <TagsInput 
+      tags={tags}
+      setTags={setTags}
+      />
       <div className="my-2">
         <Checkbox
           label="Make public"
