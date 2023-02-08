@@ -27,7 +27,7 @@ const PictureTitleAndDesc = ({
 }: PictureTitleAndDescProps) => {
   return (
     <Card className="w-96 bg-white">
-      <CardHeader color="white" className="relative h-56">
+      <CardHeader color="white" className="relative h-56 mt-2">
         <img
           src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
           alt="img-blur-shadow"

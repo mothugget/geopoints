@@ -56,7 +56,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
     listData &&
     data && (
       <>
-        <div className="flex flex-col pt-12">
+        <div className="flex flex-col pt-4">
           <PictureTitleAndDesc
             imagePath={listData.imagePath}
             description={listData.description}
