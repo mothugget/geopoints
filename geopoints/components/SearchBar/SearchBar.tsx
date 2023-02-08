@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image.js';
-import { AiOutlineSearch } from 'react-icons/ai';
 import Search from './Search';
-import mGlass from '../../public/mglass.png';
+import mGlass from '../../public/mglass2.png';
 
 export const SearchBar = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
