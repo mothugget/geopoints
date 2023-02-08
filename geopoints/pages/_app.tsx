@@ -9,28 +9,36 @@ import { DisplayedPointsContextProvider } from '../contexts/DisplayedPointsConte
 import Header from '../components/Header';
 import { ThemeProvider } from '@material-tailwind/react';
 import { RoutesContextProvider } from '../contexts/RoutesContext';
+import { useRouter } from 'next/router';
 
 const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
-    <UserProvider>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
-          <ClickedMarkerContextProvider>
-            <DisplayedPointsContextProvider>
-              <MapContextProvider>
-                <RoutesContextProvider>
-                  <Header />
-                  <Footer />
-                  <Component {...pageProps} />
-                </RoutesContextProvider>
-              </MapContextProvider>
-            </DisplayedPointsContextProvider>
-          </ClickedMarkerContextProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </UserProvider>
+    <>
+      {router.pathname !== '/welcome' ? (
+        <UserProvider>
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
+              <ClickedMarkerContextProvider>
+                <DisplayedPointsContextProvider>
+                  <MapContextProvider>
+                    <RoutesContextProvider>
+                      <Header />
+                      <Footer />
+                      <Component {...pageProps} />
+                    </RoutesContextProvider>
+                  </MapContextProvider>
+                </DisplayedPointsContextProvider>
+              </ClickedMarkerContextProvider>
+            </ThemeProvider>
+          </QueryClientProvider>
+        </UserProvider>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
   );
 }
 

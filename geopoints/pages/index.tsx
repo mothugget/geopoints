@@ -1,5 +1,4 @@
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client';
-import { useState } from 'react';
 import { useUserData } from '../hooks/useUserData';
 import Map from '../components/Map';
 import Header from '../components/Header';
@@ -25,7 +24,6 @@ export default withPageAuthRequired(function Home() {
         <ClickedMarkerDialog />
         <Map />
       </section>
-
     </main>
   );
 });
