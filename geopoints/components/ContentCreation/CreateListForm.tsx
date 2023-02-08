@@ -29,10 +29,11 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [listInput, setListInput] = useState<any>(null);
-  const [checkboxState, setCheckboxState] = useState(false);
+  
   const [imgPath, setImgPath] = useState('');
   const [tags, setTags] = useState([])
 
+  let checkboxState = false
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -124,7 +125,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
 
 
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckboxState(!checkboxState);
+    checkboxState=!checkboxState;
   };
 
   return (
