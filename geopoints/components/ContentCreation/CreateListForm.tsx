@@ -170,7 +170,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
 
       <div className="my-5">
         <UploadWidget
-          buttonString={'Upload a marker'}
+          buttonString={'Upload an image'}
           setImgPath={setImgPath}
           multiple={false}
         />
