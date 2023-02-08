@@ -11,6 +11,7 @@ import { Input, Checkbox, Button } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
 
 interface EditListFormProps {
+  showEditList: boolean;
   setShowEditList: Dispatch<SetStateAction<boolean>>;
   listData: List;
 }
@@ -24,7 +25,7 @@ interface ListData {
   imagePath: string;
 }
 
-function EditListForm({ setShowEditList, listData }: EditListFormProps) {
+function EditListForm({ showEditList, setShowEditList, listData }: EditListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
@@ -33,8 +34,8 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
 
   useEffect(() => {
     setTags(noTags => listData.tags.map((tag: any) => tag.name))
-  }, [listData])
-
+  }, [showEditList])
+  console.log(tags)
   const initialUpdatedList = {
     title: listData.title ?? '',
     id: listData.id,
@@ -165,6 +166,7 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
       </div>
 
       <TagsInput
+        updateState={showEditList}
         tags={tags}
         setTags={setTags}
       />

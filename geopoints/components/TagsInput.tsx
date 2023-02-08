@@ -18,15 +18,16 @@ const KeyCodes = {
 };
 
 interface TagsInputProps {
+    updateState: boolean;
     tags: any;
     setTags: Dispatch<SetStateAction<any>>;
 }
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.space];
 
-const TagsInput = ({ tags, setTags }: TagsInputProps) => {
+const TagsInput = ({ updateState, tags, setTags }: TagsInputProps) => {
     const [parsedTags, setParsedTags] = useState([]);
-console.log('tags input tags',tags)
+    console.log('tags input tags', tags)
     useEffect(() => {
         setParsedTags(
             tags.map((tag: string) => {
@@ -35,11 +36,13 @@ console.log('tags input tags',tags)
                     text: tag
                 };
             }))
-    }, [])
-    
+    }, [updateState])
+
+
+    console.log(updateState)
     useEffect(() => {
         setTags(
-            parsedTags.map(tag=>tag.text)
+            parsedTags.map(tag => tag.text)
         )
     }, [parsedTags])
 

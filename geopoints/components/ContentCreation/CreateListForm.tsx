@@ -156,6 +156,7 @@ console.log(tags)
       </div>
 
       <TagsInput 
+      updateState={false}
       tags={tags}
       setTags={setTags}
       />
