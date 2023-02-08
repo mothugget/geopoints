@@ -6,7 +6,7 @@ import { useUserData } from '../../hooks/useUserData';
 import { createList } from '../../util/createList';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import { useMutation, useQueryClient } from 'react-query';
-import { Input, Checkbox, Button } from '@material-tailwind/react';
+import { Input, Switch, Button } from '@material-tailwind/react';
 import TagsInput from '../TagsInput';
 
 const labelClass = 'w-full text-base font-bold text-gray-800';
@@ -29,10 +29,11 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
   const [listInput, setListInput] = useState<any>(null);
-  const [checkboxState, setCheckboxState] = useState(false);
+  
   const [imgPath, setImgPath] = useState('');
   const [tags, setTags] = useState([])
 
+  let checkboxState = false
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -107,7 +108,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       author: data.id,
       description: listInput.description,
       tags: tags,
-      isPublic: checkboxState,
+      isPublic: listInput.isPublic||false,
       imagePath: imgPath ? imgPath : '',
     };
     mutation.mutate(listData);
@@ -123,7 +124,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   };
 
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckboxState(!checkboxState);
+    setListInput({ ...listInput, isPublic: e.target.checked });
   };
 
   return (
@@ -160,10 +161,12 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       />
 
       <div className="my-2">
-        <Checkbox
+        <Switch
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
+          defaultChecked={false}
+          onClick={(e)=>{console.log(e)}}
         />
       </div>
 
