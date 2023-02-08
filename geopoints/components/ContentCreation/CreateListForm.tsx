@@ -78,17 +78,17 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           List created! ✅
         </div>
         <Button
-          className="my-5"
+          className="my-5 bg-light-green-700"
           ripple={true}
-          color="green"
+          // color="green"
           onClick={() => mutation.reset()}
         >
           Create another one!
         </Button>
         <Button
-          className="my-5"
+          className="my-5 bg-light-green-700"
           ripple={true}
-          color="blue"
+          // color="blue"
           onClick={() => {
             mutation.reset();
             setShowCreateList(false);
@@ -170,7 +170,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
 
       <div className="my-5">
         <UploadWidget
-          buttonString={'Upload a marker'}
+          buttonString={'Upload an image'}
           setImgPath={setImgPath}
           multiple={false}
         />

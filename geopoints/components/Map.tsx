@@ -19,6 +19,7 @@ import { useUserData } from '../hooks/useUserData';
 import useCreatePoint from '../hooks/useCreatePoint';
 import { RoutesContext } from '../contexts/RoutesContext';
 import homeMarker from '../public/home-marker.png';
+import SmallLoadingSpinner from './SmallLoadingSpinner';
 
 const containerStyle = {
   width: '100%',
@@ -187,8 +188,10 @@ function Map() {
           }}
         >
           <h3 className="text-black text-base">
-            You are here: <span className="font-bold text-light-green-900">Double tap</span> or{' '}
-            <span className="font-bold text-light-green-900">press new</span> to create points 🤞🏼
+            You are here:{' '}
+            <span className="font-bold text-light-green-900">Double tap</span>{' '}
+            or <span className="font-bold text-light-green-900">press new</span>{' '}
+            to create points 🤞🏼
           </h3>
         </InfoWindow>
         <DirectionsService
@@ -204,6 +207,11 @@ function Map() {
         />
         {destinationService.showRoute && directionsResponse && (
           <DirectionsRenderer options={{ directions: directionsResponse }} />
+        )}
+        {mutation.isLoading && (
+          <div className="h-full flex justify-center items-center">
+            <SmallLoadingSpinner size={50} />
+          </div>
         )}
       </GoogleMap>
       {showCrosshair && (
