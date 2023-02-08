@@ -53,8 +53,9 @@ const PictureTitleAndDesc = ({
         </Link>
       </CardBody>
       {points!.map((point) => {
+        console.log(point.id)
         return (
-          <Link key={point.id} href={`../../../points/${point.id}`}>
+          // <Link key={point.id} href={`/points/${point.id}`}>
             <CardFooter divider className="p-0">
               <PointUnderList
                 imagePath={
@@ -64,7 +65,7 @@ const PictureTitleAndDesc = ({
                 description={point.description}
               />
             </CardFooter>
-          </Link>
+          // </Link>
         );
       })}
     </Card>

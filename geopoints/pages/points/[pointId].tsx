@@ -31,6 +31,7 @@ function PointPage({ pointData }: { pointData: Point }) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { pointId } = context.query;
+  console.log(pointId)
   const pointData = await prisma.point.findUnique({
     where: { id: Number(pointId) },
   });

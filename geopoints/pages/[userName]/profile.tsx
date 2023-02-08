@@ -88,12 +88,14 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
               })
             ) : value === 'Points' ? (
               data?.ownLists[0].points.map((point: Point) => {
+                console.log({point})
                 return (
                   <PointUnderList
                     key={point.id}
                     title={point.title}
                     imagePath={point.imagePath}
                     description={point.description}
+                    pointId={point.id}
                   />
                 );
               })
