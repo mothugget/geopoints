@@ -19,26 +19,25 @@ interface NewProps {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
 }
 
-const New = ({
-  showSidebar,
-  setShowSidebar,
-}: NewProps) => {
+const New = ({ showSidebar, setShowSidebar }: NewProps) => {
   const [showCreatePoint, setShowCreatePoint] = useState<boolean>(false);
   const [showCreateList, setShowCreateList] = useState<boolean>(false);
   const [showCrosshairModal, setShowCrosshairModal] = useState(false);
   const { setShowCrosshair } = useContext(MapContext);
 
-  const router = useRouter()
+  const router = useRouter();
 
   function createPointHandler() {
-    if(router.pathname!='/'){router.push('/')}
-    setShowCrosshairModal(!showCrosshairModal)
-    setShowCrosshair && setShowCrosshair(true)
+    if (router.pathname != '/') {
+      router.push('/');
+    }
+    setShowCrosshairModal(!showCrosshairModal);
+    setShowCrosshair && setShowCrosshair(true);
   }
 
   return (
     <>
-      <Menu >
+      <Menu>
         <MenuHandler
           onClick={() => {
             console.log('im here');
@@ -47,14 +46,17 @@ const New = ({
             }
           }}
         >
-          <Button size="sm" variant="gradient" className="">
+          <Button
+            size="sm"
+            variant="gradient"
+            color='white'
+            className='text-light-green-700'
+          >
             NEW
           </Button>
         </MenuHandler>
         <MenuList>
-          <MenuItem onClick={createPointHandler}>
-            Point
-          </MenuItem>
+          <MenuItem onClick={createPointHandler}>Point</MenuItem>
           <MenuItem onClick={() => setShowCreateList(!showCreateList)}>
             List
           </MenuItem>

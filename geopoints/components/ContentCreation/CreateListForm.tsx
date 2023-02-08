@@ -154,12 +154,12 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
         />
       </div>
 
-      <TagsInput 
+      <TagsInput
       updateState={false}
       tags={tags}
       setTags={setTags}
       />
-      
+
       <div className="my-2">
         <Checkbox
           label="Make public"
@@ -177,7 +177,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
       </div>
 
       <div className="my-1">
-        <Button ripple={true} type="submit">
+        <Button ripple={true} className="bg-light-green-700" type="submit">
           Create
         </Button>
       </div>

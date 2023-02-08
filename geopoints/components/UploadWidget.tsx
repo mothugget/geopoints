@@ -31,7 +31,7 @@ export default function UploadWidget({
             e.preventDefault();
             open();
           }
-          return <Button className='mt-2' onClick={handleOnClick}>{buttonString}</Button>;
+          return <Button className='mt-2 bg-light-green-700' onClick={handleOnClick}>{buttonString}</Button>;
         }}
       </CldUploadWidget>
     </div>

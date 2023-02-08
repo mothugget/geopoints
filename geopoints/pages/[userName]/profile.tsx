@@ -103,7 +103,7 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
                 <ProfileTab imagePath={data.imagePath} name={data.name} userName={data.userName} bio={data.bio} />
                 {user && user.email === profileUser.email && (
                   <Link className="fixed bottom-20 right-4" href={`../${data.userName}/edit`}>
-                    <Button>Edit Profile</Button>
+                    <Button className="bg-light-green-700">Edit Profile</Button>
                   </Link>
                 )}
                 </>

@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { BsInstagram, BsFacebook } from 'react-icons/bs';
-
 import {
   Card,
   CardBody,
@@ -21,8 +20,8 @@ interface ProfileTabProps {
 const ProfileTab = ({ imagePath, name, userName, bio }: ProfileTabProps) => {
   return (
     <div>
-      <Card className="h-auto w-auto object-contain bg-amber-50">
-        <img src={imagePath} alt="" className="p-6" />
+      <Card className="h-auto w-auto object-contain">
+        <img src={imagePath} alt="profile-picture" className="p-6" />
       </Card>
       <CardBody className="text-center">
         <Typography variant="h4" color="blue-gray" className="mb-2">
