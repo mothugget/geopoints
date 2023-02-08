@@ -11,21 +11,18 @@ import New from './ContentCreation/New';
 import { RoutesContext } from '../contexts/RoutesContext';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../hooks/useUserData';
-import { Coordinates } from '../types/types';
 
 const Footer = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [prevRoute, setPrevRoute] = useState('');
   const router = useRouter();
-  const { destinationService, setDestinationService } = useContext(RoutesContext);
+  const { destinationService, setDestinationService } =
+    useContext(RoutesContext);
   const { map, currentUserPosition } = useContext(MapContext);
 
   const cameraOptions: google.maps.CameraOptions = {
     center: currentUserPosition,
   };
-
- console.log(currentUserPosition)
-
 
   const { user } = useUser();
   const { data } = useUserData(user!);
@@ -35,9 +32,9 @@ const Footer = () => {
     setShowSidebar(false);
   }
 
-  function logoHandler (){
+  function logoHandler() {
     map?.moveCamera(cameraOptions);
-    router.push('/')
+    router.push('/');
   }
 
   const handleRouteClick = () => {

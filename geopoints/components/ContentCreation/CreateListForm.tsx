@@ -33,7 +33,6 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
   const [imgPath, setImgPath] = useState('');
   const [tags, setTags] = useState([])
 
-console.log(tags)
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
@@ -156,6 +155,7 @@ console.log(tags)
       </div>
 
       <TagsInput
+      updateState={false}
       tags={tags}
       setTags={setTags}
       />

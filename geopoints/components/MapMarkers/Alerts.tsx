@@ -13,7 +13,7 @@ export default function Alerts({ message, color, mutation }: MyAlertProps) {
   const [show, setShow] = useState(true);
 
   return (
-    <div className="h-screen">
+    <div className="">
       <Alert
         show={show}
         color={color}
