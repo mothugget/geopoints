@@ -84,7 +84,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
                 setOpen(true)
               }}
             >
-              Delete List {JSON.stringify(listData.isPublic)}
+              Delete List
             </Button>
             <Button
               ripple={false}

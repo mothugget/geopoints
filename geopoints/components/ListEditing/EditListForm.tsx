@@ -8,7 +8,9 @@ import SmallLoadingSpinner from '../SmallLoadingSpinner';
 import TagsInput from '../TagsInput';
 import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
+
 import { useRouter } from 'next/router';
+import { CheckBox } from '@mui/icons-material';
 
 interface EditListFormProps {
   showEditList: boolean;
@@ -25,14 +27,15 @@ interface ListData {
   imagePath: string;
 }
 
+
+
 function EditListForm({ showEditList, setShowEditList, listData }: EditListFormProps) {
   const { user } = useUser();
   const { data } = useUserData(user!);
-  const [imgUploaded, setImgUploaded] = useState(false);
   const router = useRouter();
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState([]);
 
- 
+ console.log('inside edit list form')
     let passedTags = listData.tags.map((tag: any) => tag.name)
 
   const initialUpdatedList = {
@@ -40,7 +43,7 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
     id: listData.id,
     description: listData.description ?? '',
     tags: listData.tags ?? '',
-    isPublic: data.isPublic,
+    isPublic: listData.isPublic,
     imagePath: listData.imagePath ?? '',
   };
 
@@ -103,6 +106,7 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
             router.replace(router.asPath);
             // this makes getServerSideProps to fire again to get te latest data
             setShowEditList(false);
+            window.location.reload();
           }}
         >
           Close
@@ -118,9 +122,10 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
       id: originalData.id,
       description: listInput.description || originalData.description,
       tags: tags,
-      isPublic: updatedPublicValue ? publicValue : originalData.isPublic,
+      isPublic: e.target[3].checked,
       imagePath: imgPath ? imgPath : originalData.imagePath,
     };
+    
     mutation.mutate(updatedListData);
     setListInput({});
   };
@@ -133,8 +138,8 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
   };
 
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    updatedPublicValue = true;
-    publicValue = !publicValue;
+    console.log('toggle switch edit ', e.target.checked)
+    setListInput({ ...listInput, isPublic: e.target.checked });
   };
 
   return (
@@ -172,11 +177,8 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
 
       <div className="my-2">
         <Checkbox
-          label="Make public"
-          ripple={true}
-          onChange={publicInputHandler}
-          defaultChecked={listData.isPublic}
-          checked={listInput.isPublic}
+        label='Make public'
+        defaultChecked={publicValue}
         />
       </div>
       <div className="my-5">
@@ -188,7 +190,7 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
       </div>
 
       <div className="my-1">
-        <Button ripple={true} type="submit">
+        <Button className=' bg-light-green-700' ripple={true} type="submit">
           Update
         </Button>
       </div>

@@ -167,6 +167,7 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
           ripple={true}
           onChange={publicInputHandler}
           defaultChecked={false}
+          onClick={(e)=>{console.log(e)}}
         />
       </div>
 
