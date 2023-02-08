@@ -59,7 +59,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   return (
     listData &&
     data && (
-      <div className="flex justify-center mb-28">
+      <div className="flex justify-center">
         <div className="flex flex-col pt-4">
           <PictureTitleAndDesc
             imagePath={listData.imagePath}

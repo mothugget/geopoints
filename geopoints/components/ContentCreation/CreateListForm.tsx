@@ -122,7 +122,6 @@ function CreateListForm({ setShowCreateList }: CreateListFormProps) {
     setListInput({ ...listInput, description: e.target.value });
   };
 
-
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckboxState(!checkboxState);
   };

@@ -32,8 +32,8 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
   const router = useRouter();
   const [tags, setTags] = useState([])
 
- 
-    let passedTags = listData.tags.map((tag: any) => tag.name)
+
+  let passedTags = listData.tags.map((tag: any) => tag.name)
 
   const initialUpdatedList = {
     title: listData.title ?? '',
@@ -110,6 +110,8 @@ function EditListForm({ showEditList, setShowEditList, listData }: EditListFormP
       </div>
     );
   }
+
+  console.log({updatedPublicValue})
 
   const listFormSubmitHandler = async (e: any) => {
     e.preventDefault();
