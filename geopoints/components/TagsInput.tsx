@@ -26,7 +26,7 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.space];
 
 const TagsInput = ({ tags, setTags }: TagsInputProps) => {
     const [parsedTags, setParsedTags] = useState([]);
-
+console.log('tags input tags',tags)
     useEffect(() => {
         setParsedTags(
             tags.map((tag: string) => {
@@ -83,7 +83,7 @@ const TagsInput = ({ tags, setTags }: TagsInputProps) => {
                 inputFieldPosition="bottom"
                 autocomplete
                 classNames={{
-                    tags: 'font-normal text-sm',
+                    tags: 'font-normal text-blue-gray-600 text-sm',
                     tagInput: '',
                     tagInputField: 'w-fill h-6',
                     selected: '',

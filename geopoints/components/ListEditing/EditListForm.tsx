@@ -1,10 +1,11 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { List } from '../../types/types';
 import UploadWidget from '../UploadWidget';
 import { useUser } from '@auth0/nextjs-auth0/client';
 import { useUserData } from '../../hooks/useUserData';
 import { updateList } from '../../util/updateList';
 import SmallLoadingSpinner from '../SmallLoadingSpinner';
+import TagsInput from '../TagsInput';
 import { useMutation, useQueryClient } from 'react-query';
 import { Input, Checkbox, Button } from '@material-tailwind/react';
 import { useRouter } from 'next/router';
@@ -28,6 +29,11 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
   const { data } = useUserData(user!);
   const [imgUploaded, setImgUploaded] = useState(false);
   const router = useRouter();
+  const [tags, setTags] = useState([])
+
+  useEffect(() => {
+    setTags(noTags => listData.tags.map((tag: any) => tag.name))
+  }, [listData])
 
   const initialUpdatedList = {
     title: listData.title ?? '',
@@ -111,7 +117,7 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
       title: listInput.title || originalData.title,
       id: originalData.id,
       description: listInput.description || originalData.description,
-      tags: listInput.tags || originalData.tags,
+      tags: tags,
       isPublic: updatedPublicValue ? publicValue : originalData.isPublic,
       imagePath: imgPath ? imgPath : originalData.imagePath,
     };
@@ -125,10 +131,7 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
   const descriptionInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListInput({ ...listInput, description: e.target.value });
   };
-  const tagsInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userEnteredTags = e.target.value.split(' ');
-    setListInput({ ...listInput, tags: userEnteredTags });
-  };
+
   const publicInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     updatedPublicValue = true;
     publicValue = !publicValue;
@@ -160,15 +163,11 @@ function EditListForm({ setShowEditList, listData }: EditListFormProps) {
           value={listInput.description}
         />
       </div>
-      <div className="my-2 mt-5">
-        <Input
-          variant="static"
-          label="Tags"
-          onChange={tagsInputHandler}
-          maxLength={50}
-          placeholder={listInput?.tags?.map((tag: any) => tag.name).join(' ')}
-        />
-      </div>
+
+      <TagsInput
+        tags={tags}
+        setTags={setTags}
+      />
 
       <div className="my-2">
         <Checkbox

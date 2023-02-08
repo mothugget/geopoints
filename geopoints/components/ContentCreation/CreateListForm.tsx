@@ -154,10 +154,12 @@ console.log(tags)
           maxLength={50}
         />
       </div>
+
       <TagsInput 
       tags={tags}
       setTags={setTags}
       />
+      
       <div className="my-2">
         <Checkbox
           label="Make public"
