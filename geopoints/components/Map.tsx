@@ -115,7 +115,7 @@ function Map() {
       }));
   };
 
-  if (!currentUserLocation) {
+  if (true) {
     return <LoadingSpinner />;
   }
 
