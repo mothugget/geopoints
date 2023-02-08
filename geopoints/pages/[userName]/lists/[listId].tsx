@@ -16,6 +16,7 @@ import { useUserData } from '../../../hooks/useUserData';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import EditListModal from '../../../components/ListEditing/EditListModal';
 import RouteToListAuthor from '../../../components/RouteToListAuthor/RouteToListAuthor';
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 
@@ -52,6 +53,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
     return <span className="text-black">Error: {error.message}</span>;
   }
 
+
   return (
     listData &&
     data && (
@@ -64,8 +66,9 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             points={listData.points}
             tags={listData.tags}
           />
-          <div className= "relative bottom-10 left-5">
-            <RouteToListAuthor userName={data.userName} />
+          
+          <div className= "relative top-2 left-5">
+            <RouteToListAuthor userName={listOwner.userName} />
           </div>
         </div>
         {data.id == listData.authorId ? (

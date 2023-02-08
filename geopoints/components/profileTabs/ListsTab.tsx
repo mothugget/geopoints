@@ -47,7 +47,7 @@ const ListTab = ({
         </Card>
       </Link>
 
-      <div className="relative bottom-20 left-5">
+      <div className="relative bottom-8 left-5">
         <RouteToListAuthor userName={userName} />
       </div>
     </div>
