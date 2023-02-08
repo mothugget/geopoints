@@ -14,7 +14,7 @@ interface ListToggleProps {
 
 const ListToggle = ({ list }: ListToggleProps) => {
   const [enabled, setEnabled] = useState(false);
-  const toggleState = window.localStorage.getItem('list' + list.id)
+  const toggleState = window.localStorage.getItem('list' + list.id);
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
   const { displayedPoints, setDisplayedPoints } = useContext(
@@ -28,53 +28,54 @@ const ListToggle = ({ list }: ListToggleProps) => {
   }
 
   function sendListPointsToMap(pointArray: Point[]) {
-    const allPoints = [...displayedPoints, ...pointArray]
-    if (setDisplayedPoints) setDisplayedPoints(prevPoints => ensureUniquePoints(allPoints))
+    const allPoints = [...displayedPoints, ...pointArray];
+    if (setDisplayedPoints)
+      setDisplayedPoints((prevPoints) => ensureUniquePoints(allPoints));
   }
 
   function removeListPointsFromMap(listId: number | undefined) {
-    if (setDisplayedPoints) setDisplayedPoints(prevPoints => {
-      return prevPoints.filter(point => (point.listId !== listId))
-    })
+    if (setDisplayedPoints)
+      setDisplayedPoints((prevPoints) => {
+        return prevPoints.filter((point) => point.listId !== listId);
+      });
   }
-
 
   useEffect(() => {
     if (toggleState !== null) {
-      const toggleStateBool = JSON.parse(toggleState)
-      setEnabled(toggleStateBool)
+      const toggleStateBool = JSON.parse(toggleState);
+      setEnabled(toggleStateBool);
       if (toggleStateBool) {
-        list.points && sendListPointsToMap(list.points)
+        list.points && sendListPointsToMap(list.points);
       } else {
-        removeListPointsFromMap(list.id)
+        removeListPointsFromMap(list.id);
       }
     }
-  }, [toggleState])
-
+  }, [toggleState]);
 
   function makeListVisible(value: boolean) {
-    window.localStorage.setItem('list' + list.id, JSON.stringify(value))
+    window.localStorage.setItem('list' + list.id, JSON.stringify(value));
     setEnabled(value);
     if (value) {
-      list.points && sendListPointsToMap(list.points)
+      list.points && sendListPointsToMap(list.points);
     } else {
-      removeListPointsFromMap(list.id)
+      removeListPointsFromMap(list.id);
     }
   }
 
   return (
     <>
-
       <div className="mt-5 flex justify-between">
         <Switch
           checked={enabled}
           onChange={makeListVisible}
-          className={`${enabled ? 'bg-blue-600' : 'bg-gray-200'
-            } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
+          className={`${
+            enabled ? 'bg-light-green-600' : 'bg-light-green-100'
+          } relative inline-flex h-6 w-11 items-center rounded-full mr-6`}
         >
           <span
-            className={`${enabled ? 'translate-x-6' : 'translate-x-1'
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+            className={`${
+              enabled ? 'translate-x-6' : 'translate-x-1'
+            } inline-block h-4 w-4 transform rounded-full bg-white transition`}
           />
         </Switch>
 
@@ -86,7 +87,6 @@ const ListToggle = ({ list }: ListToggleProps) => {
           </Link>
         )}
       </div>
-
     </>
   );
 };

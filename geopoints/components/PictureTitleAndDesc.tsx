@@ -26,8 +26,8 @@ const PictureTitleAndDesc = ({
   tags,
 }: PictureTitleAndDescProps) => {
   return (
-    <Card className="w-96 bg-amber-50">
-      <CardHeader color="white" className="relative h-56">
+    <Card className="w-96 bg-white shadow-none">
+      <CardHeader color="white" className="relative h-56 mt-2">
         <img
           src={imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE}
           alt="img-blur-shadow"
@@ -48,7 +48,7 @@ const PictureTitleAndDesc = ({
       {points!.map((point) => {
         return (
           <Link key={point.id} href={`../../../points/${point.id}`}>
-            <CardFooter divider className="py-1">
+            <CardFooter divider className="p-0">
               <PointUnderList
                 imagePath={
                   point.imagePath || process.env.NEXT_PUBLIC_DEFAULT_IMAGE

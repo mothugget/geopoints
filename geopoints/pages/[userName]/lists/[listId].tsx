@@ -58,7 +58,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
     listData &&
     data && (
       <>
-        <div className="flex flex-col pt-8">
+        <div className="flex flex-col pt-4">
           <PictureTitleAndDesc
             imagePath={listData.imagePath}
             description={listData.description}
@@ -75,7 +75,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
           <div>
             <Button
               ripple={false}
-              className="fixed bottom-20 right-4"
+              className="fixed bottom-20 right-4 bg-light-green-700"
               onClick={() => {
                 // handleDeleteList(data.id, listData.id!);
                 setOpen(true)
@@ -85,7 +85,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
             </Button>
             <Button
               ripple={false}
-              className="fixed bottom-20 left-4"
+              className="fixed bottom-20 left-4 bg-light-green-700"
               onClick={() => setShowEditList(!showEditList)}
             >
               Edit list
@@ -99,7 +99,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
         ) : liked ? (
           <Button
             ripple={false}
-            className="fixed bottom-20 right-4"
+            className="fixed bottom-20 right-4 bg-light-green-700"
             onClick={() => {
               handleToggleFavourites(data.id, listData.id!, liked); // move to modal: Confirm Delete? Yes/No -> redirect to Home
               setLiked(false);
@@ -110,7 +110,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
         ) : (
           <Button
             ripple={false}
-            className="fixed bottom-20 right-4"
+            className="fixed bottom-20 right-4 bg-light-green-700"
             onClick={() => {
               handleToggleFavourites(data.id, listData.id!, liked);
               setLiked(true);
@@ -121,9 +121,8 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
         )}
         <Dialog open={open} handler={handleOpen} className="w-96 flex flex-col">
         <DialogHeader className="text-xl mt-2">Are you sure you want to delete the list?</DialogHeader>
-        <DialogFooter className="flex flex-col justify-center items-cente">
+        <DialogFooter className="flex flex-col justify-center items-center">
           <Link href='/'>
-
             <Button
               className="my-1 w-24"
               variant="gradient"
