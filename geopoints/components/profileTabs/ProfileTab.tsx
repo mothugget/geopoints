@@ -34,7 +34,7 @@ const ProfileTab = ({ imagePath, name, userName, bio }: ProfileTabProps) => {
         >
           {userName ? `@${userName}` : ''}
         </Typography>
-        <Typography className="font-medium text-gray-300" textGradient>
+        <Typography className="font-medium text-gray-600" textGradient>
           {bio ? bio : ''}
         </Typography>
       </CardBody>
