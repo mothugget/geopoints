@@ -11,7 +11,8 @@ import { WithContext as ReactTags } from 'react-tag-input';
 
 const KeyCodes = {
     comma: 188,
-    enter: 13
+    enter: 13,
+    space:32,
 };
 
 interface TagsInputProps {
@@ -19,7 +20,7 @@ interface TagsInputProps {
     setTags: Dispatch<SetStateAction<any>>;
 }
 
-const delimiters = [KeyCodes.comma, KeyCodes.enter];
+const delimiters = [KeyCodes.comma, KeyCodes.enter, KeyCodes.space];
 
 const TagsInput = ({ tags, setTags }: TagsInputProps) => {
     // const [tags, setTags] = useState([
@@ -53,7 +54,7 @@ const TagsInput = ({ tags, setTags }: TagsInputProps) => {
 
     return (
         <div className='mt-2'>
-            <label className='font-normal text-sm'>
+            <label className='font-normal text-blue-gray-600 text-sm'>
                 Tags <span className='text-red-500'>*</span></label>
             <ReactTags
                 tags={tags}
@@ -65,7 +66,21 @@ const TagsInput = ({ tags, setTags }: TagsInputProps) => {
                 handleTagClick={handleTagClick}
                 inputFieldPosition="bottom"
                 autocomplete
+                classNames={{
+                    tags: '',
+                    tagInput: '',
+                    tagInputField: 'border-black w-fill h-6',
+                    selected: '',
+                    tag: 'mx-1 font-normal text-blue-gray-300  text-sm ',
+                    remove: 'removeClass',
+                    suggestions: 'suggestionsClass',
+                    activeSuggestion: 'activeSuggestionClass',
+                    editTagInput: 'editTagInputClass',
+                    editTagInputField: 'editTagInputField',
+                    clearAll: 'clearAllClass',
+                }}
             />
+            <div className=''></div>
         </div>
     );
 };
