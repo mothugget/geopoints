@@ -86,7 +86,7 @@ export default function ClickedMarkerDialog() {
       ) : null}
       <Dialog open={open} handler={handleOpen} className="w-96 flex flex-col">
         <DialogHeader className="text-xl mt-2">Point Options:</DialogHeader>
-        <DialogFooter className="flex flex-col justify-center items-cente">
+        <DialogFooter className="flex flex-col justify-center items-center">
           <Button
             className="my-1 w-24"
             variant="gradient"

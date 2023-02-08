@@ -19,7 +19,7 @@ const Header = () => {
     <div className="z-40">
       <SearchBar />
       <Link href={`/${data?.userName}/profile`}></Link>
-      {data?.imagePath ? (
+      {data ? (
         <Menu>
           <MenuHandler>
             <Image
