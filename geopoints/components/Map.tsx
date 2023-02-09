@@ -38,6 +38,8 @@ const newPointDefaultData: CreatePointData = {
   lng: 0,
 };
 
+
+
 function Map() {
   const [currentUserLocation, setCurrentUserLocation] = useState<Coordinates>({
     lat: 0,
@@ -61,6 +63,8 @@ function Map() {
   const userDefaultList = data.ownLists.find(
     (list: List) => list.title === 'My Points'
   );
+
+
 
   useEffect(() => {
     getUserPosition();
