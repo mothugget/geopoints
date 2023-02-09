@@ -181,8 +181,8 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
           value={pointInput?.description}
         />
       </div>
-      <div className="my-2">
-        {/* <Checkbox
+      {/* <div className="my-2">
+        <Checkbox
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
