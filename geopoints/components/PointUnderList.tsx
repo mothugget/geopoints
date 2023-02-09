@@ -18,7 +18,7 @@ const PointUnderList = ({
   description,
 }: PointUnderListProps) => {
   return (
-    pointId && (
+    pointId ? (
       <section className="rounded">
         <Link href={`/points/${pointId}`}>
           <div className="p-3">
@@ -38,6 +38,9 @@ const PointUnderList = ({
                   <p className="text-gray-700 text-sm">
                     {description ? description : "No description"}
                   </p>
+                  <p className="text-gray-700 text-sm">
+                    test
+                  </p>
                 </div>
               </div>
             </div>
@@ -45,6 +48,10 @@ const PointUnderList = ({
         </Link>
       </section>
     )
+    :
+    <div>
+      
+    </div>
   );
 };
 

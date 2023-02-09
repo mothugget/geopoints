@@ -49,16 +49,17 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
   const router = useRouter();
   const [tabDefault, setTabDefault] = useState(
     router.query.tabDefault || 'Lists'
-  );
+    );
 
   const { isError, isLoading, data, error, refetch } = useUserData(profileUser!)
   if (isLoading) {
     return <LoadingSpinner />;
   }
-
+  
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
+  console.log('data.ownLists0',data.ownLists[0])
 
   return (
     <Tabs value={tabDefault} className="bg-transparent">
@@ -89,7 +90,7 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
                 }
               })
             ) : value === 'Points' ? (
-              data?.ownLists[0].points.map((point: Point) => {
+              data?.ownLists.map((ownList) => ownList.points.map((point: Point) => {
                 console.log({point})
                 return (
                   <PointUnderList
@@ -100,7 +101,7 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
                     pointId={point.id}
                   />
                 );
-              })
+              }))
             ) : value === 'Profile' ? (
               data && data.imagePath ? (
                 <>

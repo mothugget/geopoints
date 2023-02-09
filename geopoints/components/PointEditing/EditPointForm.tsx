@@ -62,6 +62,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
 
   const mutation = useMutation(
     (updatedPointData: PointData) => {
+      console.log({updatedPointData})
       return updatePoint(updatedPointData);
     },
     {
@@ -69,7 +70,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
         queryClient.invalidateQueries('fectchUserData');
         setDisplayedPoints &&
           setDisplayedPoints((displayedPoints) =>
-           { const filteredPoints = displayedPoints.filter((point) => point.id !== updatedPoint.id)
+            { const filteredPoints = displayedPoints.filter((point) => point.id !== updatedPoint.id)
             return [...filteredPoints,updatedPoint]}
           );
       },
