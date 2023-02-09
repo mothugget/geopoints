@@ -48,11 +48,11 @@ const Footer = () => {
   return (
     <>
       <ListsSidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <footer className="h-16 z-10 bg-light-green-200">
+      <footer className="h-16 z-10 bg-light-green-200 ">
         <div className="p-4 flex justify-between text-gray-600 fixed bottom-0 inset-x-0 z-50 bg-light-green-400">
           <button onClick={logoHandler}>
             <Image
-              src={'/geopoints-logo-white.png'}
+              src={"/geopoints-logo-white.png"}
               alt="home logo"
               width={40}
               height={40}
@@ -71,12 +71,12 @@ const Footer = () => {
           </Link>
           <AiOutlineUnorderedList
             onClick={() => {
-              if (router.pathname === '/') {
+              if (router.pathname === "/") {
                 setShowSidebar(!showSidebar);
               }
             }}
             className={`w-9 h-9 ${
-              router.pathname === '/' ? `text-white` : `text-gray-600`
+              router.pathname === "/" ? `text-white` : `text-gray-600`
             }`}
           />
         </div>

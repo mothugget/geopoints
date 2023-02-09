@@ -45,7 +45,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
     })
 
   // console.log('Data: ', data)
-  console.log('ListData: ', listData)
+  // console.log('ListData: ', listData)
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -59,7 +59,7 @@ function List({ listData, listOwner }: { listData: List; listOwner: User }) {
   return (
     listData &&
     data && (
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-20">
         <div className="flex flex-col pt-4">
           <PictureTitleAndDesc
             imagePath={listData.imagePath}

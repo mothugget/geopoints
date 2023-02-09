@@ -41,7 +41,7 @@ export default function Search(props: {}) {
     [props]
   );
 
-  console.log(autocompleteState)
+  // console.log(autocompleteState)
 
   const formRef = useRef(null);
   const inputRef = useRef(null);

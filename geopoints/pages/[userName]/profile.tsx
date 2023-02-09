@@ -87,7 +87,7 @@ export default function MyTabs({ profileUser }: { profileUser: User }) {
                     </div>
                   );
                 }
-              })
+              })    
             ) : value === 'Points' ? (
               data?.ownLists[0].points.map((point: Point) => {
                 console.log({point})

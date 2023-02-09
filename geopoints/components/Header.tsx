@@ -16,7 +16,7 @@ const Header = () => {
   const { data } = useUserData(user!);
 
   return (
-    <div className="z-40">
+    <div className="z-40 fixed">
       <SearchBar />
       <Link href={`/${data?.userName}/profile`}></Link>
       {data ? (
