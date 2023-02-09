@@ -14,16 +14,21 @@ export default withPageAuthRequired(function Home() {
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
   const { map } = useContext(MapContext);
+  const urlCoord = { lat: Number(router.query.lat), lng: Number(router.query.lng) }
+  const cameraOptions: google.maps.CameraOptions = {
+    center: urlCoord,
+  };
+
+  useEffect(() => { setTimeout(() => { if (router.query.lat) { map?.moveCamera(cameraOptions); } }, 5000)},[map])
+  useEffect(() => {  if (router.query.lat) { map?.moveCamera(cameraOptions) }}, [])
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
 
-  const urlCoord = { lat: Number(router.query.lat), lng: Number(router.query.lng) }
 
-  const cameraOptions: google.maps.CameraOptions = {
-    center: urlCoord,
-  };
+
+
   
 function goToPoint() {
     map?.moveCamera(cameraOptions);
