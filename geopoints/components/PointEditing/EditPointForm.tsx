@@ -130,7 +130,7 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
       title: pointInput.title ?? originalData.title,
       id: originalData.id,
       description: pointInput.description ?? originalData.description,
-      isPublic: updatedPublicValue ? publicValue! : originalData?.isPublic!,
+      isPublic:  originalData?.isPublic!,
       imagePath: imgPath ? imgPath! : originalData.imagePath!,
       listId: pointInput.listId,
       newListId: pointInput?.newListId,
@@ -182,12 +182,12 @@ function EditPointForm({ setShowEditPoint, pointData }: EditPointFormProps) {
         />
       </div>
       <div className="my-2">
-        <Checkbox
+        {/* <Checkbox
           label="Make public"
           ripple={true}
           onChange={publicInputHandler}
         />
-      </div>
+      </div> */}
       <Select
         id="List"
         name="List"
