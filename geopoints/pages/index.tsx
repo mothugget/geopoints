@@ -7,21 +7,27 @@ import Header from '../components/Header';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ClickedMarkerDialog from '../components/MapMarkers/ClickedMarkerDialog';
 import { useContext, useEffect } from 'react';
+import { DisplayedPointsContext } from '../../contexts/DisplayedPointsContext';
 
 export default withPageAuthRequired(function Home() {
 
   const router = useRouter();
   const { user } = useUser();
   const { isError, isLoading, error, data } = useUserData(user!);
-  const { map } = useContext(MapContext);
-  const urlCoord = { lat: Number(router.query.lat), lng: Number(router.query.lng) }
+  const { map, currentUserPosition } = useContext(MapContext);
+  const urlCoord = router.query.lat?
+  { lat: Number(router.query.lat), lng: Number(router.query.lng) }
+:currentUserPosition;
+
   const cameraOptions: google.maps.CameraOptions = {
     center: urlCoord,
   };
 
-  useEffect(() => { setTimeout(() => { if (router.query.lat) { map?.moveCamera(cameraOptions); } }, 5000)},[map])
-  useEffect(() => {  if (router.query.lat) { map?.moveCamera(cameraOptions) }}, [])
 
+  map&&map.addListener('idle', function () {
+    map?.moveCamera(cameraOptions);
+    window.localStorage.setItem('refresh', JSON.stringify(!JSON.parse(window.localStorage.getItem('refresh')||'false')))
+  })
   if (isLoading) {
     return <LoadingSpinner />;
   }
