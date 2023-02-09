@@ -37,7 +37,7 @@ function PointPage({ pointData }: { pointData: Point }) {
       )}
       <DeletePoint pointId={pointData.id} />
       <BackButton text="Back to List"/>
-      <Button className='fixed top-24 right-8 bg-light-green-700' onClick={goToPoint}>See on map</Button>
+      <Button className='fixed top-24 right-8 bg-light-green-700' ripple={false} onClick={goToPoint}>See on map</Button>
     </>
   );
 }
