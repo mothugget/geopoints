@@ -18,9 +18,8 @@ const PointUnderList = ({
   description,
 }: PointUnderListProps) => {
   return (
-    pointId ? (
       <section className="rounded">
-        <Link href={`/points/${pointId}`}>
+        {/* <Link href={`/points/${pointId}`}> */}
           <div className="p-3">
             <div className=" w-full lg:max-w-full lg:flex">
               <div className="bg-white p-4 flex flex-row items-center leading-normal rounded-xl">
@@ -38,20 +37,13 @@ const PointUnderList = ({
                   <p className="text-gray-700 text-sm">
                     {description ? description : "No description"}
                   </p>
-                  <p className="text-gray-700 text-sm">
-                    test
-                  </p>
                 </div>
               </div>
             </div>
           </div>
-        </Link>
+        {/* </Link> */}
       </section>
-    )
-    :
-    <div>
-      
-    </div>
+
   );
 };
 

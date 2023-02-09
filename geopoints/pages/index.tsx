@@ -24,10 +24,10 @@ export default withPageAuthRequired(function Home() {
   };
 
 
-  map&&map.addListener('idle', function () {
-    map?.moveCamera(cameraOptions);
-    window.localStorage.setItem('refresh', JSON.stringify(!JSON.parse(window.localStorage.getItem('refresh')||'false')))
-  })
+  // map&&map.addListener('idle', function () {
+  //   map?.moveCamera(cameraOptions);
+  //   window.localStorage.setItem('refresh', JSON.stringify(!JSON.parse(window.localStorage.getItem('refresh')||'false')))
+  // })
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -35,10 +35,10 @@ export default withPageAuthRequired(function Home() {
 
 
 
-  
+
 function goToPoint() {
     map?.moveCamera(cameraOptions);
-  
+
 }
 
 
@@ -48,7 +48,7 @@ function goToPoint() {
   if (isError && error instanceof Error) {
     return <span className="text-black">Error: {error.message}</span>;
   }
- 
+
   return (
     <main className="flex flex-col h-full justify-between bg-white">
       <section className="mb-auto">

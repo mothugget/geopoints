@@ -183,6 +183,7 @@ console.log(data.imagePath)
             ripple={true}
             type="submit"
             disabled={!(updateEnabled && validateEntries)}
+            className="bg-light-green-700"
           >
             Update Profile Info
           </Button>
