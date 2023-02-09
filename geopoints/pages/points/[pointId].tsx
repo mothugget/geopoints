@@ -5,6 +5,7 @@ import PointDisplay from "../../components/PointPage/PointDisplay";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useRouter } from "next/router.js";
 import BackButton from "../../components/BackButton/BackButton";
+import DeletePoint from "../../components/DeletePoint/DeletePoint";
 
 const prisma = new PrismaClient();
 
@@ -24,6 +25,7 @@ function PointPage({ pointData }: { pointData: Point }) {
       ) : (
         <LoadingSpinner />
       )}
+      <DeletePoint pointId={pointData.id} />
       <BackButton text="Back to List"/>
     </>
   );
