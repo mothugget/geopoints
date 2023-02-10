@@ -16,46 +16,77 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 </p>
 
 
-
 ## Getting started
 
-Except for the regular suspects; git, Node, npm, you need these things to work on the Trash Walk app. Follow the instructions supplied below them or on their links to get them up and running before you continue with *Installation*.
+Except for the regular suspects; git, Node, npm, you need these things to work on the Geopoints app. Follow the instructions supplied below them or on their links to get them up and running before you continue with *Installation*.
 
-* Xcode (latest version, at least >9.3). Install from App Store.
-* [Cocoapods](https://cocoapods.org) - a dependency manager for Swift and Objective-C Cocoa projects. 
-  ```sudo gem install cocoapods```
-* [Expo XDE](https://www.expo.io) - the Expo development environment.
-  ```npm install -g exp```
+* [PostgreSQL](https://www.postgresql.org/) - a object-relational database.
 
-**Recommended!**
+   Create a database in your machine or use a `URI` provided by services like [Supabse](https://supabase.com/).
 
-* The [Trash Walk backend](https://github.com/cherlin/trash-walk-backend) is highly recommended as well, if you want any sort of useful interaction with the app.
-* [React Native Debugger](https://github.com/jhen0409/react-native-debugger) - a debugger built on the Chrome debugger, including React and Redux Dev Tools.
+* [Cloudinary](https://cloudinary.com/) - a cloud media storage.
+
+   Create an account and get an `API KEY`.
+
+* [Google Maps](https://console.cloud.google.com/getting-started)
+
+   Create an account and get an `API KEY`.
+
+* [Auth0](https://auth0.com/) - an authentication service.
+
+    Create an app and follow [this guide](https://auth0.com/docs/quickstart/webapp/nextjs/01-login).
 
 ## Installation
 
 1. Clone this repo and enter!
 
    ```bash
-   git clone https://github.com/cherlin/trash-walk-frontend.git
-   cd trash-walk-frontend
+   git clone https://github.com/MateoPresaCastro/geopoints
+   cd geopoints/geopoints/
    ```
 
 2. Install dependencies.
 
    ```bash
    npm install
-   cd ios			# ! Change into the ios folder !
-   pod install
    ```
 
-3. While in the ios folder, run ````exp start```` to start the Expo development environment that will build the JS bundle for your app.
+3. Add enviroment variables.
 
-4. Run the **_trash-walk.xcworkspace_** file in Xcode (**NOT** the *trash-walk.xcodeproj*).
+    Create a `.env` file in the inner geopoints folder and add your database connection string, e.g:
 
-5. Set up an **Identity** for the app under *General* in Xcode. You will need to pick a bundle name that will be unique to the particular certificate that you then have to generate under **Signing**
+    ```bash
+    DATABASE_URL="postgres://[username]:[password]@[host]:[port]/[dbname]"
+    ```
 
-6. Build the app! (click the Play-button in the top left corner when you have picked your target in the drop-down to the right of it.)
+    Add the rest of enviroment variables to `.env.local` on the same folder. Don't forget to add all `Auth0` variables.
+
+    ```bash
+    NEXT_PUBLIC_BACKEND_HOST="http://localhost:3000"
+    NEXT_PUBLIC_API_KEY="Your Google API key"
+    AUTH0_SECRET=""
+    AUTH0_BASE_URL="http://localhost:3000"
+    AUTH0_ISSUER_BASE_URL=""
+    AUTH0_CLIENT_ID=""
+    AUTH0_CLIENT_SECRET=""
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="Your cloudinary cloud name"
+    NEXT_PUBLIC_DEFAULT_IMAGE="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png"
+    NEXT_PUBLIC_DEFAULT_MARKER_USER_LOCATION="https://image.pngaaa.com/328/1509328-middle.png"
+    ```
+
+4. While in the geopoints folder, run this command. It pushes the prisma schema into your database and seeds data.
+
+    ```bash
+    npx prisma db push && npx prisma db seed
+    ```
+
+5. Run `npm run dev` and open your browser pointing to `http://localhost:3000/welcome`.
+
+6. Click on the `Getting Started` button and login.
+
+7. Accept your browser's request to track your location and change your system preferences if neccesary.
+
+8. Enjoy!
 
 ## Tech Stack
 

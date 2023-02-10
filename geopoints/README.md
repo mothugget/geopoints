@@ -56,7 +56,7 @@ Except for the regular suspects; git, Node, npm, you need these things to work o
     NEXT_PUBLIC_DEFAULT_MARKER_USER_LOCATION=https://image.pngaaa.com/328/1509328-middle.png
     ```
 
-4. While in the geopints folder, run this command. It pushes the prisma schema into your database and seeds data.
+4. While in the geopoints folder, run this command. It pushes the prisma schema into your database and seeds data.
 
     ```bash
     npx prisma db push && npx prisma db seed
