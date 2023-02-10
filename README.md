@@ -26,7 +26,7 @@ Except for the regular suspects; git, Node, npm, you need these things to work o
 
 * [Cloudinary](https://cloudinary.com/) - a cloud media storage.
 
-   Create an account and get an `API KEY`.
+   Create an account and get your `CLOUD NAME`.
 
 * [Google Maps](https://console.cloud.google.com/getting-started)
 
