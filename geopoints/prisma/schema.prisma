@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  userName    String  @unique @map(name: "user_name")
+  name        String?
+  bio         String?
+  imagePath   String? @map(name: "image_path")
+  instagram   String?
+  facebook    String?
+  password    String?
+  ownLists    List[]
+  likedPoints Point[] @relation("LikedPoints")
+  likedLists  List[]  @relation("LikedLists")
+}
+
+model List {
+  id          Int      @id @default(autoincrement())
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    Int      @map(name: "author_id")
+  title       String
+  description String?
+  imagePath   String?  @map(name: "image_path")
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  isPublic    Boolean  @default(false) @map(name: "is_public")
+  spotifyPath String?  @map(name: "spotify_path")
+  tags        Tag[]
+  points      Point[]
+  likedBy     User[]   @relation("LikedLists")
+}
+
+model Point {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+  isPublic    Boolean @default(false) @map(name: "is_public")
+  lng         Float
+  lat         Float
+  imagePath   String  @map(name: "image_path")
+  spotifyPath String? @map(name: "spotify_path")
+  tags        Tag[]
+  markerPath  String  @default("http://res.cloudinary.com/dlshfgwja/image/upload/v1675763079/idm32m9zbvuzc94way5g.png")
+  list        List    @relation(fields: [listId], references: [id], onDelete: Cascade)
+  listId      Int     @map(name: "list_id")
+  likedBy     User[]  @relation("LikedPoints")
+}
+
+model Tag {
+  id            Int     @id @default(autoincrement())
+  name          String  @unique
+  timesSearched Int     @default(0) @map(name: "times_searched")
+  points        Point[]
+  lists         List[]
+}
