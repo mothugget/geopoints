@@ -20,7 +20,7 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 
 Except for the regular suspects; git, Node, npm, you need these things to work on the Geopoints app. Follow the instructions supplied below them or on their links to get them up and running before you continue with *Installation*.
 
-* [PostgreSQL](https://www.postgresql.org/) - a object-relational database.
+* [PostgreSQL](https://www.postgresql.org/) - an object-relational database.
 
    Create a database in your machine or use a `URI` provided by services like [Supabase](https://supabase.com/).
 
