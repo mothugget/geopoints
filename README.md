@@ -82,7 +82,7 @@ Except for the regular suspects; git, Node, npm, you need these things to work o
 
 5. Run `npm run dev` and open your browser pointing to `http://localhost:3000/welcome`.
 
-6. Click on the `Getting Started` button and login.
+6. Click on the `Get started` button and login.
 
 7. Accept your browser's request to track your location and change your system preferences if neccesary.
 
