@@ -12,8 +12,7 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 ## Screenshots
 
 <p align="center">
-  <img src="images/screenshot-readme-1-a.png" />
-  <img src="images/screenshot-readme-1-b.png" />
+  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1676095248/xpnvvnlx69uqzaberdgf.png" />
 </p>
 
 
