@@ -1,7 +1,7 @@
 
 # Geopoints
 
-<p align="center">
+<p align="center" width=40>
   <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png" />
 </p>
 
