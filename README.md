@@ -23,7 +23,7 @@ Except for the regular suspects; git, Node, npm, you need these things to work o
 
 * [PostgreSQL](https://www.postgresql.org/) - a object-relational database.
 
-   Create a database in your machine or use a `URI` provided by services like [Supabse](https://supabase.com/).
+   Create a database in your machine or use a `URI` provided by services like [Supabase](https://supabase.com/).
 
 * [Cloudinary](https://cloudinary.com/) - a cloud media storage.
 
