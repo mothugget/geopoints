@@ -1,8 +1,6 @@
 
 # Geopoints
 
-<p align="center" width="48">
-  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png" style="width:100px;height:auto;"/>
 <p align="center"> 
   <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png" style="width:100px;height:auto;"/>
 </p>
@@ -14,8 +12,7 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 ## Screenshots
 
 <p align="center">
-  <img src="images/screenshot-readme-1-a.png" />
-  <img src="images/screenshot-readme-1-b.png" />
+  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1676095248/xpnvvnlx69uqzaberdgf.png" style="width:40vw;height:auto;"/>
 </p>
 
 
