@@ -2,7 +2,7 @@
 # Geopoints
 
 <p align="center">
-  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png=250x250" />
+  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png" />
 </p>
 
 
