@@ -1,8 +1,8 @@
 
 # Geopoints
 
-<p align="center">
-  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png" />
+<p align="center"> 
+  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1675782008/bp1ynczax2kz0seqo3in.png" style="width:100px;height:auto;"/>
 </p>
 
 
@@ -12,8 +12,7 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 ## Screenshots
 
 <p align="center">
-  <img src="images/screenshot-readme-1-a.png" />
-  <img src="images/screenshot-readme-1-b.png" />
+  <img src="http://res.cloudinary.com/dlshfgwja/image/upload/v1676095248/xpnvvnlx69uqzaberdgf.png" style="width:40vw;height:auto;" />
 </p>
 
 
@@ -21,9 +20,9 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 
 Except for the regular suspects; git, Node, npm, you need these things to work on the Geopoints app. Follow the instructions supplied below them or on their links to get them up and running before you continue with *Installation*.
 
-* [PostgreSQL](https://www.postgresql.org/) - a object-relational database.
+* [PostgreSQL](https://www.postgresql.org/) - an object-relational database.
 
-   Create a database in your machine or use a `URI` provided by services like [Supabse](https://supabase.com/).
+   Create a database in your machine or use a `URI` provided by services like [Supabase](https://supabase.com/).
 
 * [Cloudinary](https://cloudinary.com/) - a cloud media storage.
 
