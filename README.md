@@ -91,11 +91,17 @@ Except for the regular suspects; git, Node, npm, you need these things to work o
 
 ## Tech Stack
 
-* [React Native](https://facebook.github.io/react-native/) (ejected from Expo)
-* [Redux](https://redux.js.org/)
-* Other dependencies:
-  * [React Native Background Geolocation](https://github.com/transistorsoft/react-native-background-geolocation)
-  * [React Native Maps](https://github.com/react-community/react-native-maps)
+* React
+* Next.js
+* React Query
+* Prisma
+* PostgreSQL
+* Google Maps API
+* TypeScript
+* Auth0
+* Tailwind CSS
+* Material Tailwind
+* Cloudinary
 
 ## Developers
 
