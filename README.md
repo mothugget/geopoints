@@ -17,6 +17,16 @@ Geopoints is a mobile app that enables users to organize their favorite activiti
 
 [A small demo film](https://www.youtube.com/watch?v=DrTirxNFs0Y)
 
+## My involvement
+
+An app I helped conceive and was a part of building from the ground up. As we were a very small team, each member ended up playing some part in essentially every aspect of the codebase. However, there were some parts which I had a more dominant role in implementing.
+
+I had a large role in handling the Google Maps API, especially in the marker component, which I tailored to our needs and our data structure in order to facilitate the work of my team members.
+
+I implemented the Cloudinary upload widget in order to expedite and simplify image uploading, and ensured that this component could be easily integrated with the rest of our Typescript codebase even though it lacked Typescript support.
+
+During the planning phase I was a driving force in the usage of (and essentially the sole creator of) diagrams and visualisations describing the work we were going to do. This work helped solidify a shared mental model of both our data- and component structure across our team, as well as proving invaluable when onboarding new members.
+
 ## Getting started
 
 Except for the regular suspects; git, Node, npm, you need these things to work on the Geopoints app. Follow the instructions supplied below them or on their links to get them up and running before you continue with *Installation*.
